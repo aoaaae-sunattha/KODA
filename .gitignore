@@ -1,0 +1,23 @@
+# Environment variables — NEVER commit these
+.env
+.env.local
+.env.*.local
+
+# App build output
+app/dist/
+app/node_modules/
+
+# OS
+.DS_Store
+
+# Playwright screenshots (generated during dev/testing)
+app/.playwright-mcp/
+.playwright-mcp/
+
+# Editor
+.vscode/
+.idea/
+
+# Claude Code / agent plugins (local only)
+.claude/
+.agents/
