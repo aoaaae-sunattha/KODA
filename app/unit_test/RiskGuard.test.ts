@@ -52,6 +52,34 @@ describe('Risk & Error States (Phase 5)', () => {
       expect(useStore.getState().currentUser?.overdueAmount).toBe(0)
     })
 
+    it('simulateFailure + payOverdue round-trip resolves overdue installment', () => {
+      useStore.getState().login('fresh@anyway.test')
+
+      // Create an order and simulate failure
+      const product = { ...SEED_PRODUCTS[0], price: 1000 }
+      useStore.getState().createOrder(product as any, 4)
+      const orderId = useStore.getState().orders[0].id
+
+      useStore.getState().simulateFailure(orderId)
+
+      // Verify: account locked, order overdue, installment marked overdue
+      let state = useStore.getState()
+      expect(state.currentUser?.accountStatus).toBe('locked')
+      expect(state.currentUser?.overdueAmount).toBe(250)
+      expect(state.orders[0].status).toBe('overdue')
+      expect(state.orders[0].installments[1].status).toBe('overdue')
+
+      // Pay overdue: account unlocked, installment marked paid
+      useStore.getState().payOverdue()
+
+      state = useStore.getState()
+      expect(state.currentUser?.accountStatus).toBe('active')
+      expect(state.currentUser?.overdueAmount).toBe(0)
+      expect(state.orders[0].status).toBe('active')
+      expect(state.orders[0].installments[1].status).toBe('paid')
+      expect(state.orders[0].paidCount).toBe(2)
+    })
+
     it('verifyKYC() activates user and grants credit', () => {
       useStore.getState().login('new@anyway.test')
       expect(useStore.getState().currentUser?.verified).toBe(false)

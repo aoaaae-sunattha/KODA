@@ -183,7 +183,14 @@ export const useStore = create<AppState>((set, get) => ({
         ? { ...state.currentUser, accountStatus: 'active', overdueAmount: 0 }
         : null,
       orders: state.orders.map(o =>
-        o.status === 'overdue' ? { ...o, status: 'active' as const } : o
+        o.status === 'overdue' ? {
+          ...o,
+          status: 'active' as const,
+          paidCount: o.paidCount + 1,
+          installments: o.installments.map(inst =>
+            inst.status === 'overdue' ? { ...inst, status: 'paid' as const } : inst
+          ),
+        } : o
       ),
     }))
   },
@@ -195,24 +202,43 @@ export const useStore = create<AppState>((set, get) => ({
     const nextUnpaid = order.installments.find(i => i.status !== 'paid')
     const amount = nextUnpaid ? nextUnpaid.amount : 0
 
+    const nextIndex = nextUnpaid ? nextUnpaid.index : -1
+
     set(state => ({
       currentUser: state.currentUser
         ? { ...state.currentUser, accountStatus: 'locked' as const, overdueAmount: amount }
         : null,
       orders: state.orders.map(o =>
-        o.id === orderId ? { ...o, status: 'overdue' as const } : o
+        o.id === orderId ? {
+          ...o,
+          status: 'overdue' as const,
+          installments: o.installments.map((inst, i) =>
+            i === nextIndex ? { ...inst, status: 'overdue' as const } : inst
+          ),
+        } : o
       ),
     }))
   },
 
   // ─── CARDS ──────────────────────────────────────────────────────────────────
   addCard: (cardData) => {
-    const newCard: Card = { ...cardData, id: `card-${Date.now()}` }
-    set(state => ({ cards: [...state.cards, newCard] }))
+    set(state => {
+      const isPrimary = state.cards.length === 0 ? true : cardData.isPrimary
+      const newCard: Card = { 
+        ...cardData, 
+        id: `card-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        isPrimary 
+      }
+      return { cards: [...state.cards, newCard] }
+    })
   },
 
   removeCard: (cardId: string) => {
-    set(state => ({ cards: state.cards.filter(c => c.id !== cardId) }))
+    set(state => {
+      const card = state.cards.find(c => c.id === cardId)
+      if (card?.isPrimary) return state // Cannot remove primary card
+      return { cards: state.cards.filter(c => c.id !== cardId) }
+    })
   },
 
   setPrimaryCard: (cardId: string) => {

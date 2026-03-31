@@ -17,16 +17,32 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, onClose }) =
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (last4.length !== 4) return
+    if (expiry.length < 5) return
 
     const [month, year] = expiry.split('/')
+    const expMonth = parseInt(month)
+    const expYear = 2000 + parseInt(year)
+
+    if (expMonth < 1 || expMonth > 12) return
+
     addCard({
       last4,
       brand,
-      expiryMonth: parseInt(month) || 12,
-      expiryYear: 2000 + (parseInt(year) || 29),
+      expiryMonth: expMonth,
+      expiryYear: expYear,
       isPrimary: false,
     })
     onClose()
+    setLast4('')
+    setExpiry('')
+  }
+
+  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, '')
+    if (value.length > 2) {
+      value = value.substring(0, 2) + '/' + value.substring(2, 4)
+    }
+    setExpiry(value)
   }
 
   return (
@@ -61,10 +77,10 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, onClose }) =
                   <button
                     key={b}
                     type="button"
-                    onClick={() => setBrand(b as any)}
+                    onClick={() => setBrand(b as 'visa' | 'mastercard')}
                     className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all uppercase tracking-wider ${
-                      brand === b 
-                        ? 'bg-white text-indigo-600 shadow-sm' 
+                      brand === b
+                        ? 'bg-white text-indigo-600 shadow-sm'
                         : 'text-slate-500 hover:text-slate-700'
                     }`}
                   >
@@ -102,8 +118,9 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, onClose }) =
                 <input
                   type="text"
                   placeholder="12/29"
+                  maxLength={5}
                   value={expiry}
-                  onChange={(e) => setExpiry(e.target.value)}
+                  onChange={handleExpiryChange}
                   required
                   className="w-full px-4 py-4 bg-slate-50 border-2 border-transparent focus:border-indigo-600 rounded-2xl font-mono text-lg text-slate-900 transition-all outline-none"
                 />

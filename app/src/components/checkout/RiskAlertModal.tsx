@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AlertCircle, AlertTriangle, CreditCard, X, ArrowRight, ShieldAlert } from 'lucide-react'
+import { AlertCircle, AlertTriangle, X, ArrowRight, ShieldAlert } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { formatCurrency } from '../../utils/format'
 import { useStore } from '../../store/useStore'

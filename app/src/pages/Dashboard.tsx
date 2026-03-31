@@ -37,7 +37,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F5F0EC' }}>
+    <div className="min-h-screen bg-background">
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-8">
         {/* Account Alerts */}
         <div className="space-y-3">
@@ -95,7 +95,7 @@ export default function Dashboard() {
                 <CheckCircle2 size={20} />
               </div>
               <div className="flex-1">
-                <h4 className="text-sm font-bold text-emerald-900">Payments Setti-ed</h4>
+                <h4 className="text-sm font-bold text-emerald-900">Payments Settled</h4>
                 <p className="text-xs text-emerald-700 font-medium">Your account is now active again. Happy shopping!</p>
               </div>
             </motion.div>
