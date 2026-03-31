@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CheckCircle2, ShoppingBag } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { formatCurrency } from '../utils/format'
 import { getAvailableTerms } from '../data/feeRates'
 import { useCheckoutGuard } from '../hooks/useCheckoutGuard'
 import { CheckoutModal } from '../components/checkout/CheckoutModal'
+import { IDVerifyModal } from '../components/checkout/IDVerifyModal'
 import type { Product } from '../data/types'
 
 export default function Store() {
@@ -16,15 +17,19 @@ export default function Store() {
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
+  const [isIDVerifyOpen, setIsIDVerifyOpen] = useState(false)
   const [showSuccessToast, setShowSuccessToast] = useState(false)
 
   if (!currentUser) return null
 
   const handleBuy = (product: Product) => {
     const status = check(product.price)
+    
     if (status === 'allowed') {
       setSelectedProduct(product)
       setIsCheckoutOpen(true)
+    } else if (status === 'unverified') {
+      setIsIDVerifyOpen(true)
     } else {
       alert(`Checkout blocked: ${status}. Please check your dashboard.`)
     }
@@ -40,14 +45,14 @@ export default function Store() {
   }
 
   return (
-    <div className="min-h-screen pb-20" style={{ backgroundColor: '#F5F0EC' }}>
+    <div className="min-h-screen pb-20 bg-background">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <header className="mb-12 flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-extrabold tracking-tight mb-2" style={{ color: '#1A1A2E' }}>
+            <h1 className="text-4xl font-extrabold tracking-tight mb-2 text-text-primary">
               Curated Essentials
             </h1>
-            <p className="text-lg" style={{ color: '#6B7280' }}>
+            <p className="text-lg text-text-secondary">
               High-value items, split into interest-free installments.
             </p>
           </div>
@@ -80,27 +85,26 @@ export default function Store() {
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <span className="text-xs font-bold uppercase tracking-wider" style={{ color: '#5D5FEF' }}>
+                      <span className="text-xs font-bold uppercase tracking-wider text-primary">
                         {product.brand}
                       </span>
-                      <h3 className="text-xl font-bold mt-1" style={{ color: '#1A1A2E' }}>{product.name}</h3>
+                      <h3 className="text-xl font-bold mt-1 text-text-primary">{product.name}</h3>
                     </div>
-                    <span className="text-xl font-bold" style={{ color: '#1A1A2E' }}>
+                    <span className="text-xl font-bold text-text-primary">
                       {formatCurrency(product.price)}
                     </span>
                   </div>
-                  <p className="text-sm mb-6 flex-1 line-clamp-2" style={{ color: '#6B7280' }}>
+                  <p className="text-sm mb-6 flex-1 line-clamp-2 text-text-secondary">
                     {product.description}
                   </p>
-                  
-                  <div className="flex items-center justify-between mt-auto pt-4 border-t" style={{ borderColor: '#F3F4F6' }}>
-                    <div className="text-xs font-medium" style={{ color: '#6B7280' }}>
+
+                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-100">
+                    <div className="text-xs font-medium text-text-secondary">
                       Up to <span className="font-bold text-gray-900">{maxTerm} terms</span>
                     </div>
-                    <button 
+                    <button
                       onClick={() => handleBuy(product)}
-                      className="px-6 py-2.5 rounded-full text-white text-sm font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20"
-                      style={{ backgroundColor: '#5D5FEF' }}
+                      className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20"
                     >
                       Buy with Anyway
                     </button>
@@ -117,6 +121,11 @@ export default function Store() {
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
         onSuccess={handleCheckoutSuccess}
+      />
+
+      <IDVerifyModal
+        isOpen={isIDVerifyOpen}
+        onClose={() => setIsIDVerifyOpen(false)}
       />
 
       {/* Success Toast */}

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { PlanSelector } from '../../src/components/checkout/PlanSelector'
+import type { Term } from '../../src/data/types'
 import React from 'react'
 
 // Mock framer-motion to avoid animation issues in tests
@@ -15,7 +16,7 @@ describe('PlanSelector Component', () => {
   const mockOnTermSelect = vi.fn()
   const defaultProps = {
     price: 1000,
-    selectedTerm: 4,
+    selectedTerm: 4 as Term,
     onTermSelect: mockOnTermSelect,
   }
 
@@ -51,7 +52,7 @@ describe('PlanSelector Component', () => {
   })
 
   it('displays correct summary for selected term', () => {
-    render(<PlanSelector {...defaultProps} selectedTerm={6} />)
+    render(<PlanSelector {...defaultProps} selectedTerm={6 as Term} />)
     // $1000 / 6 = 166 monthly. Fee = 40. First payment = 166 + 40 = 206
     expect(screen.getByText('$206')).toBeDefined() // First payment
     expect(screen.getByText('$1,040')).toBeDefined() // Total

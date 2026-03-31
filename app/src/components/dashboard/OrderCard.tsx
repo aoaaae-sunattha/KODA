@@ -10,7 +10,7 @@ interface OrderCardProps {
 }
 
 export default function OrderCard({ order }: OrderCardProps) {
-  const { payInstallment, simulateRefund } = useStore()
+  const { payInstallment, simulateRefund, simulateFailure } = useStore()
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null)
 
   const paidAmount = order.paidCount > 0
@@ -129,6 +129,14 @@ export default function OrderCard({ order }: OrderCardProps) {
               className="py-3 px-6 rounded-2xl border-2 border-gray-100 text-sm font-bold text-gray-500 hover:bg-gray-50 transition-colors"
             >
               Refund
+            </button>
+          )}
+          {order.status === 'active' && (
+            <button
+              onClick={() => simulateFailure(order.id)}
+              className="text-[10px] font-black uppercase tracking-widest text-red-300 hover:text-red-500 transition-colors px-2"
+            >
+              Simulate Failure
             </button>
           )}
         </div>

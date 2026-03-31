@@ -42,7 +42,9 @@ These stories are prioritized for building a functional mockup that demonstrates
 **As a user,** I want to add a new Visa/Mastercard and set it as my primary payment method **so that** my next installment is charged to the correct card.
 - **AC1:** CRUD interface for card tokens (last 4 digits only).
 
-## [PRIORITY 6: Back-Office]
-### US.7: View Settlement (Merchant)
-**As a merchant,** I want to see that Anyway has "settled" the $1,000 order to my bank account **so that** I can ship the product.
-- **AC1:** Simple table showing Order ID, Amount, Commission, and Payout Status.
+## [PRIORITY 7: QA & Demo Automation]
+### US.8: Simulate Edge Case Scenarios
+**As a QA Tester or Demo Presenter,** I want to trigger state changes like "Verify ID" or "Mark Overdue" on-demand **so that** I can demonstrate how the system handles different user lifecycles and error states.
+- **AC1:** "Verify" button transitions a new user to active status with a realistic mock delay.
+- **AC2:** "Simulate Failure" button on an active order instantly locks the account and updates all dashboard banners.
+- **AC3:** Checkout is immediately blocked (403 Simulation) once an account is locked.

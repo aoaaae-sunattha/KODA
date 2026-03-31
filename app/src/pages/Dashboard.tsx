@@ -3,12 +3,15 @@ import { useStore } from '../store/useStore'
 import { AlertCircle, AlertTriangle, ShieldCheck, ShoppingBag } from 'lucide-react'
 import CreditGauge from '../components/dashboard/CreditGauge'
 import OrderCard from '../components/dashboard/OrderCard'
+import { IDVerifyModal } from '../components/checkout/IDVerifyModal'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 export default function Dashboard() {
   const { currentUser, orders } = useStore()
   const used = useStore(s => s.getUsedCredit())
   const available = useStore(s => s.getAvailableCredit())
+  const [isKYCOpen, setIsKYCOpen] = useState(false)
 
   if (!currentUser) return null
 
@@ -77,10 +80,17 @@ export default function Dashboard() {
                 <h4 className="text-sm font-bold text-indigo-900">Identity Verification</h4>
                 <p className="text-xs text-indigo-700 font-medium">Complete KYC to unlock your full shopping power.</p>
               </div>
-              <button className="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-200">Verify</button>
+              <button 
+                onClick={() => setIsKYCOpen(true)}
+                className="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-200"
+              >
+                Verify
+              </button>
             </motion.div>
           )}
         </div>
+
+        <IDVerifyModal isOpen={isKYCOpen} onClose={() => setIsKYCOpen(false)} />
 
         {/* Credit Utilization Gauge */}
         <CreditGauge 
