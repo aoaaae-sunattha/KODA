@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Anyway** is a BNPL (Buy Now, Pay Later) payment solution mockup — an interview-ready prototype. Code lives in `app/`. Planning docs are in the root.
 
-**Current state:** Phases 1, 1.5, 2, and 3 are complete. Phase 4 (Refund Engine) is next.
+**Current state:** Phases 1-5 are complete. Phase 6 (Card Management) is next.
 
 ## Documentation Structure
 
@@ -94,9 +94,9 @@ Build in this order per `tasks.md`:
 3. ✅ Phase 1.5 — Merchant Storefront
 4. ✅ Phase 2 — Dashboard polish + animations
 5. ✅ Phase 3 — Checkout modal + plan selector
-6. ← **Phase 4 — Refund engine**
-7. Phase 5 — Risk & error states
-8. Phase 6 — Add card form (partial)
+6. ✅ Phase 4 — Refund engine
+7. ✅ Phase 5 — Risk & error states
+8. ← **Phase 6 — Add card form (partial)**
 9. ✅ Phase 7 — Merchant (done)
 10. Phase 8 — Animation pass + responsive
 

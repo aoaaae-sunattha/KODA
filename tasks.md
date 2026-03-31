@@ -77,18 +77,24 @@ All tickets must meet these criteria before being marked ✅:
 
 ---
 
-## PHASE 4 — Refund Engine (Priority 3)
+## PHASE 4 — Refund Engine (Priority 3) ✅
 
 ### Category: Dynamic Adjustment
 
 | # | Ticket | Description | Status |
 |---|--------|-------------|--------|
-| T-09 | Refund Simulation | Refund input modal & Zustand action | ⬜ |
-| T-22 | Refund Engine Tests | Verify last-installment-first logic | ⬜ |
+| T-09 | Refund Simulation | Refund input modal & Zustand action | ✅ |
+| T-22 | Refund Engine Tests | Verify last-installment-first logic | ✅ |
+
+### Deliverables for Phase 4
+- [x] `RefundModal` allows inputting custom amounts
+- [x] Store logic follows "backward reconciliation" (last unpaid first)
+- [x] UI shows strike-through price on refunded orders
+- [x] All refund unit tests pass
 
 ---
 
-## PHASE 5 — Risk & Error States (Priority 4) 🔄
+## PHASE 5 — Risk & Error States (Priority 4) ✅
 
 ### Category: Trust & Safety
 
@@ -96,8 +102,14 @@ All tickets must meet these criteria before being marked ✅:
 |---|--------|-------------|--------|
 | T-10 | KYC / ID Verify Mock Flow | `IDVerifyModal` with 2s mock delay | ✅ |
 | T-11 | Declined Payment & Overdue Alert | Dashboard banners & Locked account logic | ✅ |
-| T-23 | Risk/KYC Unit Tests | Verify checkout blocking logic | ⬜ |
+| T-23 | Risk/KYC Unit Tests | Verify checkout blocking logic | ✅ |
 | T-25 | Manual Overdue Simulation | "Simulate Failure" action on OrderCard | ✅ |
+
+### Deliverables for Phase 5
+- [x] "Pay Now" button unlocks account and clears overdue status
+- [x] `RiskAlertModal` replaces browser alerts for blocked checkouts
+- [x] "Update Card" banner button navigates to card management
+- [x] Comprehensive tests for all risk guard branches pass
 
 ---
 
@@ -141,8 +153,8 @@ React 19, Tailwind 4, Framer Motion 12, Zustand 5, Lucide React, Vitest.
 1. Foundation ✅
 2. Storefront ✅
 3. Dashboard ✅
-4. Checkout (Current) 🔄
-5. Refunds
+4. Checkout ✅
+5. Refunds ✅
 6. Risk/KYC
 7. Cards
 8. Polish

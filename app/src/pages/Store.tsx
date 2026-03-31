@@ -8,6 +8,7 @@ import { getAvailableTerms } from '../data/feeRates'
 import { useCheckoutGuard } from '../hooks/useCheckoutGuard'
 import { CheckoutModal } from '../components/checkout/CheckoutModal'
 import { IDVerifyModal } from '../components/checkout/IDVerifyModal'
+import { RiskAlertModal, type RiskReason } from '../components/checkout/RiskAlertModal'
 import type { Product } from '../data/types'
 
 export default function Store() {
@@ -18,6 +19,7 @@ export default function Store() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
   const [isIDVerifyOpen, setIsIDVerifyOpen] = useState(false)
+  const [riskReason, setRiskReason] = useState<RiskReason | null>(null)
   const [showSuccessToast, setShowSuccessToast] = useState(false)
 
   if (!currentUser) return null
@@ -31,7 +33,8 @@ export default function Store() {
     } else if (status === 'unverified') {
       setIsIDVerifyOpen(true)
     } else {
-      alert(`Checkout blocked: ${status}. Please check your dashboard.`)
+      setSelectedProduct(product)
+      setRiskReason(status as RiskReason)
     }
   }
 
@@ -126,6 +129,13 @@ export default function Store() {
       <IDVerifyModal
         isOpen={isIDVerifyOpen}
         onClose={() => setIsIDVerifyOpen(false)}
+      />
+
+      <RiskAlertModal
+        isOpen={!!riskReason}
+        onClose={() => setRiskReason(null)}
+        reason={riskReason}
+        price={selectedProduct?.price}
       />
 
       {/* Success Toast */}

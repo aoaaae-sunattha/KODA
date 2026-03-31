@@ -1,19 +1,27 @@
 import { motion } from 'framer-motion'
 import { useStore } from '../store/useStore'
-import { AlertCircle, AlertTriangle, ShieldCheck, ShoppingBag } from 'lucide-react'
+import { AlertCircle, AlertTriangle, ShieldCheck, ShoppingBag, CheckCircle2 } from 'lucide-react'
 import CreditGauge from '../components/dashboard/CreditGauge'
 import OrderCard from '../components/dashboard/OrderCard'
 import { IDVerifyModal } from '../components/checkout/IDVerifyModal'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 export default function Dashboard() {
-  const { currentUser, orders } = useStore()
+  const { currentUser, orders, payOverdue } = useStore()
   const used = useStore(s => s.getUsedCredit())
   const available = useStore(s => s.getAvailableCredit())
   const [isKYCOpen, setIsKYCOpen] = useState(false)
+  const [showPaySuccess, setShowPaySuccess] = useState(false)
+  const navigate = useNavigate()
 
   if (!currentUser) return null
+
+  const handlePayOverdue = () => {
+    payOverdue()
+    setShowPaySuccess(true)
+    setTimeout(() => setShowPaySuccess(false), 3000)
+  }
 
   const activeOrders = orders.filter(o => o.status === 'active' || o.status === 'overdue' || o.status === 'pending')
   const completedOrders = orders.filter(o => o.status === 'completed')
@@ -46,7 +54,12 @@ export default function Dashboard() {
                 <h4 className="text-sm font-bold text-red-900">Account Locked</h4>
                 <p className="text-xs text-red-700 font-medium">Overdue payments detected. Settle them to resume shopping.</p>
               </div>
-              <button className="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-red-200">Pay Now</button>
+              <button 
+                onClick={handlePayOverdue}
+                className="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-red-200 hover:bg-red-700 transition-colors"
+              >
+                Pay Now
+              </button>
             </motion.div>
           )}
 
@@ -63,7 +76,28 @@ export default function Dashboard() {
                 <h4 className="text-sm font-bold text-amber-900">Action Required</h4>
                 <p className="text-xs text-amber-700 font-medium">Update your payment method to avoid service interruption.</p>
               </div>
-              <button className="px-4 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-amber-200">Update Card</button>
+              <button 
+                onClick={() => navigate('/cards')}
+                className="px-4 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-amber-200 hover:bg-amber-700 transition-colors"
+              >
+                Update Card
+              </button>
+            </motion.div>
+          )}
+
+          {showPaySuccess && (
+            <motion.div 
+              initial={{ height: 0, opacity: 0, y: -20 }}
+              animate={{ height: 'auto', opacity: 1, y: 0 }}
+              className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
+            >
+              <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                <CheckCircle2 size={20} />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-sm font-bold text-emerald-900">Payments Setti-ed</h4>
+                <p className="text-xs text-emerald-700 font-medium">Your account is now active again. Happy shopping!</p>
+              </div>
             </motion.div>
           )}
 
