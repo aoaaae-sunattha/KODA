@@ -131,21 +131,29 @@ export const useStore = create<AppState>((set, get) => ({
     set(state => ({
       orders: state.orders.map(order => {
         if (order.id !== orderId) return order
+        
         // Apply refund to last unpaid installment first, then work backwards
         let remaining = amount
         const updatedInstallments = [...order.installments]
+        
         for (let i = updatedInstallments.length - 1; i >= 0 && remaining > 0; i--) {
           const inst = updatedInstallments[i]
-          if (inst.status === 'paid') continue
-          const deducted = Math.min(inst.amount, remaining)
-          updatedInstallments[i] = { ...inst, amount: inst.amount - deducted }
-          remaining -= deducted
+          if (inst.status === 'paid') continue // Spec: refund only unpaid installments
+          
+          const deductable = Math.min(inst.amount, remaining)
+          updatedInstallments[i] = { ...inst, amount: inst.amount - deductable }
+          remaining -= deductable
         }
+
+        const newTotal = order.total - (amount - remaining)
+        const allSettled = updatedInstallments.every(i => i.status === 'paid' || i.amount === 0)
+
         return {
           ...order,
-          refundedAmount: order.refundedAmount + amount,
-          total: order.total - amount,
+          refundedAmount: order.refundedAmount + (amount - remaining),
+          total: newTotal,
           installments: updatedInstallments,
+          status: allSettled ? 'completed' : order.status,
         }
       }),
     }))
@@ -181,22 +189,20 @@ export const useStore = create<AppState>((set, get) => ({
   },
 
   simulateFailure: (orderId: string) => {
-    set(state => {
-      const order = state.orders.find(o => o.id === orderId)
-      if (!order) return state
-      
-      const nextUnpaid = order.installments.find(i => i.status !== 'paid')
-      const amount = nextUnpaid ? nextUnpaid.amount : 0
+    const order = get().orders.find(o => o.id === orderId)
+    if (!order) return
 
-      return {
-        currentUser: state.currentUser
-          ? { ...state.currentUser, accountStatus: 'locked', overdueAmount: amount }
-          : null,
-        orders: state.orders.map(o =>
-          o.id === orderId ? { ...o, status: 'overdue' as const } : o
-        ),
-      }
-    })
+    const nextUnpaid = order.installments.find(i => i.status !== 'paid')
+    const amount = nextUnpaid ? nextUnpaid.amount : 0
+
+    set(state => ({
+      currentUser: state.currentUser
+        ? { ...state.currentUser, accountStatus: 'locked' as const, overdueAmount: amount }
+        : null,
+      orders: state.orders.map(o =>
+        o.id === orderId ? { ...o, status: 'overdue' as const } : o
+      ),
+    }))
   },
 
   // ─── CARDS ──────────────────────────────────────────────────────────────────
@@ -221,10 +227,9 @@ export const useStore = create<AppState>((set, get) => ({
     return orders
       .filter(o => o.status !== 'completed')
       .reduce((sum, o) => {
-        // o.total is already reduced by refunds in simulateRefund, so don't subtract refundedAmount again
-        const paidAmount = o.paidCount > 0
-          ? o.firstPayment + (o.paidCount - 1) * o.monthly
-          : 0
+        const paidAmount = o.installments
+          .filter(i => i.status === 'paid')
+          .reduce((s, i) => s + i.amount, 0)
         return sum + (o.total - paidAmount)
       }, 0)
   },
