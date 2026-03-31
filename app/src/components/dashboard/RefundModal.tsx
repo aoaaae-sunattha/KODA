@@ -33,7 +33,7 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
     .reduce((sum, i) => sum + i.amount, 0)
 
   const handleQuickSelect = (percent: number) => {
-    const val = Math.floor(maxRefundable * percent)
+    const val = Math.round(maxRefundable * percent)
     setAmount(val.toString())
   }
 
@@ -86,7 +86,7 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
                 </div>
                 <h2 className="text-2xl font-black text-slate-900 mb-2">Refund Processed</h2>
                 <p className="text-sm text-slate-500">
-                  {formatCurrency(parseInt(amount))} has been deducted from the final installments of your {order.merchant} order.
+                  {formatCurrency(Math.round(parseFloat(amount)))} has been deducted from the final installments of your {order.merchant} order.
                 </p>
               </motion.div>
             ) : (
@@ -164,7 +164,7 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
                   <div className="pt-2">
                     <button
                       type="submit"
-                      disabled={isProcessing || !amount || parseInt(amount) > maxRefundable}
+                      disabled={isProcessing || !amount || Math.round(parseFloat(amount)) > maxRefundable}
                       className="w-full py-5 bg-orange-500 text-white rounded-2xl font-bold text-lg hover:bg-orange-600 transition-all shadow-lg shadow-orange-100 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale active:scale-[0.98]"
                     >
                       {isProcessing ? (

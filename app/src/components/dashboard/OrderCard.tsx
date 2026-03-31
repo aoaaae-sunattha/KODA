@@ -15,9 +15,9 @@ export default function OrderCard({ order }: OrderCardProps) {
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null)
   const [isRefundModalOpen, setIsRefundModalOpen] = useState(false)
 
-  const paidAmount = order.paidCount > 0
-    ? order.firstPayment + (order.paidCount - 1) * order.monthly
-    : 0
+  const paidAmount = order.installments
+    .filter(i => i.status === 'paid')
+    .reduce((sum, i) => sum + i.amount, 0)
   const originalTotal = order.principal + order.fee
   const paidPct = (paidAmount / originalTotal) * 100
   const refundedPct = (order.refundedAmount / originalTotal) * 100

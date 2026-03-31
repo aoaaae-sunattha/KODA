@@ -113,14 +113,21 @@ All tickets must meet these criteria before being marked ✅:
 
 ---
 
-## PHASE 6 — Card Management (Priority 5)
+## PHASE 6 — Card Management (Priority 5) ✅
 
 ### Category: Account Settings
 
 | # | Ticket | Description | Status |
 |---|--------|-------------|--------|
-| T-12 | Saved Cards CRUD | Card list and Primary setting | 🔄 |
-| T-24 | Card Management Tests | Verify setPrimary and expiry logic | ⬜ |
+| T-12 | Saved Cards CRUD | Card list and Primary setting | ✅ |
+| T-24 | Card Management Tests | Verify setPrimary and removal logic | ✅ |
+
+### Deliverables for Phase 6
+- [x] Users can add new cards via `AddCardModal`
+- [x] Expiry field has auto-slash formatting and validation
+- [x] First card added is automatically set as primary
+- [x] Primary card cannot be removed (prevents orphaned orders)
+- [x] All CRUD operations verified via unit tests pass
 
 ---
 
