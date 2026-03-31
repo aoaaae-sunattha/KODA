@@ -1,11 +1,12 @@
 import React from 'react'
 import { addMonths } from 'date-fns'
 import { calculatePlan } from '../../data/feeRates'
+import type { Term } from '../../data/types'
 import { formatCurrency, formatShortDate } from '../../utils/format'
 
 interface PaymentTimelineProps {
   price: number
-  term: number
+  term: Term
 }
 
 export const PaymentTimeline: React.FC<PaymentTimelineProps> = ({ price, term }) => {
@@ -19,12 +20,9 @@ export const PaymentTimeline: React.FC<PaymentTimelineProps> = ({ price, term })
 
       {Array.from({ length: term }).map((_, i) => {
         const isFirst = i === 0
-        const isLast = i === term - 1
         const date = addMonths(today, i)
         
-        let amount = plan.monthly
-        if (isFirst) amount = plan.firstPayment
-        if (isLast) amount = plan.lastMonthly
+        const amount = plan.installments[i]
 
         return (
           <div key={i} className="relative flex items-center justify-between group">
@@ -42,7 +40,7 @@ export const PaymentTimeline: React.FC<PaymentTimelineProps> = ({ price, term })
                 {isFirst ? 'Today' : `Installment ${i + 1}`}
               </span>
               <span className="text-sm text-slate-400 font-medium">
-                {formatShortDate(date)}
+                {formatShortDate(date.toISOString())}
               </span>
             </div>
 

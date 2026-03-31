@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ShoppingBag, CreditCard, ShieldCheck } from 'lucide-react'
 import { PlanSelector } from './PlanSelector'
 import { PaymentTimeline } from './PaymentTimeline'
 import { useStore } from '../../store/useStore'
 import { formatCurrency } from '../../utils/format'
-import type { Product } from '../../data/types'
+import type { Product, Term } from '../../data/types'
 
 interface CheckoutModalProps {
   product: Product | null
@@ -20,10 +20,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const [selectedTerm, setSelectedTerm] = useState(4)
+  const [selectedTerm, setSelectedTerm] = useState<Term>(4)
   const [isConfirming, setIsConfirming] = useState(false)
   const createOrder = useStore((state) => state.createOrder)
   const primaryCard = useStore((state) => state.cards.find(c => c.isPrimary))
+
+  useEffect(() => {
+    if (isOpen) setSelectedTerm(4)
+  }, [isOpen])
 
   if (!product) return null
 

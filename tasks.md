@@ -58,22 +58,22 @@ All tickets must meet these criteria before being marked ✅:
 
 ---
 
-## PHASE 3 — Checkout & Payment Slicing (Priority 2) 🔄
+## PHASE 3 — Checkout & Payment Slicing (Priority 2) ✅
 
 ### Category: Checkout Flow
 
 | # | Ticket | Description | Status |
 |---|--------|-------------|--------|
-| T-06 | Payment Plan Selector | 7 pill buttons, term selection math | ⬜ |
-| T-07 | Checkout Modal | Slide-up modal with order summary | ⬜ |
-| T-08 | Payment Schedule Timeline | Vertical list of N installments with dates | ⬜ |
-| T-21 | Checkout Flow Unit Tests | Verify selection math and modal state | ⬜ |
+| T-06 | Payment Plan Selector | 7 pill buttons, term selection math | ✅ |
+| T-07 | Checkout Modal | Slide-up modal with order summary | ✅ |
+| T-08 | Payment Schedule Timeline | Vertical list of N installments with dates | ✅ |
+| T-21 | Checkout Flow Unit Tests | Verify selection math and modal state | ✅ |
 
 ### Deliverables for Phase 3
-- [ ] Plan selector shows correct monthly, fee, total for all 7 terms
-- [ ] Checkout modal opens, plan selection works, confirm creates new order
-- [ ] Payment timeline shows correct dates with fee on first row
-- [ ] Unit tests for checkout logic pass in `app/unit_test/`
+- [x] Plan selector shows correct monthly, fee, total for all 7 terms
+- [x] Checkout modal opens, plan selection works, confirm creates new order
+- [x] Payment timeline shows correct dates with fee on first row
+- [x] Unit tests for checkout logic pass in `app/unit_test/`
 
 ---
 
@@ -88,15 +88,16 @@ All tickets must meet these criteria before being marked ✅:
 
 ---
 
-## PHASE 5 — Risk & Error States (Priority 4)
+## PHASE 5 — Risk & Error States (Priority 4) 🔄
 
 ### Category: Trust & Safety
 
 | # | Ticket | Description | Status |
 |---|--------|-------------|--------|
-| T-10 | KYC / ID Verify Mock Flow | `IDVerifyModal` with fake delay | ⬜ |
+| T-10 | KYC / ID Verify Mock Flow | `IDVerifyModal` with 2s mock delay | ✅ |
 | T-11 | Declined Payment & Overdue Alert | Dashboard banners & Locked account logic | ✅ |
 | T-23 | Risk/KYC Unit Tests | Verify checkout blocking logic | ⬜ |
+| T-25 | Manual Overdue Simulation | "Simulate Failure" action on OrderCard | ✅ |
 
 ---
 

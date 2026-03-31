@@ -29,6 +29,8 @@ interface AppState {
   lockAccount: () => void
   payOverdue: () => void
 
+  simulateFailure: (orderId: string) => void
+
   addCard: (card: Omit<Card, 'id'>) => void
   removeCard: (cardId: string) => void
   setPrimaryCard: (cardId: string) => void
@@ -176,6 +178,25 @@ export const useStore = create<AppState>((set, get) => ({
         o.status === 'overdue' ? { ...o, status: 'active' as const } : o
       ),
     }))
+  },
+
+  simulateFailure: (orderId: string) => {
+    set(state => {
+      const order = state.orders.find(o => o.id === orderId)
+      if (!order) return state
+      
+      const nextUnpaid = order.installments.find(i => i.status !== 'paid')
+      const amount = nextUnpaid ? nextUnpaid.amount : 0
+
+      return {
+        currentUser: state.currentUser
+          ? { ...state.currentUser, accountStatus: 'locked', overdueAmount: amount }
+          : null,
+        orders: state.orders.map(o =>
+          o.id === orderId ? { ...o, status: 'overdue' as const } : o
+        ),
+      }
+    })
   },
 
   // ─── CARDS ──────────────────────────────────────────────────────────────────
