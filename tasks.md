@@ -133,9 +133,20 @@ All tickets must meet these criteria before being marked ✅:
 
 ## PHASE 7 — Merchant Back-Office (Priority 6) ✅
 
-| # | Task | Status |
-|---|------|--------|
-| T-13 | Settlement Table | ✅ |
+### Category: B2B Operations
+
+| # | Ticket | Description | Status |
+|---|--------|-------------|--------|
+| T-13 | Settlement Table | Payout tracking with commission math | ✅ |
+| T-26 | Real-time Settlements | Shopper checkout creates merchant entries | ✅ |
+| T-27 | Settlement Actions | "Settle" button for pending payouts | ✅ |
+
+### Deliverables for Phase 7
+- [x] Merchant settlement table with gross, commission (2.5%), and net payout
+- [x] High-fidelity UI using design tokens and Framer Motion layout
+- [x] Real-time integration: customer purchase automatically triggers merchant order
+- [x] Manual "Settle" action for merchants to confirm payouts
+- [x] Unit tests for financial logic and state transitions pass
 
 ---
 
