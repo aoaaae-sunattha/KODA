@@ -116,7 +116,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <div className="flex items-center justify-center gap-2 py-2">
                 <ShieldCheck className="w-4 h-4 text-success" />
                 <span className="text-xs font-medium text-slate-400">
-                  Secured by Anyway BNPL • Encrypted Payment
+                  Secured by KODA BNPL • Encrypted Payment
                 </span>
               </div>
             </div>
@@ -144,6 +144,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <button
                 disabled={isConfirming || !primaryCard}
                 onClick={handleConfirm}
+                data-testid="checkout-confirm-btn"
                 className="w-full py-4 bg-primary text-white rounded-2xl font-bold text-lg shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all active:scale-[0.98] disabled:opacity-50 disabled:grayscale disabled:scale-100 flex items-center justify-center gap-2"
               >
                 {isConfirming ? (
@@ -161,7 +162,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </button>
               
               <p className="mt-4 text-[10px] text-slate-400 text-center leading-relaxed">
-                By confirming, you agree to Anyway's Terms of Service and Privacy Policy. 
+                By confirming, you agree to KODA's Terms of Service and Privacy Policy. 
                 Your first payment will be charged immediately.
               </p>
             </div>

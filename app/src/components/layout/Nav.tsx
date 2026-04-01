@@ -22,13 +22,14 @@ export default function Nav() {
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between sticky top-0 z-50" style={{ borderColor: '#E5E7EB' }}>
         <div className="flex items-center gap-10">
           <Link to="/dashboard" className="text-xl font-black tracking-tighter" style={{ color: '#5D5FEF' }}>
-            -Anyway
+            -Koda
           </Link>
           <div className="hidden md:flex gap-8">
             {navItems.map(item => (
               <Link 
                 key={item.path} 
                 to={item.path} 
+                data-testid={`nav-link-${item.label.toLowerCase()}`}
                 className={`text-sm font-semibold flex items-center gap-2 transition-colors relative ${isActive(item.path) ? '' : 'hover:text-[#5D5FEF]'}`}
                 style={{ color: isActive(item.path) ? '#1A1A2E' : '#6B7280' }}
               >
@@ -57,9 +58,11 @@ export default function Nav() {
           </div>
           <button
             onClick={logout}
+            data-testid="logout-btn"
             className="p-2 rounded-lg text-gray-400 hover:text-red-500 transition-colors"
             title="Log out"
           >
+
             <LogOut size={20} />
           </button>
         </div>
@@ -71,6 +74,7 @@ export default function Nav() {
           <Link
             key={item.path}
             to={item.path}
+            data-testid={`mobile-nav-link-${item.label.toLowerCase()}`}
             className="flex flex-col items-center gap-1 flex-1 relative"
           >
             <div className={`p-1.5 rounded-xl transition-colors ${isActive(item.path) ? 'bg-[#5D5FEF]/10 text-[#5D5FEF]' : 'text-gray-400'}`}>

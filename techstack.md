@@ -1,4 +1,4 @@
-# techstack.md — Anyway BNPL: Confirmed Tech Stack
+# techstack.md — KODA BNPL: Confirmed Tech Stack
 
 Formally confirmed 2026-03-30. Do not change without updating this file.
 
@@ -29,7 +29,7 @@ Formally confirmed 2026-03-30. Do not change without updating this file.
 | CSS Modules / styled-components | More files, slower iteration vs Tailwind |
 | Redux Toolkit | Too much boilerplate for 8 mock accounts + simple state |
 | React Context | Fine but more verbose than Zustand for this scope |
-| MUI / Chakra UI | Component libraries override our custom Anyway branding |
+| MUI / Chakra UI | Component libraries override our custom KODA branding |
 | GSAP | Paid license for some features; Framer Motion covers all needs |
 
 ---
@@ -67,7 +67,7 @@ src/
 ├── data/
 │   ├── types.ts         ← All TypeScript interfaces (Order, Card, User, Product, MerchantOrder)
 │   ├── mockUsers.ts     ← 8 accounts mapped by email
-│   ├── seedOrders.ts    ← 3 default orders for active@anyway.test
+│   ├── seedOrders.ts    ← 3 default orders for active@koda.test
 │   ├── seedProducts.ts  ← 6 products for /store (Phase 1.5 — to be created)
 │   └── feeRates.ts      ← FEE_RATES + calculatePlan() + getAvailableTerms()
 ├── hooks/

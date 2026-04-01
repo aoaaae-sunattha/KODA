@@ -1,6 +1,6 @@
 # account.check.md
 
-Mock test accounts for the Anyway BNPL mockup.
+Mock test accounts for the KODA BNPL mockup.
 Use any password to log in. The email determines which state loads.
 
 ---
@@ -14,7 +14,7 @@ and loads that user's pre-configured state. No real authentication occurs.
 ## Accounts & States
 
 ### 1. Happy Path — Active User
-**Email:** `active@anyway.test`
+**Email:** `active@koda.test`
 **Password:** anything
 **State:**
 - KYC verified ✅
@@ -31,7 +31,7 @@ and loads that user's pre-configured state. No real authentication occurs.
 ---
 
 ### 2. New User — Unverified (Zero State)
-**Email:** `new@anyway.test`
+**Email:** `new@koda.test`
 **Password:** anything
 **State:**
 - KYC NOT verified ❌
@@ -44,7 +44,7 @@ and loads that user's pre-configured state. No real authentication occurs.
 ---
 
 ### 3. New User — Verified, No Orders
-**Email:** `fresh@anyway.test`
+**Email:** `fresh@koda.test`
 **Password:** anything
 **State:**
 - KYC verified ✅
@@ -58,7 +58,7 @@ and loads that user's pre-configured state. No real authentication occurs.
 ---
 
 ### 4. Overdue / Locked Account
-**Email:** `overdue@anyway.test`
+**Email:** `overdue@koda.test`
 **Password:** anything
 **State:**
 - KYC verified ✅
@@ -75,7 +75,7 @@ and loads that user's pre-configured state. No real authentication occurs.
 ---
 
 ### 5. Declined Card
-**Email:** `declined@anyway.test`
+**Email:** `declined@koda.test`
 **Password:** anything
 **State:**
 - KYC verified ✅
@@ -91,7 +91,7 @@ and loads that user's pre-configured state. No real authentication occurs.
 ---
 
 ### 6. Maxed Out Credit
-**Email:** `maxed@anyway.test`
+**Email:** `maxed@koda.test`
 **Password:** anything
 **State:**
 - KYC verified ✅
@@ -108,7 +108,7 @@ and loads that user's pre-configured state. No real authentication occurs.
 ---
 
 ### 7. Power User — Long History
-**Email:** `power@anyway.test`
+**Email:** `power@koda.test`
 **Password:** anything
 **State:**
 - KYC verified ✅
@@ -126,7 +126,7 @@ and loads that user's pre-configured state. No real authentication occurs.
 ---
 
 ### 8. Merchant View
-**Email:** `merchant@anyway.test`
+**Email:** `merchant@koda.test`
 **Password:** anything
 **Role:** Merchant (loads merchant back-office view, not shopper dashboard)
 **State:**
@@ -160,14 +160,14 @@ and loads that user's pre-configured state. No real authentication occurs.
 To switch scenarios during a demo, type the email below in the login field and press Enter:
 
 ```
-active@anyway.test     → Normal dashboard (default demo)
-new@anyway.test        → KYC onboarding flow
-fresh@anyway.test      → Empty state (verified, no orders)
-overdue@anyway.test    → Locked account + overdue alert
-declined@anyway.test   → Declined card + action required
-maxed@anyway.test      → Credit limit exceeded
-power@anyway.test      → Power user with order history
-merchant@anyway.test   → Merchant back-office view
+active@koda.test     → Normal dashboard (default demo)
+new@koda.test        → KYC onboarding flow
+fresh@koda.test      → Empty state (verified, no orders)
+overdue@koda.test    → Locked account + overdue alert
+declined@koda.test   → Declined card + action required
+maxed@koda.test      → Credit limit exceeded
+power@koda.test      → Power user with order history
+merchant@koda.test   → Merchant back-office view
 ```
 
 Any string as password works — auth is mocked.

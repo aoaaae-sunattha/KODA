@@ -9,7 +9,7 @@ describe('QA Scenario Simulation', () => {
 
   it('verifies that simulateFailure locks the account and triggers overdue state', () => {
     // 1. Setup: Login as fresh user and create an order
-    useStore.getState().login('fresh@anyway.test')
+    useStore.getState().login('fresh@koda.test')
     useStore.getState().createOrder(SEED_PRODUCTS[0], 4)
     const orderId = useStore.getState().orders[0].id
 
@@ -25,7 +25,7 @@ describe('QA Scenario Simulation', () => {
 
   it('verifies that verifyKYC (T-10) activates a new user with credit', () => {
     // 1. Setup: Login as unverified new user
-    useStore.getState().login('new@anyway.test')
+    useStore.getState().login('new@koda.test')
     expect(useStore.getState().currentUser?.verified).toBe(false)
     expect(useStore.getState().getAvailableCredit()).toBe(0)
 
@@ -40,7 +40,7 @@ describe('QA Scenario Simulation', () => {
   })
 
   it('verifies Card Management CRUD (T-12)', () => {
-    useStore.getState().login('fresh@anyway.test')
+    useStore.getState().login('fresh@koda.test')
     const initialCount = useStore.getState().cards.length
 
     // 1. Add Card

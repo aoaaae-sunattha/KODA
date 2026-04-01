@@ -1,4 +1,4 @@
-# tasks.md — Anyway BNPL Mockup: Master Task Plan
+# tasks.md — KODA BNPL Mockup: Master Task Plan
 
 Last updated: 2026-03-30
 Status legend: ⬜ Not started | 🔄 In progress | ✅ Done | 🔒 Blocked

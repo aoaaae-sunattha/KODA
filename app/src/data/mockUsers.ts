@@ -21,7 +21,7 @@ const illumPlan    = calculatePlan(2000, 4)
 const magasinPlan  = calculatePlan(3000, 8)
 const norrPlan     = calculatePlan(3000, 10)
 const samsoePlan   = calculatePlan(2500, 6)
-const norsePlan    = calculatePlan(2500, 4)
+const norsePlan    = calculatePlan(2350, 4)
 const boliaPlan    = calculatePlan(4000, 4)
 const illumsPlan   = calculatePlan(2000, 6)
 const boPlan       = calculatePlan(6000, 12)
@@ -29,38 +29,38 @@ const sneakerPlan  = calculatePlan(2400, 8)
 
 // ─── USERS ────────────────────────────────────────────────────────────────────
 export const MOCK_USERS: Record<string, User> = {
-  'active@anyway.test': {
-    id: 'u1', email: 'active@anyway.test', name: 'Alex Johnson',
+  'active@koda.test': {
+    id: 'u1', email: 'active@koda.test', name: 'Alex Johnson',
     verified: true, creditLimit: 10000, accountStatus: 'active', role: 'shopper',
   },
-  'new@anyway.test': {
-    id: 'u2', email: 'new@anyway.test', name: 'Sam New',
+  'new@koda.test': {
+    id: 'u2', email: 'new@koda.test', name: 'Sam New',
     verified: false, creditLimit: 0, accountStatus: 'kyc_pending', role: 'shopper',
   },
-  'fresh@anyway.test': {
-    id: 'u3', email: 'fresh@anyway.test', name: 'Jordan Fresh',
+  'fresh@koda.test': {
+    id: 'u3', email: 'fresh@koda.test', name: 'Jordan Fresh',
     verified: true, creditLimit: 8000, accountStatus: 'active', role: 'shopper',
   },
-  'overdue@anyway.test': {
-    id: 'u4', email: 'overdue@anyway.test', name: 'Riley Overdue',
+  'overdue@koda.test': {
+    id: 'u4', email: 'overdue@koda.test', name: 'Riley Overdue',
     verified: true, creditLimit: 10000, accountStatus: 'locked',
     overdueAmount: 500, overdueSince: '2026-02-15', role: 'shopper',
   },
-  'declined@anyway.test': {
-    id: 'u5', email: 'declined@anyway.test', name: 'Morgan Declined',
+  'declined@koda.test': {
+    id: 'u5', email: 'declined@koda.test', name: 'Morgan Declined',
     verified: true, creditLimit: 10000, accountStatus: 'action_required',
     declineReason: 'Card expired — payment failed on 2026-03-01', role: 'shopper',
   },
-  'maxed@anyway.test': {
-    id: 'u6', email: 'maxed@anyway.test', name: 'Casey Maxed',
+  'maxed@koda.test': {
+    id: 'u6', email: 'maxed@koda.test', name: 'Casey Maxed',
     verified: true, creditLimit: 5000, accountStatus: 'active', role: 'shopper',
   },
-  'power@anyway.test': {
-    id: 'u7', email: 'power@anyway.test', name: 'Taylor Power',
+  'power@koda.test': {
+    id: 'u7', email: 'power@koda.test', name: 'Taylor Power',
     verified: true, creditLimit: 25000, accountStatus: 'active', role: 'shopper',
   },
-  'merchant@anyway.test': {
-    id: 'u8', email: 'merchant@anyway.test', name: 'Copenhagen Concept Store',
+  'merchant@koda.test': {
+    id: 'u8', email: 'merchant@koda.test', name: 'Copenhagen Concept Store',
     verified: true, creditLimit: 0, accountStatus: 'active',
     role: 'merchant', businessName: 'Copenhagen Concept Store',
   },
@@ -68,10 +68,10 @@ export const MOCK_USERS: Record<string, User> = {
 
 // ─── ORDERS PER USER ──────────────────────────────────────────────────────────
 export const MOCK_ORDERS: Record<string, Order[]> = {
-  'active@anyway.test': defaultOrders,
-  'new@anyway.test': [],
-  'fresh@anyway.test': [],
-  'overdue@anyway.test': [
+  'active@koda.test': defaultOrders,
+  'new@koda.test': [],
+  'fresh@koda.test': [],
+  'overdue@koda.test': [
     {
       id: 'ov-1', merchant: 'ILLUM', merchantCategory: 'Department Store',
       purchaseDate: '2026-01-15', principal: 2000, term: 4,
@@ -91,7 +91,7 @@ export const MOCK_ORDERS: Record<string, Order[]> = {
       installments: makeInstallments(magasinPlan, 3, new Date('2026-02-01')),
     },
   ],
-  'declined@anyway.test': [
+  'declined@koda.test': [
     {
       id: 'dec-1', merchant: 'Nørr Streetwear', merchantCategory: 'Fashion',
       purchaseDate: '2025-11-01', principal: 3000, term: 10,
@@ -101,25 +101,25 @@ export const MOCK_ORDERS: Record<string, Order[]> = {
       installments: makeInstallments(norrPlan, 4, new Date('2025-11-01')),
     },
   ],
-  'maxed@anyway.test': [
+  'maxed@koda.test': [
     {
       id: 'max-1', merchant: 'Samsøe Samsøe', merchantCategory: 'Fashion',
       purchaseDate: '2026-03-01', principal: 2500, term: 6,
       fee: samsoePlan.fee, monthly: samsoePlan.monthly,
       firstPayment: samsoePlan.firstPayment, total: samsoePlan.total,
-      paidCount: 1, refundedAmount: 0, status: 'active',
-      installments: makeInstallments(samsoePlan, 1, new Date('2026-03-01')),
+      paidCount: 0, refundedAmount: 0, status: 'active',
+      installments: makeInstallments(samsoePlan, 0, new Date('2026-03-01')),
     },
     {
       id: 'max-2', merchant: 'Norse Projects', merchantCategory: 'Fashion',
-      purchaseDate: '2026-03-15', principal: 2500, term: 4,
+      purchaseDate: '2026-03-15', principal: 2350, term: 4,
       fee: norsePlan.fee, monthly: norsePlan.monthly,
       firstPayment: norsePlan.firstPayment, total: norsePlan.total,
-      paidCount: 1, refundedAmount: 0, status: 'active',
-      installments: makeInstallments(norsePlan, 1, new Date('2026-03-15')),
+      paidCount: 0, refundedAmount: 0, status: 'active',
+      installments: makeInstallments(norsePlan, 0, new Date('2026-03-15')),
     },
   ],
-  'power@anyway.test': [
+  'power@koda.test': [
     {
       id: 'pow-1', merchant: 'Bolia', merchantCategory: 'Furniture & Interior',
       purchaseDate: '2025-08-01', principal: 4000, term: 4,
@@ -153,22 +153,22 @@ export const MOCK_ORDERS: Record<string, Order[]> = {
       installments: makeInstallments(sneakerPlan, 2, new Date('2026-02-01')),
     },
   ],
-  'merchant@anyway.test': [],
+  'merchant@koda.test': [],
 }
 
 // ─── CARDS PER USER ───────────────────────────────────────────────────────────
 export const MOCK_CARDS: Record<string, Card[]> = {
-  'active@anyway.test':   [{ id: 'c1', last4: '4242', brand: 'visa',       expiryMonth: 12, expiryYear: 2028, isPrimary: true }],
-  'new@anyway.test':      [],
-  'fresh@anyway.test':    [{ id: 'c2', last4: '1234', brand: 'mastercard', expiryMonth: 8,  expiryYear: 2027, isPrimary: true }],
-  'overdue@anyway.test':  [{ id: 'c3', last4: '9999', brand: 'visa',       expiryMonth: 6,  expiryYear: 2027, isPrimary: true }],
-  'declined@anyway.test': [{ id: 'c4', last4: '5678', brand: 'mastercard', expiryMonth: 1,  expiryYear: 2026, isPrimary: true, isExpired: true }],
-  'maxed@anyway.test':    [{ id: 'c5', last4: '3333', brand: 'visa',       expiryMonth: 9,  expiryYear: 2028, isPrimary: true }],
-  'power@anyway.test':    [
+  'active@koda.test':   [{ id: 'c1', last4: '4242', brand: 'visa',       expiryMonth: 12, expiryYear: 2028, isPrimary: true }],
+  'new@koda.test':      [],
+  'fresh@koda.test':    [{ id: 'c2', last4: '1234', brand: 'mastercard', expiryMonth: 8,  expiryYear: 2027, isPrimary: true }],
+  'overdue@koda.test':  [{ id: 'c3', last4: '9999', brand: 'visa',       expiryMonth: 6,  expiryYear: 2027, isPrimary: true }],
+  'declined@koda.test': [{ id: 'c4', last4: '5678', brand: 'mastercard', expiryMonth: 1,  expiryYear: 2026, isPrimary: true, isExpired: true }],
+  'maxed@koda.test':    [{ id: 'c5', last4: '3333', brand: 'visa',       expiryMonth: 9,  expiryYear: 2028, isPrimary: true }],
+  'power@koda.test':    [
     { id: 'c6', last4: '4242', brand: 'visa',       expiryMonth: 12, expiryYear: 2028, isPrimary: true },
     { id: 'c7', last4: '8888', brand: 'mastercard', expiryMonth: 3,  expiryYear: 2029, isPrimary: false },
   ],
-  'merchant@anyway.test': [],
+  'merchant@koda.test': [],
 }
 
 // ─── MERCHANT ORDERS ──────────────────────────────────────────────────────────

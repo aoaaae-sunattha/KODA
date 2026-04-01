@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import type { User, Order, Card, MerchantOrder, Product, Term, Installment } from '../data/types'
 import {
   MOCK_USERS, MOCK_ORDERS, MOCK_CARDS, MOCK_MERCHANT_ORDERS,
@@ -42,7 +43,7 @@ interface AppState {
   getAvailableCredit: () => number
 }
 
-export const useStore = create<AppState>((set, get) => ({
+export const useStore = create<AppState>()(persist((set, get) => ({
   currentUser: null,
   loginError: null,
   orders: [],
@@ -289,4 +290,12 @@ export const useStore = create<AppState>((set, get) => ({
     if (!currentUser) return 0
     return Math.max(0, currentUser.creditLimit - get().getUsedCredit())
   },
+}), {
+  name: 'koda-session',
+  partialize: (state) => ({
+    currentUser: state.currentUser,
+    orders: state.orders,
+    cards: state.cards,
+    merchantOrders: state.merchantOrders,
+  }),
 }))

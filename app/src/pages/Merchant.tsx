@@ -45,9 +45,9 @@ export default function Merchant() {
       <nav className="bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-black text-xl">
-            A
+            K
           </div>
-          <span className="text-xl font-black text-text-primary tracking-tight">Anyway<span className="text-primary">.merchant</span></span>
+          <span className="text-xl font-black text-text-primary tracking-tight">KODA<span className="text-primary">.merchant</span></span>
         </div>
         
         <div className="flex items-center gap-6">
@@ -113,7 +113,7 @@ export default function Merchant() {
             <table className="w-full text-left">
               <thead>
                 <tr className="bg-slate-50/50">
-                  {['Order ID', 'Date', 'Gross Amount', 'Anyway Fee (2.5%)', 'Net Payout', 'Status', 'Action'].map(h => (
+                  {['Order ID', 'Date', 'Gross Amount', 'KODA Fee (2.5%)', 'Net Payout', 'Status', 'Action'].map(h => (
                     <th key={h} className="px-8 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                       {h}
                     </th>

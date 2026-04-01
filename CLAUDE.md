@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Anyway** is a BNPL (Buy Now, Pay Later) payment solution mockup — an interview-ready prototype. Code lives in `app/`. Planning docs are in the root.
+**KODA** is a BNPL (Buy Now, Pay Later) payment solution mockup — an interview-ready prototype. Code lives in `app/`. Planning docs are in the root.
 
 **Current state:** Phases 1-7 are complete. Phase 8 (Polish & Demo Prep) is next.
 
@@ -72,7 +72,7 @@ Tests live in `app/unit_test/` (not colocated). `tsconfig.test.json` relaxes unu
 | `app/src/data/types.ts` | All TypeScript interfaces |
 | `app/src/data/feeRates.ts` | `calculatePlan()`, fee rates, APR, term thresholds |
 | `app/src/data/seedProducts.ts` | 6 products (iPhone $999 → eBike $15,500) |
-| `app/src/data/seedOrders.ts` | 3 default orders for `active@anyway.test` |
+| `app/src/data/seedOrders.ts` | 3 default orders for `active@koda.test` |
 | `app/src/data/mockUsers.ts` | All 8 mock accounts with orders + cards |
 | `app/src/utils/format.ts` | `formatCurrency($)`, `formatDate()`, `formatShortDate()` |
 
@@ -150,14 +150,14 @@ Login is email-only (any password). Email maps to `src/data/mockUsers.ts`.
 
 | Email | Scenario |
 |---|---|
-| `active@anyway.test` | Default — 3 active orders |
-| `new@anyway.test` | Pre-KYC, no orders |
-| `fresh@anyway.test` | Verified, zero orders |
-| `overdue@anyway.test` | Locked account |
-| `declined@anyway.test` | Expired card |
-| `maxed@anyway.test` | 99% credit used |
-| `power@anyway.test` | Power user, 2 cards |
-| `merchant@anyway.test` | Merchant back-office |
+| `active@koda.test` | Default — 3 active orders |
+| `new@koda.test` | Pre-KYC, no orders |
+| `fresh@koda.test` | Verified, zero orders |
+| `overdue@koda.test` | Locked account |
+| `declined@koda.test` | Expired card |
+| `maxed@koda.test` | 99% credit used |
+| `power@koda.test` | Power user, 2 cards |
+| `merchant@koda.test` | Merchant back-office |
 
 ## UI/UX Conventions
 

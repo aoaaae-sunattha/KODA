@@ -8,7 +8,7 @@ describe('Refund Engine (Phase 4)', () => {
   })
 
   it('correctly handles a partial refund (backward reconciliation)', () => {
-    useStore.getState().login('fresh@anyway.test')
+    useStore.getState().login('fresh@koda.test')
     
     // 1. Create order for $1000, 4 installments ($250 each)
     // Actually $999 iPhone / 4 = $249, $249, $249, $252
@@ -33,7 +33,7 @@ describe('Refund Engine (Phase 4)', () => {
   })
 
   it('correctly spills over multiple installments during a large refund', () => {
-    useStore.getState().login('fresh@anyway.test')
+    useStore.getState().login('fresh@koda.test')
     
     const product = { ...SEED_PRODUCTS[0], price: 1000 }
     useStore.getState().createOrder(product as any, 4)
@@ -55,7 +55,7 @@ describe('Refund Engine (Phase 4)', () => {
   })
 
   it('marks order as completed after a full refund of unpaid installments', () => {
-    useStore.getState().login('fresh@anyway.test')
+    useStore.getState().login('fresh@koda.test')
     
     const product = { ...SEED_PRODUCTS[0], price: 1000 }
     useStore.getState().createOrder(product as any, 4)
@@ -71,7 +71,7 @@ describe('Refund Engine (Phase 4)', () => {
   })
 
   it('refuses to refund more than the unpaid balance', () => {
-    useStore.getState().login('fresh@anyway.test')
+    useStore.getState().login('fresh@koda.test')
     
     const product = { ...SEED_PRODUCTS[0], price: 1000 }
     useStore.getState().createOrder(product as any, 4)

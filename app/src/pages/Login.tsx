@@ -22,11 +22,11 @@ export default function Login() {
       <div className="bg-white rounded-2xl shadow-sm p-10 w-full max-w-sm">
         {/* Logo */}
         <div className="mb-8 text-center">
-          <span className="text-3xl font-bold" style={{ color: '#5D5FEF' }}>-Anyway</span>
+          <span className="text-3xl font-bold" style={{ color: '#5D5FEF' }}>-Koda</span>
           <p className="text-sm mt-1" style={{ color: '#6B7280' }}>Buy Now, Pay Later</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" data-testid="login-form">
           <div>
             <label className="block text-sm font-medium mb-1" style={{ color: '#1A1A2E' }}>
               Email
@@ -35,8 +35,9 @@ export default function Login() {
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="active@anyway.test"
+              placeholder="active@koda.test"
               required
+              data-testid="login-email"
               className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition"
               style={{ borderColor: '#E5E7EB', color: '#1A1A2E' }}
               onFocus={e => (e.target.style.borderColor = '#5D5FEF')}
@@ -54,6 +55,7 @@ export default function Login() {
               onChange={e => setPassword(e.target.value)}
               placeholder="Any password works"
               required
+              data-testid="login-password"
               className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition"
               style={{ borderColor: '#E5E7EB', color: '#1A1A2E' }}
               onFocus={e => (e.target.style.borderColor = '#5D5FEF')}
@@ -62,11 +64,12 @@ export default function Login() {
           </div>
 
           {loginError && (
-            <p className="text-sm text-center" style={{ color: '#EF4444' }}>{loginError}</p>
+            <p className="text-sm text-center" style={{ color: '#EF4444' }} data-testid="login-error">{loginError}</p>
           )}
 
           <button
             type="submit"
+            data-testid="login-submit"
             className="w-full py-3 rounded-xl text-white font-semibold text-sm transition hover:opacity-90 active:scale-95"
             style={{ backgroundColor: '#5D5FEF' }}
           >
@@ -78,10 +81,10 @@ export default function Login() {
         <div className="mt-6 rounded-xl p-4 text-xs" style={{ backgroundColor: '#F5F0EC', color: '#6B7280' }}>
           <p className="font-semibold mb-1">Demo accounts:</p>
           {[
-            'active@anyway.test',
-            'overdue@anyway.test',
-            'declined@anyway.test',
-            'merchant@anyway.test',
+            'active@koda.test',
+            'overdue@koda.test',
+            'declined@koda.test',
+            'merchant@koda.test',
           ].map(e => (
             <button
               key={e}
