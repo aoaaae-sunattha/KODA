@@ -9,7 +9,7 @@ describe('Merchant Portal (Phase 7)', () => {
 
   it('correctly calculates commission and payout for a new order', () => {
     // 1. Setup: Login as shopper and create order
-    useStore.getState().login('fresh@anyway.test')
+    useStore.getState().login('fresh@koda.test')
     const product = SEED_PRODUCTS[0] // iPhone 15 Pro, $999
     
     useStore.getState().createOrder(product, 4)
@@ -27,7 +27,7 @@ describe('Merchant Portal (Phase 7)', () => {
 
   it('correctly sums settled payouts in totalSettled calculation', () => {
     // 1. Setup: Login as merchant
-    useStore.getState().login('merchant@anyway.test')
+    useStore.getState().login('merchant@koda.test')
     let state = useStore.getState()
     
     // MOCK_MERCHANT_ORDERS has:
@@ -52,7 +52,7 @@ describe('Merchant Portal (Phase 7)', () => {
 
   it('real-time integration: shopper purchase appears in merchant list', () => {
     // 1. Shopper buys something
-    useStore.getState().login('fresh@anyway.test')
+    useStore.getState().login('fresh@koda.test')
     useStore.getState().createOrder(SEED_PRODUCTS[1], 6) // MacBook Pro, $2499
     
     // 2. Check merchant list (still logged in as shopper, but merchantOrders is global)

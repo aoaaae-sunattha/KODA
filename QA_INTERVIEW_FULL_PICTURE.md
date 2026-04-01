@@ -1,6 +1,6 @@
-# Anyway BNPL: QA Interview "Full Picture" & Testbed Overview
+# KODA BNPL: QA Interview "Full Picture" & Testbed Overview
 
-This document summarizes the **Anyway** Buy Now, Pay Later mockup as a functional **Testbed** for demonstrating fintech QA and E2E automation.
+This document summarizes the **KODA** Buy Now, Pay Later mockup as a functional **Testbed** for demonstrating fintech QA and E2E automation.
 
 ---
 
@@ -27,11 +27,11 @@ This document summarizes the **Anyway** Buy Now, Pay Later mockup as a functiona
 ### **D. Scenario Switching: Mock Authentication (`/login`)**
 *   **Purpose:** Instantly load "Edge Case" account data using pre-configured emails.
 *   **Available Scenarios:**
-    *   `active@anyway.test`: Normal healthy user.
-    *   `overdue@anyway.test`: Delinquent user (locked UI).
-    *   `declined@anyway.test`: Expired card state.
-    *   `maxed@anyway.test`: 99% credit utilization.
-    *   `merchant@anyway.test`: Merchant settlement view.
+    *   `active@koda.test`: Normal healthy user.
+    *   `overdue@koda.test`: Delinquent user (locked UI).
+    *   `declined@koda.test`: Expired card state.
+    *   `maxed@koda.test`: 99% credit utilization.
+    *   `merchant@koda.test`: Merchant settlement view.
 
 ---
 
@@ -40,7 +40,7 @@ This document summarizes the **Anyway** Buy Now, Pay Later mockup as a functiona
 To enhance your demo, we are implementing two additional "Data Generators":
 
 1.  **ID Verification Modal (T-10):**
-    *   **Goal:** Transition a `new@anyway.test` user (unverified) into an `active` state during a live demo.
+    *   **Goal:** Transition a `new@koda.test` user (unverified) into an `active` state during a live demo.
     *   **Demo Value:** Shows you can handle onboarding flows and conditional UI states.
 
 2.  **Manual Overdue Trigger:**

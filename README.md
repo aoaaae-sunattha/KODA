@@ -1,6 +1,6 @@
-# Anyway -- BNPL Mockup (QA & Testing Guide)
+# KODA -- BNPL Mockup (QA & Testing Guide)
 
-Welcome to the **Anyway** testing repository. This project is a high-fidelity mockup of a Buy Now, Pay Later (BNPL) service, designed specifically for QA engineers to practice manual testing, exploratory testing, and E2E automation.
+Welcome to the **KODA** testing repository. This project is a high-fidelity mockup of a Buy Now, Pay Later (BNPL) service, designed specifically for QA engineers to practice manual testing, exploratory testing, and E2E automation.
 
 ---
 
@@ -30,7 +30,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 The app uses **Mock Authentication**. You can trigger different account states by logging in with specific emails (any password works).
 
 ### 1. The "Happy Path" (Standard User)
-- **Email:** `active@anyway.test`
+- **Email:** `active@koda.test`
 - **Goal:** Verify the core dashboard experience.
 - **Checklist:**
     - [ ] Credit Gauge animates on load.
@@ -38,7 +38,7 @@ The app uses **Mock Authentication**. You can trigger different account states b
     - [ ] Clicking "Pay Next" on an order card updates the progress bar and credit gauge in real-time.
 
 ### 2. KYC & Onboarding (New User)
-- **Email:** `new@anyway.test`
+- **Email:** `new@koda.test`
 - **Goal:** Test the "Unverified" state and identity verification flow.
 - **Checklist:**
     - [ ] Dashboard shows "Identity Verification" alert.
@@ -47,7 +47,7 @@ The app uses **Mock Authentication**. You can trigger different account states b
     - [ ] Completing verification unlocks credit ($8,000) and clears the alert.
 
 ### 3. Risk & Blocking (Locked Account)
-- **Email:** `overdue@anyway.test`
+- **Email:** `overdue@koda.test`
 - **Goal:** Verify that delinquent accounts cannot make new purchases.
 - **Checklist:**
     - [ ] Dashboard shows a red "Account Locked" alert.
@@ -56,7 +56,7 @@ The app uses **Mock Authentication**. You can trigger different account states b
     - [ ] Click "Pay Now" in the dashboard alert to unlock the account.
 
 ### 4. Credit Limits (Maxed Out)
-- **Email:** `maxed@anyway.test`
+- **Email:** `maxed@koda.test`
 - **Goal:** Test "Insufficient Credit" logic.
 - **Checklist:**
     - [ ] Credit gauge shows nearly 100% utilization.
@@ -64,7 +64,7 @@ The app uses **Mock Authentication**. You can trigger different account states b
     - [ ] **Expectation:** Checkout should be blocked due to "Insufficient Credit Limit".
 
 ### 5. Refund Reconciliation
-- **Email:** `active@anyway.test`
+- **Email:** `active@koda.test`
 - **Goal:** Verify the "Backward Reconciliation" refund logic.
 - **Checklist:**
     - [ ] Open an order card and click the "Refund" icon.

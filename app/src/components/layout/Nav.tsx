@@ -22,7 +22,7 @@ export default function Nav() {
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between sticky top-0 z-50" style={{ borderColor: '#E5E7EB' }}>
         <div className="flex items-center gap-10">
           <Link to="/dashboard" className="text-xl font-black tracking-tighter" style={{ color: '#5D5FEF' }}>
-            -Anyway
+            -Koda
           </Link>
           <div className="hidden md:flex gap-8">
             {navItems.map(item => (

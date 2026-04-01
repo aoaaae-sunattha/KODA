@@ -22,7 +22,7 @@ export default function Login() {
       <div className="bg-white rounded-2xl shadow-sm p-10 w-full max-w-sm">
         {/* Logo */}
         <div className="mb-8 text-center">
-          <span className="text-3xl font-bold" style={{ color: '#5D5FEF' }}>-Anyway</span>
+          <span className="text-3xl font-bold" style={{ color: '#5D5FEF' }}>-Koda</span>
           <p className="text-sm mt-1" style={{ color: '#6B7280' }}>Buy Now, Pay Later</p>
         </div>
 
@@ -35,7 +35,7 @@ export default function Login() {
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="active@anyway.test"
+              placeholder="active@koda.test"
               required
               className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition"
               style={{ borderColor: '#E5E7EB', color: '#1A1A2E' }}
@@ -78,10 +78,10 @@ export default function Login() {
         <div className="mt-6 rounded-xl p-4 text-xs" style={{ backgroundColor: '#F5F0EC', color: '#6B7280' }}>
           <p className="font-semibold mb-1">Demo accounts:</p>
           {[
-            'active@anyway.test',
-            'overdue@anyway.test',
-            'declined@anyway.test',
-            'merchant@anyway.test',
+            'active@koda.test',
+            'overdue@koda.test',
+            'declined@koda.test',
+            'merchant@koda.test',
           ].map(e => (
             <button
               key={e}

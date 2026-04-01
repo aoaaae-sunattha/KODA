@@ -140,7 +140,7 @@ export default function Store() {
                       onClick={() => handleBuy(product)}
                       className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20"
                     >
-                      Buy with Anyway
+                      Buy with KODA
                     </button>
                   </div>
                 </div>
