@@ -26,6 +26,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const primaryCard = useStore((state) => state.cards.find(c => c.isPrimary))
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (isOpen) setSelectedTerm(4)
   }, [isOpen])
 
