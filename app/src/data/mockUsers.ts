@@ -21,7 +21,7 @@ const illumPlan    = calculatePlan(2000, 4)
 const magasinPlan  = calculatePlan(3000, 8)
 const norrPlan     = calculatePlan(3000, 10)
 const samsoePlan   = calculatePlan(2500, 6)
-const norsePlan    = calculatePlan(2500, 4)
+const norsePlan    = calculatePlan(2350, 4)
 const boliaPlan    = calculatePlan(4000, 4)
 const illumsPlan   = calculatePlan(2000, 6)
 const boPlan       = calculatePlan(6000, 12)
@@ -107,16 +107,16 @@ export const MOCK_ORDERS: Record<string, Order[]> = {
       purchaseDate: '2026-03-01', principal: 2500, term: 6,
       fee: samsoePlan.fee, monthly: samsoePlan.monthly,
       firstPayment: samsoePlan.firstPayment, total: samsoePlan.total,
-      paidCount: 1, refundedAmount: 0, status: 'active',
-      installments: makeInstallments(samsoePlan, 1, new Date('2026-03-01')),
+      paidCount: 0, refundedAmount: 0, status: 'active',
+      installments: makeInstallments(samsoePlan, 0, new Date('2026-03-01')),
     },
     {
       id: 'max-2', merchant: 'Norse Projects', merchantCategory: 'Fashion',
-      purchaseDate: '2026-03-15', principal: 2500, term: 4,
+      purchaseDate: '2026-03-15', principal: 2350, term: 4,
       fee: norsePlan.fee, monthly: norsePlan.monthly,
       firstPayment: norsePlan.firstPayment, total: norsePlan.total,
-      paidCount: 1, refundedAmount: 0, status: 'active',
-      installments: makeInstallments(norsePlan, 1, new Date('2026-03-15')),
+      paidCount: 0, refundedAmount: 0, status: 'active',
+      installments: makeInstallments(norsePlan, 0, new Date('2026-03-15')),
     },
   ],
   'power@koda.test': [

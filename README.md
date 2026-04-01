@@ -1,4 +1,4 @@
-# KODA -- BNPL Mockup (QA & Testing Guide)
+# KODA — BNPL Mockup (QA & Testing Guide)
 
 Welcome to the **KODA** testing repository. This project is a high-fidelity mockup of a Buy Now, Pay Later (BNPL) service, designed specifically for QA engineers to practice manual testing, exploratory testing, and E2E automation.
 
@@ -7,7 +7,7 @@ Welcome to the **KODA** testing repository. This project is a high-fidelity mock
 ## Getting Started
 
 ### Prerequisites
-- Node.js v22 via nvm (system Node 18 has icu4c mismatch)
+- Node.js v22 via nvm
 - npm
 
 ### Installation
@@ -27,9 +27,9 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## QA Testing Scenarios
 
-The app uses **Mock Authentication**. You can trigger different account states by logging in with specific emails (any password works).
+The app uses Mock Authentication. You can trigger different account states by logging in with specific emails (any password works).
 
-### 1. The "Happy Path" (Standard User)
+### 1. The Happy Path (Standard User)
 - **Email:** `active@koda.test`
 - **Goal:** Verify the core dashboard experience.
 - **Checklist:**
@@ -55,22 +55,6 @@ The app uses **Mock Authentication**. You can trigger different account states b
     - [ ] **Expectation:** The `RiskAlertModal` should appear, blocking the checkout.
     - [ ] Click "Pay Now" in the dashboard alert to unlock the account.
 
-### 4. Credit Limits (Maxed Out)
-- **Email:** `maxed@koda.test`
-- **Goal:** Test "Insufficient Credit" logic.
-- **Checklist:**
-    - [ ] Credit gauge shows nearly 100% utilization.
-    - [ ] Try to buy a high-value item (e.g., iPhone or MacBook).
-    - [ ] **Expectation:** Checkout should be blocked due to "Insufficient Credit Limit".
-
-### 5. Refund Reconciliation
-- **Email:** `active@koda.test`
-- **Goal:** Verify the "Backward Reconciliation" refund logic.
-- **Checklist:**
-    - [ ] Open an order card and click the "Refund" icon.
-    - [ ] Enter a partial refund amount.
-    - [ ] **Expectation:** The refund should be subtracted from the *last* unpaid installment first.
-
 ---
 
 ## Unit Testing
@@ -81,6 +65,28 @@ cd app
 npm run test              # single run
 npm run test:watch        # watch mode
 npx vitest run unit_test/CheckoutFlow.test.ts  # single file
+```
+
+---
+
+## E2E Automation (Playwright)
+
+The project includes a Playwright framework located in the `/playwright` directory.
+
+### Key Selectors (data-testid)
+The app has been instrumented with stable selectors for automation:
+- `login-email`, `login-password`, `login-submit`
+- `order-card`, `pay-installment-btn`, `simulate-failure-btn`
+- `buy-with-koda-btn`, `checkout-confirm-btn`
+- `nav-link-dashboard`, `nav-link-shop`, `logout-btn`
+
+### Run Automation
+```bash
+# Run all tests
+npx playwright test
+
+# Run tests in UI mode (interactive)
+npx playwright test --ui
 ```
 
 ---

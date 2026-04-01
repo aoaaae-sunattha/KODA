@@ -138,6 +138,7 @@ export default function Store() {
                     </div>
                     <button
                       onClick={() => handleBuy(product)}
+                      data-testid="buy-with-koda-btn"
                       className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20"
                     >
                       Buy with KODA

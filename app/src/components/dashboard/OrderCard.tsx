@@ -35,6 +35,8 @@ export default function OrderCard({ order }: OrderCardProps) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      data-testid="order-card"
+      data-merchant={order.merchant}
       className="bg-white rounded-3xl p-6 shadow-sm border border-transparent hover:border-gray-200 transition-colors"
     >
       <div className="flex justify-between items-start mb-6">
@@ -139,6 +141,7 @@ export default function OrderCard({ order }: OrderCardProps) {
           {nextUnpaid && (
             <button
               onClick={() => payInstallment(order.id)}
+              data-testid="pay-installment-btn"
               className="flex-1 py-3 px-4 rounded-2xl bg-[#5D5FEF] text-white text-sm font-bold shadow-lg shadow-[#5D5FEF]/20 hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
               Pay {formatCurrency(nextUnpaid.amount)}
@@ -148,6 +151,7 @@ export default function OrderCard({ order }: OrderCardProps) {
           {order.paidCount > 0 && maxRefundable > 0 && (
             <button
               onClick={() => setIsRefundModalOpen(true)}
+              data-testid="open-refund-modal-btn"
               className="py-3 px-6 rounded-2xl border-2 border-gray-100 text-sm font-bold text-gray-500 hover:bg-gray-50 transition-colors flex items-center gap-2"
             >
               <Undo2 size={16} />
@@ -158,6 +162,7 @@ export default function OrderCard({ order }: OrderCardProps) {
             <button
               onClick={() => simulateFailure(order.id)}
               disabled={order.status !== 'active'}
+              data-testid="simulate-failure-btn"
               className="text-[10px] font-black uppercase tracking-widest text-red-300 hover:text-red-500 transition-colors px-2 disabled:opacity-30 disabled:cursor-not-allowed"
             >
               Simulate Failure

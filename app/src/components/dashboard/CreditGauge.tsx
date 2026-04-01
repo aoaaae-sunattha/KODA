@@ -15,19 +15,19 @@ export default function CreditGauge({ used, available, limit }: CreditGaugeProps
   const statusLabel = usedPct >= 100 ? 'Limit reached' : usedPct >= 90 ? 'Near limit' : null
 
   return (
-    <div className="bg-white rounded-3xl p-8 shadow-sm border border-white/50">
+    <div className="bg-white rounded-3xl p-8 shadow-sm border border-white/50" data-testid="credit-gauge">
       <div className="flex justify-between items-end mb-4">
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">
             Available Credit
           </span>
-          <div className="text-4xl font-black text-gray-900 tracking-tight">
+          <div className="text-4xl font-black text-gray-900 tracking-tight" data-testid="available-credit">
             <Counter value={available} />
           </div>
         </div>
         <div className="text-right">
           <span className="text-xs font-bold text-gray-400 block mb-1">Total Limit</span>
-          <span className="text-sm font-bold text-gray-600">{formatCurrency(limit)}</span>
+          <span className="text-sm font-bold text-gray-600" data-testid="total-limit">{formatCurrency(limit)}</span>
         </div>
       </div>
 
@@ -39,6 +39,7 @@ export default function CreditGauge({ used, available, limit }: CreditGaugeProps
           transition={{ type: 'spring', stiffness: 50, damping: 15 }}
           className="h-full rounded-full"
           style={{ backgroundColor: color }}
+          data-testid="credit-progress-fill"
         />
       </div>
 
@@ -48,11 +49,11 @@ export default function CreditGauge({ used, available, limit }: CreditGaugeProps
         </span>
         <div className="flex items-center gap-2">
           {statusLabel && (
-            <span className="text-xs font-bold" style={{ color }}>
+            <span className="text-xs font-bold" style={{ color }} data-testid="credit-status-label">
               {statusLabel}
             </span>
           )}
-          <span className="text-xs font-bold text-gray-400">
+          <span className="text-xs font-bold text-gray-400" data-testid="credit-used-percentage">
             {Math.round(usedPct)}%
           </span>
         </div>
