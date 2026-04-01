@@ -19,6 +19,7 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
 
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAmount('')
       setIsProcessing(false)
       setIsSuccess(false)
