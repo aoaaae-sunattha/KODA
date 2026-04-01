@@ -13,6 +13,9 @@ app/node_modules/
 # Playwright screenshots (generated during dev/testing)
 app/.playwright-mcp/
 .playwright-mcp/
+playwright-report/
+test-results/
+test-results.txt
 
 # Editor
 .vscode/
@@ -21,3 +24,4 @@ app/.playwright-mcp/
 # Claude Code / agent plugins (local only)
 .claude/
 .agents/
+.gstack/

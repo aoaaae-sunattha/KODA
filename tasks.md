@@ -160,9 +160,19 @@ All tickets must meet these criteria before being marked ✅:
 
 ---
 
+## PHASE 9 — E2E Automation ✅
+
+| # | Task | Status |
+|---|------|--------|
+| T-28 | Playwright E2E Setup & POM | ✅ |
+| T-29 | Login Flow Full Coverage (17 cases) | ✅ |
+| T-30 | Automated Reporting Pipeline | ✅ |
+
+---
+
 ## Tech Stack Summary
 
-React 19, Tailwind 4, Framer Motion 12, Zustand 5, Lucide React, Vitest.
+React 19, Tailwind 4, Framer Motion 12, Zustand 5, Lucide React, Vitest, Playwright.
 
 ---
 
@@ -176,3 +186,4 @@ React 19, Tailwind 4, Framer Motion 12, Zustand 5, Lucide React, Vitest.
 6. Risk/KYC ✅
 7. Cards ✅
 8. Polish ✅
+9. E2E Automation ✅

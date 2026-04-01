@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "test:e2e": "npx playwright test",
+    "test:e2e:report": "npx playwright test --reporter=html"
+  },
   "devDependencies": {
     "@playwright/test": "^1.59.0",
     "@types/node": "^25.5.0"
