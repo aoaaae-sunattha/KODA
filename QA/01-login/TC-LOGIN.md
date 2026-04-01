@@ -39,20 +39,43 @@ Tests mock login, account routing, and auth guards.
 ### TC-LOGIN-03: Login with each mock account
 Repeat for all 8 accounts. Verify correct routing and initial visual:
 
-| Email | Expected Destination | Key Visual |
-|-------|---------------------|------------|
+| Email | Expected Destination | Key Visual & CTA |
+|-------|---------------------|------------------|
 | `active@koda.test` | `/dashboard` | 3 order cards, credit gauge at 22% |
-| `new@koda.test` | `/dashboard` | KYC alert + empty state + $0 credit |
-| `fresh@koda.test` | `/dashboard` | Empty orders + $8,000 credit |
-| `overdue@koda.test` | `/dashboard` | Red "Account Locked" banner |
-| `declined@koda.test` | `/dashboard` | Amber "Action Required" banner |
+| `new@koda.test` | `/dashboard` | KYC alert + "Verify Identity" CTA |
+| `fresh@koda.test` | `/dashboard` | Empty orders + "Start shopping" CTA |
+| `overdue@koda.test` | `/dashboard` | Red "Account Locked" banner + "Pay overdue" CTA |
+| `declined@koda.test` | `/dashboard` | Amber "Action Required" banner + "Update Card" CTA |
 | `maxed@koda.test` | `/dashboard` | Credit gauge at 99%, red fill |
 | `power@koda.test` | `/dashboard` | 4 orders (2 active + 2 completed), 2 cards |
 | `merchant@koda.test` | `/merchant` | Settlement table with "KODA.merchant" nav |
 
 ---
 
-### TC-LOGIN-04: Invalid email (not in mock data)
+### TC-LOGIN-13: Form submission via Enter key
+
+| Step | Action | Expected Result |
+|------|--------|-----------------|
+| 1 | Enter `active@koda.test` in email | Email entered |
+| 2 | Enter any password | Password entered |
+| 3 | Press `Enter` key on keyboard | Form submits |
+| 4 | Verify redirect | Redirects to `/dashboard` |
+
+---
+
+### TC-LOGIN-14: Session persistence on page refresh
+
+| Step | Action | Expected Result |
+|------|--------|-----------------|
+| 1 | Log in as `active@koda.test` | Dashboard loads |
+| 2 | Verify current view | Dashboard visible |
+| 3 | Refresh the browser page (F5 / Cmd+R) | Page reloads |
+| 4 | Verify auth state | User remains logged in (no redirect to `/login`) |
+| 5 | Verify data integrity | Dashboard still shows Alex Johnson + correct credit gauge |
+
+---
+
+### BUG-LOGIN-01: No auto-redirect when already logged in
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -151,6 +174,42 @@ Repeat for all 8 accounts. Verify correct routing and initial visual:
 | 2 | Click away from email field | Border returns to gray (#E5E7EB) |
 | 3 | Click into password field | Border color changes to purple |
 | 4 | Click away | Border returns to gray |
+
+---
+
+### TC-LOGIN-15: Demo shortcut data-binding
+
+| Step | Action | Expected Result |
+|------|--------|-----------------|
+| 1 | Navigate to `/login` | Email field is empty or shows placeholder |
+| 2 | Click `overdue@koda.test` in demo section | Email input value updates to `overdue@koda.test` |
+| 3 | Click `active@koda.test` shortcut | Email input value updates immediately to `active@koda.test` |
+| 4 | Click "Log in" | Form submits with the selected shortcut email |
+
+---
+
+### TC-LOGIN-16: Input field attribute validation
+
+| Step | Action | Expected Result |
+|------|--------|-----------------|
+| 1 | Inspect Email input field | Contains `type="email"` and `required` attributes |
+| 2 | Inspect Password input field | Contains `type="password"` and `required` attributes |
+| 3 | Type characters in Password field | Input is masked (dots/bullets), characters not visible |
+
+---
+
+## E2E Automation Readiness
+
+### TC-LOGIN-17: Verification of Automation Selectors (Data-TestIDs)
+*Ensures the page is compatible with Playwright and AI-driven E2E testing.*
+
+| Step | Action | Expected Result | Selector (`data-testid`) |
+|------|--------|-----------------|-------------------------|
+| 1 | Inspect Login Form | Form element exists | `login-form` |
+| 2 | Inspect Email Input | Input field exists | `login-email` |
+| 3 | Inspect Password Input | Input field exists | `login-password` |
+| 4 | Inspect Submit Button | Button element exists | `login-submit` |
+| 5 | Trigger Login Error | Failed login message visible | `login-error` |
 
 ---
 
