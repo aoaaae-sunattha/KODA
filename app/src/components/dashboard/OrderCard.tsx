@@ -48,8 +48,15 @@ export default function OrderCard({ order }: OrderCardProps) {
         </div>
         <div className="text-right">
           <div className="flex flex-col items-end">
-            <div className="text-xl font-black text-gray-900">
-              {formatCurrency(order.total)}
+            <div className="flex items-center gap-2 mb-1">
+              {order.status === 'overdue' && (
+                <span className="px-2 py-0.5 bg-red-100 text-red-600 text-[8px] font-black uppercase tracking-tighter rounded-md border border-red-200">
+                  Overdue
+                </span>
+              )}
+              <div className="text-xl font-black text-gray-900">
+                {formatCurrency(order.total)}
+              </div>
             </div>
             {order.refundedAmount > 0 && (
               <div className="flex flex-col items-end gap-0">

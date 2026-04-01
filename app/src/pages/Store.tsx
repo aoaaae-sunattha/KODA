@@ -47,25 +47,52 @@ export default function Store() {
     }, 2000)
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  }
+
   return (
-    <div className="min-h-screen pb-20 bg-background">
+    <div className="min-h-screen pb-32 bg-background">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <header className="mb-12 flex items-center justify-between">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
             <h1 className="text-4xl font-extrabold tracking-tight mb-2 text-text-primary">
               Curated Essentials
             </h1>
             <p className="text-lg text-text-secondary">
               High-value items, split into interest-free installments.
             </p>
-          </div>
-          <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-200 text-sm font-medium text-slate-500 shadow-sm">
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="hidden md:flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-200 text-sm font-medium text-slate-500 shadow-sm"
+          >
             <ShoppingBag className="w-4 h-4 text-primary" />
             <span>Storefront Mockup</span>
-          </div>
+          </motion.div>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {products.map(product => {
             const terms = getAvailableTerms(product.price)
             const maxTerm = Math.max(...terms)
@@ -73,17 +100,21 @@ export default function Store() {
             return (
               <motion.div 
                 key={product.id} 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group"
+                variants={itemVariants}
+                whileHover={{ y: -8 }}
+                className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col group"
               >
                 <div 
-                  className="aspect-[4/3] flex items-center justify-center text-7xl group-hover:scale-110 transition-transform duration-500 cursor-pointer"
+                  className="aspect-[4/3] flex items-center justify-center text-7xl group-hover:scale-105 transition-transform duration-500 cursor-pointer overflow-hidden"
                   style={{ background: product.color }}
                   onClick={() => handleBuy(product)}
                 >
-                  {product.emoji}
+                  <motion.span
+                    whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.2 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {product.emoji}
+                  </motion.span>
                 </div>
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex justify-between items-start mb-2">
@@ -116,7 +147,7 @@ export default function Store() {
               </motion.div>
             )
           })}
-        </div>
+        </motion.div>
       </div>
 
       <CheckoutModal

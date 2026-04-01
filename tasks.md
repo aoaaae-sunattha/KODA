@@ -154,8 +154,8 @@ All tickets must meet these criteria before being marked ✅:
 
 | # | Task | Status |
 |---|------|--------|
-| T-14 | Animation pass | ⬜ |
-| T-15 | Responsive + mobile check | ⬜ |
+| T-14 | Animation pass | ✅ |
+| T-15 | Responsive + mobile check | ✅ |
 | T-16 | Mock login screen | ✅ |
 
 ---
@@ -173,6 +173,6 @@ React 19, Tailwind 4, Framer Motion 12, Zustand 5, Lucide React, Vitest.
 3. Dashboard ✅
 4. Checkout ✅
 5. Refunds ✅
-6. Risk/KYC
-7. Cards
-8. Polish
+6. Risk/KYC ✅
+7. Cards ✅
+8. Polish ✅

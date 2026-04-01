@@ -35,6 +35,8 @@ interface AppState {
   removeCard: (cardId: string) => void
   setPrimaryCard: (cardId: string) => void
 
+  settleOrder: (merchantOrderId: string) => void
+
   // Computed helpers (not stored — derive from orders)
   getUsedCredit: () => number
   getAvailableCredit: () => number

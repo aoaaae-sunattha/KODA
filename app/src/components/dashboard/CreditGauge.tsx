@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { formatCurrency } from '../../utils/format'
+import Counter from '../ui/Counter'
 
 interface CreditGaugeProps {
   used: number
@@ -20,13 +21,9 @@ export default function CreditGauge({ used, available, limit }: CreditGaugeProps
           <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">
             Available Credit
           </span>
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl font-black text-gray-900"
-          >
-            {formatCurrency(available)}
-          </motion.span>
+          <div className="text-4xl font-black text-gray-900 tracking-tight">
+            <Counter value={available} />
+          </div>
         </div>
         <div className="text-right">
           <span className="text-xs font-bold text-gray-400 block mb-1">Total Limit</span>
@@ -47,7 +44,7 @@ export default function CreditGauge({ used, available, limit }: CreditGaugeProps
 
       <div className="flex justify-between mt-3">
         <span className="text-xs font-bold text-gray-400">
-          {formatCurrency(used)} used
+          <Counter value={used} className="text-gray-900" /> used
         </span>
         <div className="flex items-center gap-2">
           {statusLabel && (
