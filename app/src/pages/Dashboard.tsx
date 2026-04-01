@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useStore } from '../store/useStore'
 import { AlertCircle, AlertTriangle, ShieldCheck, ShoppingBag, CheckCircle2 } from 'lucide-react'
 import CreditGauge from '../components/dashboard/CreditGauge'
@@ -31,134 +31,158 @@ export default function Dashboard() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        delayChildren: 0.1
       }
     }
   }
 
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  }
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-2xl mx-auto px-4 py-8 space-y-8">
+    <div className="min-h-screen bg-background pb-24 md:pb-8">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="max-w-2xl mx-auto px-4 py-8 space-y-8"
+      >
         {/* Account Alerts */}
         <div className="space-y-3">
-          {currentUser.accountStatus === 'locked' && (
-            <motion.div 
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              className="bg-red-50 border border-red-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
-            >
-              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 shrink-0">
-                <AlertCircle size={20} />
-              </div>
-              <div className="flex-1">
-                <h4 className="text-sm font-bold text-red-900">Account Locked</h4>
-                <p className="text-xs text-red-700 font-medium">Overdue payments detected. Settle them to resume shopping.</p>
-              </div>
-              <button 
-                onClick={handlePayOverdue}
-                className="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-red-200 hover:bg-red-700 transition-colors"
+          <AnimatePresence mode="popLayout">
+            {currentUser.accountStatus === 'locked' && (
+              <motion.div 
+                key="locked-alert"
+                variants={itemVariants}
+                exit={{ height: 0, opacity: 0, scale: 0.95 }}
+                className="bg-red-50 border border-red-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
               >
-                Pay Now
-              </button>
-            </motion.div>
-          )}
+                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 shrink-0">
+                  <AlertCircle size={20} />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-bold text-red-900">Account Locked</h4>
+                  <p className="text-xs text-red-700 font-medium">Overdue payments detected. Settle them to resume shopping.</p>
+                </div>
+                <button 
+                  onClick={handlePayOverdue}
+                  className="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-red-200 hover:bg-red-700 transition-colors"
+                >
+                  Pay Now
+                </button>
+              </motion.div>
+            )}
 
-          {currentUser.accountStatus === 'action_required' && (
-            <motion.div 
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
-            >
-              <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 shrink-0">
-                <AlertTriangle size={20} />
-              </div>
-              <div className="flex-1">
-                <h4 className="text-sm font-bold text-amber-900">Action Required</h4>
-                <p className="text-xs text-amber-700 font-medium">Update your payment method to avoid service interruption.</p>
-              </div>
-              <button 
-                onClick={() => navigate('/cards')}
-                className="px-4 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-amber-200 hover:bg-amber-700 transition-colors"
+            {currentUser.accountStatus === 'action_required' && (
+              <motion.div 
+                key="action-alert"
+                variants={itemVariants}
+                exit={{ height: 0, opacity: 0, scale: 0.95 }}
+                className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
               >
-                Update Card
-              </button>
-            </motion.div>
-          )}
+                <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 shrink-0">
+                  <AlertTriangle size={20} />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-bold text-amber-900">Action Required</h4>
+                  <p className="text-xs text-amber-700 font-medium">Update your payment method to avoid service interruption.</p>
+                </div>
+                <button 
+                  onClick={() => navigate('/cards')}
+                  className="px-4 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-amber-200 hover:bg-amber-700 transition-colors"
+                >
+                  Update Card
+                </button>
+              </motion.div>
+            )}
 
-          {showPaySuccess && (
-            <motion.div 
-              initial={{ height: 0, opacity: 0, y: -20 }}
-              animate={{ height: 'auto', opacity: 1, y: 0 }}
-              className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
-            >
-              <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
-                <CheckCircle2 size={20} />
-              </div>
-              <div className="flex-1">
-                <h4 className="text-sm font-bold text-emerald-900">Payments Settled</h4>
-                <p className="text-xs text-emerald-700 font-medium">Your account is now active again. Happy shopping!</p>
-              </div>
-            </motion.div>
-          )}
-
-          {!currentUser.verified && (
-            <motion.div 
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              className="bg-indigo-50 border border-indigo-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
-            >
-              <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
-                <ShieldCheck size={20} />
-              </div>
-              <div className="flex-1">
-                <h4 className="text-sm font-bold text-indigo-900">Identity Verification</h4>
-                <p className="text-xs text-indigo-700 font-medium">Complete KYC to unlock your full shopping power.</p>
-              </div>
-              <button 
-                onClick={() => setIsKYCOpen(true)}
-                className="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-200"
+            {showPaySuccess && (
+              <motion.div 
+                key="pay-success"
+                initial={{ height: 0, opacity: 0, scale: 0.95 }}
+                animate={{ height: 'auto', opacity: 1, scale: 1 }}
+                exit={{ height: 0, opacity: 0, scale: 0.95 }}
+                className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
               >
-                Verify
-              </button>
-            </motion.div>
-          )}
+                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                  <CheckCircle2 size={20} />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-bold text-emerald-900">Payments Settled</h4>
+                  <p className="text-xs text-emerald-700 font-medium">Your account is now active again. Happy shopping!</p>
+                </div>
+              </motion.div>
+            )}
+
+            {!currentUser.verified && (
+              <motion.div 
+                key="verify-alert"
+                variants={itemVariants}
+                className="bg-indigo-50 border border-indigo-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
+              >
+                <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                  <ShieldCheck size={20} />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-bold text-indigo-900">Identity Verification</h4>
+                  <p className="text-xs text-indigo-700 font-medium">Complete KYC to unlock your full shopping power.</p>
+                </div>
+                <button 
+                  onClick={() => setIsKYCOpen(true)}
+                  className="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-200"
+                >
+                  Verify
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <IDVerifyModal isOpen={isKYCOpen} onClose={() => setIsKYCOpen(false)} />
 
         {/* Credit Utilization Gauge */}
-        <CreditGauge 
-          used={used} 
-          available={available} 
-          limit={currentUser.creditLimit} 
-        />
+        <motion.div variants={itemVariants}>
+          <CreditGauge 
+            used={used} 
+            available={available} 
+            limit={currentUser.creditLimit} 
+          />
+        </motion.div>
 
         {/* Orders Section */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="space-y-8"
-        >
+        <div className="space-y-8">
           {/* Active Orders */}
           {activeOrders.length > 0 && (
-            <section>
+            <motion.section variants={itemVariants}>
               <h2 className="text-[11px] font-black uppercase tracking-[0.2em] text-gray-400 mb-4 px-2">
                 Active Purchases ({activeOrders.length})
               </h2>
               <div className="space-y-4">
-                {activeOrders.map(order => (
-                  <OrderCard key={order.id} order={order} />
-                ))}
+                <AnimatePresence mode="popLayout">
+                  {activeOrders.map(order => (
+                    <motion.div 
+                      layout
+                      key={order.id}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <OrderCard order={order} />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               </div>
-            </section>
+            </motion.section>
           )}
 
           {/* Empty state */}
           {orders.length === 0 && (
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
+              variants={itemVariants}
               className="bg-white rounded-[32px] p-12 text-center shadow-sm border border-dashed border-gray-200"
             >
               <div className="w-20 h-20 bg-[#F5F0EC] rounded-full flex items-center justify-center mx-auto mb-6">
@@ -179,7 +203,10 @@ export default function Dashboard() {
 
           {/* Completed Orders */}
           {completedOrders.length > 0 && (
-            <section className="opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+            <motion.section 
+              variants={itemVariants}
+              className="opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+            >
               <h2 className="text-[11px] font-black uppercase tracking-[0.2em] text-gray-400 mb-4 px-2">
                 Completed ({completedOrders.length})
               </h2>
@@ -188,10 +215,10 @@ export default function Dashboard() {
                   <OrderCard key={order.id} order={order} />
                 ))}
               </div>
-            </section>
+            </motion.section>
           )}
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </div>
   )
 }
