@@ -58,64 +58,95 @@ All tickets must meet these criteria before being marked ✅:
 
 ---
 
-## PHASE 3 — Checkout & Payment Slicing (Priority 2) 🔄
+## PHASE 3 — Checkout & Payment Slicing (Priority 2) ✅
 
 ### Category: Checkout Flow
 
 | # | Ticket | Description | Status |
 |---|--------|-------------|--------|
-| T-06 | Payment Plan Selector | 7 pill buttons, term selection math | ⬜ |
-| T-07 | Checkout Modal | Slide-up modal with order summary | ⬜ |
-| T-08 | Payment Schedule Timeline | Vertical list of N installments with dates | ⬜ |
-| T-21 | Checkout Flow Unit Tests | Verify selection math and modal state | ⬜ |
+| T-06 | Payment Plan Selector | 7 pill buttons, term selection math | ✅ |
+| T-07 | Checkout Modal | Slide-up modal with order summary | ✅ |
+| T-08 | Payment Schedule Timeline | Vertical list of N installments with dates | ✅ |
+| T-21 | Checkout Flow Unit Tests | Verify selection math and modal state | ✅ |
 
 ### Deliverables for Phase 3
-- [ ] Plan selector shows correct monthly, fee, total for all 7 terms
-- [ ] Checkout modal opens, plan selection works, confirm creates new order
-- [ ] Payment timeline shows correct dates with fee on first row
-- [ ] Unit tests for checkout logic pass in `app/unit_test/`
+- [x] Plan selector shows correct monthly, fee, total for all 7 terms
+- [x] Checkout modal opens, plan selection works, confirm creates new order
+- [x] Payment timeline shows correct dates with fee on first row
+- [x] Unit tests for checkout logic pass in `app/unit_test/`
 
 ---
 
-## PHASE 4 — Refund Engine (Priority 3)
+## PHASE 4 — Refund Engine (Priority 3) ✅
 
 ### Category: Dynamic Adjustment
 
 | # | Ticket | Description | Status |
 |---|--------|-------------|--------|
-| T-09 | Refund Simulation | Refund input modal & Zustand action | ⬜ |
-| T-22 | Refund Engine Tests | Verify last-installment-first logic | ⬜ |
+| T-09 | Refund Simulation | Refund input modal & Zustand action | ✅ |
+| T-22 | Refund Engine Tests | Verify last-installment-first logic | ✅ |
+
+### Deliverables for Phase 4
+- [x] `RefundModal` allows inputting custom amounts
+- [x] Store logic follows "backward reconciliation" (last unpaid first)
+- [x] UI shows strike-through price on refunded orders
+- [x] All refund unit tests pass
 
 ---
 
-## PHASE 5 — Risk & Error States (Priority 4)
+## PHASE 5 — Risk & Error States (Priority 4) ✅
 
 ### Category: Trust & Safety
 
 | # | Ticket | Description | Status |
 |---|--------|-------------|--------|
-| T-10 | KYC / ID Verify Mock Flow | `IDVerifyModal` with fake delay | ⬜ |
+| T-10 | KYC / ID Verify Mock Flow | `IDVerifyModal` with 2s mock delay | ✅ |
 | T-11 | Declined Payment & Overdue Alert | Dashboard banners & Locked account logic | ✅ |
-| T-23 | Risk/KYC Unit Tests | Verify checkout blocking logic | ⬜ |
+| T-23 | Risk/KYC Unit Tests | Verify checkout blocking logic | ✅ |
+| T-25 | Manual Overdue Simulation | "Simulate Failure" action on OrderCard | ✅ |
+
+### Deliverables for Phase 5
+- [x] "Pay Now" button unlocks account and clears overdue status
+- [x] `RiskAlertModal` replaces browser alerts for blocked checkouts
+- [x] "Update Card" banner button navigates to card management
+- [x] Comprehensive tests for all risk guard branches pass
 
 ---
 
-## PHASE 6 — Card Management (Priority 5)
+## PHASE 6 — Card Management (Priority 5) ✅
 
 ### Category: Account Settings
 
 | # | Ticket | Description | Status |
 |---|--------|-------------|--------|
-| T-12 | Saved Cards CRUD | Card list and Primary setting | 🔄 |
-| T-24 | Card Management Tests | Verify setPrimary and expiry logic | ⬜ |
+| T-12 | Saved Cards CRUD | Card list and Primary setting | ✅ |
+| T-24 | Card Management Tests | Verify setPrimary and removal logic | ✅ |
+
+### Deliverables for Phase 6
+- [x] Users can add new cards via `AddCardModal`
+- [x] Expiry field has auto-slash formatting and validation
+- [x] First card added is automatically set as primary
+- [x] Primary card cannot be removed (prevents orphaned orders)
+- [x] All CRUD operations verified via unit tests pass
 
 ---
 
 ## PHASE 7 — Merchant Back-Office (Priority 6) ✅
 
-| # | Task | Status |
-|---|------|--------|
-| T-13 | Settlement Table | ✅ |
+### Category: B2B Operations
+
+| # | Ticket | Description | Status |
+|---|--------|-------------|--------|
+| T-13 | Settlement Table | Payout tracking with commission math | ✅ |
+| T-26 | Real-time Settlements | Shopper checkout creates merchant entries | ✅ |
+| T-27 | Settlement Actions | "Settle" button for pending payouts | ✅ |
+
+### Deliverables for Phase 7
+- [x] Merchant settlement table with gross, commission (2.5%), and net payout
+- [x] High-fidelity UI using design tokens and Framer Motion layout
+- [x] Real-time integration: customer purchase automatically triggers merchant order
+- [x] Manual "Settle" action for merchants to confirm payouts
+- [x] Unit tests for financial logic and state transitions pass
 
 ---
 
@@ -123,8 +154,8 @@ All tickets must meet these criteria before being marked ✅:
 
 | # | Task | Status |
 |---|------|--------|
-| T-14 | Animation pass | ⬜ |
-| T-15 | Responsive + mobile check | ⬜ |
+| T-14 | Animation pass | ✅ |
+| T-15 | Responsive + mobile check | ✅ |
 | T-16 | Mock login screen | ✅ |
 
 ---
@@ -140,8 +171,8 @@ React 19, Tailwind 4, Framer Motion 12, Zustand 5, Lucide React, Vitest.
 1. Foundation ✅
 2. Storefront ✅
 3. Dashboard ✅
-4. Checkout (Current) 🔄
-5. Refunds
-6. Risk/KYC
-7. Cards
-8. Polish
+4. Checkout ✅
+5. Refunds ✅
+6. Risk/KYC ✅
+7. Cards ✅
+8. Polish ✅

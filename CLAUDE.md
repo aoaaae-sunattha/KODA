@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Anyway** is a BNPL (Buy Now, Pay Later) payment solution mockup — an interview-ready prototype. Code lives in `app/`. Planning docs are in the root.
 
-**Current state:** Phase 1 and Phase 1.5 (Merchant Storefront) complete. Phase 2 (Dashboard polish) is next.
+**Current state:** Phases 1-7 are complete. Phase 8 (Polish & Demo Prep) is next.
 
 ## Documentation Structure
 
@@ -42,9 +42,10 @@ npm run build        # runs: tsc -b && vite build
 # Lint
 npm run lint         # runs: eslint .
 
-# Tests (Vitest + jsdom)
+# Tests (Vitest + jsdom, globals enabled)
 npm run test         # single run
 npm run test:watch   # watch mode
+npx vitest run unit_test/CheckoutFlow.test.ts  # single file
 
 # Preview production build
 npm run preview
@@ -52,20 +53,22 @@ npm run preview
 
 Tests live in `app/unit_test/` (not colocated). `tsconfig.test.json` relaxes unused-variable rules for test files.
 
-## What's Built (Phase 1 + 1.5)
+## What's Built (Phases 1-7)
 
 | File | What it does |
 |---|---|
 | `app/src/pages/Login.tsx` | Login screen, demo account shortcuts |
-| `app/src/pages/Dashboard.tsx` | Dashboard, order cards, credit gauge |
+| `app/src/pages/Dashboard.tsx` | Dashboard, order cards, credit gauge (Phase 2) |
 | `app/src/pages/Store.tsx` | Product catalog grid + checkout modal integration |
-| `app/src/pages/Cards.tsx` | Card list, set primary, remove |
-| `app/src/pages/Merchant.tsx` | Settlement table (fully done) |
+| `app/src/pages/Cards.tsx` | Card list, set primary, remove (Phase 6) |
+| `app/src/pages/Merchant.tsx` | Settlement table (Phase 7) |
 | `app/src/store/useStore.ts` | Zustand store — all actions |
 | `app/src/hooks/useCheckoutGuard.ts` | Pre-checkout validation (KYC → lock → credit) |
-| `app/src/components/checkout/` | CheckoutModal, PlanSelector, PaymentTimeline |
-| `app/src/components/dashboard/` | CreditGauge, OrderCard |
+| `app/src/components/checkout/` | CheckoutModal, PlanSelector, PaymentTimeline, IDVerifyModal, RiskAlertModal |
+| `app/src/components/dashboard/` | CreditGauge, OrderCard, RefundModal (Phase 4) |
 | `app/src/components/layout/Nav.tsx` | Global navigation bar |
+| `app/src/components/settings/AddCardModal.tsx` | Add new payment card modal (Phase 6) |
+| `app/src/components/ui/Counter.tsx` | Animated number counter component |
 | `app/src/data/types.ts` | All TypeScript interfaces |
 | `app/src/data/feeRates.ts` | `calculatePlan()`, fee rates, APR, term thresholds |
 | `app/src/data/seedProducts.ts` | 6 products (iPhone $999 → eBike $15,500) |
@@ -73,12 +76,22 @@ Tests live in `app/unit_test/` (not colocated). `tsconfig.test.json` relaxes unu
 | `app/src/data/mockUsers.ts` | All 8 mock accounts with orders + cards |
 | `app/src/utils/format.ts` | `formatCurrency($)`, `formatDate()`, `formatShortDate()` |
 
+**Test files** in `app/unit_test/`:
+- `CheckoutFlow.test.ts` — Math, thresholds, store actions (Phase 3)
+- `RefundEngine.test.ts` — Refund reconciliation (Phase 4)
+- `RiskGuard.test.ts` — Risk & error states (Phase 5)
+- `CardManagement.test.ts` — Card CRUD operations (Phase 6)
+- `MerchantPortal.test.ts` — Merchant settlement (Phase 7)
+- `QA_Simulation.test.ts` — Cross-phase QA scenarios
+- `components/Checkout.test.tsx` — Component tests for PlanSelector
+
 ## Architecture Notes
 
 - **Routing:** `App.tsx` uses `RequireAuth` and `RequireMerchant` wrapper components as route guards. Unknown routes redirect to `/login`.
-- **State:** Single Zustand store (`useStore.ts`) holds all state. Login hydrates from `mockUsers.ts` lookup tables. Logout clears everything. Actions: `login`, `logout`, `createOrder`, `payInstallment`, `simulateRefund`, `verifyKYC`, `lockAccount`, `payOverdue`, `addCard`, `removeCard`, `setPrimaryCard`.
+- **State:** Single Zustand store (`useStore.ts`) holds all state. Login hydrates from `mockUsers.ts` lookup tables. Logout clears everything. Actions: `login`, `logout`, `createOrder`, `payInstallment`, `simulateRefund`, `simulateFailure`, `verifyKYC`, `lockAccount`, `payOverdue`, `addCard`, `removeCard`, `setPrimaryCard`.
 - **Credit calculation:** `getUsedCredit()` and `getAvailableCredit()` are derived in the store via `get()`, not stored state.
-- **Components:** `src/components/` has subdirs — `checkout/` (CheckoutModal, PlanSelector, PaymentTimeline), `dashboard/` (CreditGauge, OrderCard), `layout/` (Nav). Empty dirs ready for future phases: `merchant/`, `settings/`, `ui/`.
+- **Components:** `src/components/` has subdirs — `checkout/` (CheckoutModal, PlanSelector, PaymentTimeline, IDVerifyModal, RiskAlertModal), `dashboard/` (CreditGauge, OrderCard, RefundModal), `layout/` (Nav), `settings/` (AddCardModal), `ui/` (Counter). `merchant/` is empty (merchant UI lives in `pages/Merchant.tsx`).
+- **Vite plugins:** `@vitejs/plugin-react` + `@tailwindcss/vite` (configured in `app/vite.config.ts`).
 - **Strict TS:** `noUnusedLocals`, `noUnusedParameters`, `strict`, and `erasableSyntaxOnly` are enabled. Three tsconfig files: `tsconfig.app.json` (app build), `tsconfig.node.json` (Vite config), `tsconfig.test.json` (tests, relaxed unused-var rules).
 - **ESLint:** Flat config (ESLint 9) with TypeScript ESLint + React Hooks + React Refresh rules.
 
@@ -88,13 +101,13 @@ Build in this order per `tasks.md`:
 1. ✅ Phase 0 — Planning
 2. ✅ Phase 1 — Foundation & data layer
 3. ✅ Phase 1.5 — Merchant Storefront
-4. ← **Phase 2 — Dashboard polish + animations**
-5. Phase 3 — Checkout modal + plan selector
-6. Phase 4 — Refund engine
-7. Phase 5 — Risk & error states
-8. Phase 6 — Add card form (partial)
+4. ✅ Phase 2 — Dashboard polish + animations
+5. ✅ Phase 3 — Checkout modal + plan selector
+6. ✅ Phase 4 — Refund engine
+7. ✅ Phase 5 — Risk & error states
+8. ✅ Phase 6 — Card management
 9. ✅ Phase 7 — Merchant (done)
-10. Phase 8 — Animation pass + responsive
+10. ← **Phase 8 — Animation pass + responsive**
 
 ## Key Business Logic
 

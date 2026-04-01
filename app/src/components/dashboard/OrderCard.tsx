@@ -3,30 +3,38 @@ import { useState } from 'react'
 import { useStore } from '../../store/useStore'
 import { formatCurrency, formatShortDate } from '../../utils/format'
 import type { Order } from '../../data/types'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Undo2 } from 'lucide-react'
+import { RefundModal } from './RefundModal'
 
 interface OrderCardProps {
   order: Order
 }
 
 export default function OrderCard({ order }: OrderCardProps) {
-  const { payInstallment, simulateRefund } = useStore()
+  const { payInstallment, simulateFailure } = useStore()
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null)
+  const [isRefundModalOpen, setIsRefundModalOpen] = useState(false)
 
-  const paidAmount = order.paidCount > 0
-    ? order.firstPayment + (order.paidCount - 1) * order.monthly
-    : 0
-  const originalTotal = order.total + order.refundedAmount
-  const paidPct = (order.paidCount / order.term) * 100
-  const refundedPct = originalTotal > 0 ? (order.refundedAmount / originalTotal) * 100 : 0
+  const paidAmount = order.installments
+    .filter(i => i.status === 'paid')
+    .reduce((sum, i) => sum + i.amount, 0)
+  const originalTotal = order.principal + order.fee
+  const paidPct = (paidAmount / originalTotal) * 100
+  const refundedPct = (order.refundedAmount / originalTotal) * 100
   const remainingPct = 100 - paidPct - refundedPct
 
   const nextUnpaid = order.installments.find(i => i.status !== 'paid')
+  const maxRefundable = order.installments
+    .filter(i => i.status !== 'paid')
+    .reduce((sum, i) => sum + i.amount, 0)
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      layout
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="bg-white rounded-3xl p-6 shadow-sm border border-transparent hover:border-gray-200 transition-colors"
     >
       <div className="flex justify-between items-start mb-6">
@@ -42,14 +50,28 @@ export default function OrderCard({ order }: OrderCardProps) {
           </div>
         </div>
         <div className="text-right">
-          <div className="text-xl font-black text-gray-900">
-            {formatCurrency(order.total)}
+          <div className="flex flex-col items-end">
+            <div className="flex items-center gap-2 mb-1">
+              {order.status === 'overdue' && (
+                <span className="px-2 py-0.5 bg-red-100 text-red-600 text-[8px] font-black uppercase tracking-tighter rounded-md border border-red-200">
+                  Overdue
+                </span>
+              )}
+              <div className="text-xl font-black text-gray-900">
+                {formatCurrency(order.total)}
+              </div>
+            </div>
+            {order.refundedAmount > 0 && (
+              <div className="flex flex-col items-end gap-0">
+                <span className="text-[10px] font-bold text-gray-300 line-through leading-none">
+                  {formatCurrency(originalTotal)}
+                </span>
+                <span className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">
+                  {formatCurrency(order.refundedAmount)} Refunded
+                </span>
+              </div>
+            )}
           </div>
-          {order.refundedAmount > 0 && (
-            <span className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">
-              {formatCurrency(order.refundedAmount)} Refunded
-            </span>
-          )}
         </div>
       </div>
 
@@ -123,16 +145,32 @@ export default function OrderCard({ order }: OrderCardProps) {
               <ChevronRight size={16} />
             </button>
           )}
-          {order.refundedAmount === 0 && order.paidCount > 0 && (
+          {order.paidCount > 0 && maxRefundable > 0 && (
             <button
-              onClick={() => simulateRefund(order.id, Math.round(order.monthly * 0.7))}
-              className="py-3 px-6 rounded-2xl border-2 border-gray-100 text-sm font-bold text-gray-500 hover:bg-gray-50 transition-colors"
+              onClick={() => setIsRefundModalOpen(true)}
+              className="py-3 px-6 rounded-2xl border-2 border-gray-100 text-sm font-bold text-gray-500 hover:bg-gray-50 transition-colors flex items-center gap-2"
             >
+              <Undo2 size={16} />
               Refund
+            </button>
+          )}
+          {order.status === 'active' && (
+            <button
+              onClick={() => simulateFailure(order.id)}
+              disabled={order.status !== 'active'}
+              className="text-[10px] font-black uppercase tracking-widest text-red-300 hover:text-red-500 transition-colors px-2 disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              Simulate Failure
             </button>
           )}
         </div>
       )}
+
+      <RefundModal 
+        order={order}
+        isOpen={isRefundModalOpen}
+        onClose={() => setIsRefundModalOpen(false)}
+      />
     </motion.div>
   )
 }

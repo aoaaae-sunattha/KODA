@@ -43,7 +43,19 @@ Before opening the Checkout Modal (M-01) for a selected item:
 - **Database Schema:** Store `last_4`, `brand`, `expiry_month`, `expiry_year`.
 - **Primary Flag:** Only one card can be `is_primary = true`.
 
-## [PRIORITY 6: Merchant Back-Office]
-### 6. Settlement Simulation
-- **Payout Amount:** `Order_Total - (Commission_Rate * Order_Total)`. Commission = 2.5%.
-- **Status Enum:** `Pending`, `Settled`, `Held`.
+## [PRIORITY 7: QA & Testability]
+### 7. QA Scenario Generators
+**Goal:** Enable on-demand state transitions for live demos and E2E testing.
+
+#### **ID Verification Simulator (T-10)**
+- **Logic:** `Transition(User.verified: false -> true)`.
+- **UI Interaction:** Slide-up modal with 2s "Scanning ID..." progress bar.
+- **Side Effects:** Updates `User.accountStatus` to `Active` and grants `$8,000` base credit limit.
+
+#### **Manual Overdue Simulator**
+- **Logic:** `Trigger(Order.id, 'overdue')`.
+- **UI Interaction:** "Simulate Payment Failure" action on an active `OrderCard`.
+- **Side Effects:** 
+    1. Sets `Order.status = 'overdue'`.
+    2. Sets `User.accountStatus = 'Locked'`.
+    3. Triggers dashboard alerts and blocks future checkouts (403 Simulation).
