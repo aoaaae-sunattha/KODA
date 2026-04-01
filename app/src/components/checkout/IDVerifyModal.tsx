@@ -15,6 +15,7 @@ export const IDVerifyModal: React.FC<IDVerifyModalProps> = ({ isOpen, onClose })
 
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep('intro')
       setProgress(0)
     }
