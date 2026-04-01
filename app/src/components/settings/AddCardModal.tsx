@@ -61,6 +61,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, onClose }) =
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden"
           >
             <div className="p-6 border-b border-slate-100 flex items-center justify-between">
