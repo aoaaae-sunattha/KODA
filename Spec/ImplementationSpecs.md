@@ -1,4 +1,4 @@
-# Implementation Specs: Anyway BNPL Solution (Mockup Focused)
+# Implementation Specs: KODA BNPL Solution (Mockup Focused)
 
 Technical logic and UI requirements prioritized for building a high-fidelity BNPL mockup.
 

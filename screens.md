@@ -1,4 +1,4 @@
-# screens.md — Anyway BNPL: Complete Screen & State Inventory
+# screens.md — KODA BNPL: Complete Screen & State Inventory
 
 This is the definitive list of every view, modal, and component state to be built.
 Used by T-01 (routing) and all UI tickets as the ground truth for scope.
@@ -11,9 +11,9 @@ Used by T-01 (routing) and all UI tickets as the ground truth for scope.
 |---|---|---|---|---|
 | `/login` | Login | No | ✅ Built | Redirects to `/dashboard` if already logged in |
 | `/dashboard` | Shopper Dashboard | Yes (shopper) | 🔄 Basic built | Main screen — order cards, credit gauge |
-| `/store` | Product Store | Yes (shopper) | ⬜ Not built | Product grid — "Buy with Anyway" buttons. Route not yet in App.tsx |
+| `/store` | Product Store | Yes (shopper) | ⬜ Not built | Product grid — "Buy with KODA" buttons. Route not yet in App.tsx |
 | `/settings/cards` | Card Management | Yes (shopper) | 🔄 Basic built | Add / remove / set primary card |
-| `/merchant` | Merchant Back-Office | Yes (merchant role) | ✅ Built | Settlement table — only `merchant@anyway.test` |
+| `/merchant` | Merchant Back-Office | Yes (merchant role) | ✅ Built | Settlement table — only `merchant@koda.test` |
 
 > Auth gate: any route visited without a session redirects to `/login`. After login, redirects back to intended route.
 
@@ -24,7 +24,7 @@ Used by T-01 (routing) and all UI tickets as the ground truth for scope.
 
 | ID | Modal Name | Trigger | Parent Route | Status |
 |---|---|---|---|---|
-| M-01 | Checkout / Plan Selector | "Buy with Anyway" on product / "New Purchase" CTA | `/store` or `/dashboard` | ⬜ |
+| M-01 | Checkout / Plan Selector | "Buy with KODA" on product / "New Purchase" CTA | `/store` or `/dashboard` | ⬜ |
 | M-02 | Payment Schedule Preview | Inside M-01, after selecting a plan | M-01 | ⬜ |
 | M-03 | ID Verify (KYC) | `useCheckoutGuard` when `user.verified = false` | M-01 | ⬜ |
 | M-04 | Refund Simulation | "Simulate Refund" on order card | `/dashboard` | ⬜ |
@@ -73,7 +73,7 @@ Used by T-01 (routing) and all UI tickets as the ground truth for scope.
 ### Product Card (`ProductCard`) — NEW for Phase 1.5
 | State | Condition | Visual | Status |
 |---|---|---|---|
-| `available` | User can afford it | Normal card, purple "Buy with Anyway" button | ⬜ |
+| `available` | User can afford it | Normal card, purple "Buy with KODA" button | ⬜ |
 | `over_limit` | Price > available credit | Card dimmed, "Insufficient credit" tooltip on button | ⬜ |
 | `account_locked` | Account is locked | Button disabled, lock icon | ⬜ |
 
@@ -83,7 +83,7 @@ Used by T-01 (routing) and all UI tickets as the ground truth for scope.
 
 | Screen | Empty Condition | What to Show | Status |
 |---|---|---|---|
-| Dashboard | No orders | Illustration + "Start shopping with Anyway" CTA → `/store` | 🔄 Basic |
+| Dashboard | No orders | Illustration + "Start shopping with KODA" CTA → `/store` | 🔄 Basic |
 | Dashboard | Unverified user, no orders | Same + KYC nudge banner | ⬜ |
 | Store | No products (shouldn't happen) | "Coming soon" placeholder | ⬜ |
 | Card Management | No cards on file | "No cards saved yet" + "Add card" CTA | 🔄 Basic |

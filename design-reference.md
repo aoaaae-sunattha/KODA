@@ -1,4 +1,4 @@
-# design-reference.md — Anyway BNPL: Visual & UX Reference
+# design-reference.md — KODA BNPL: Visual & UX Reference
 
 Ground truth for all UI decisions. Sources: live Anyday.io observation + industry BNPL patterns.
 
@@ -85,7 +85,7 @@ Font: **Inter** (system fallback: `-apple-system, sans-serif`)
 
 ```
 ┌────────────────────────────────────┐
-│  🅐  Anyway          [Avatar]      │  ← Top nav
+│  🅐  KODA          [Avatar]      │  ← Top nav
 ├────────────────────────────────────┤
 │  Credit Available                  │
 │  ████████████░░░░  $7,750 / $10k  │  ← Credit gauge

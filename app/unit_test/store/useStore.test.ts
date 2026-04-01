@@ -11,18 +11,18 @@ describe('useStore Zustand actions', () => {
   describe('Auth', () => {
     it('logins correctly with mock email', () => {
       const { login } = useStore.getState()
-      const success = login('active@anyway.test')
+      const success = login('active@koda.test')
 
       expect(success).toBe(true)
       const { currentUser, orders, cards } = useStore.getState()
-      expect(currentUser?.email).toBe('active@anyway.test')
+      expect(currentUser?.email).toBe('active@koda.test')
       expect(orders.length).toBeGreaterThan(0)
       expect(cards.length).toBeGreaterThan(0)
     })
 
     it('fails login with unknown email', () => {
       const { login } = useStore.getState()
-      const success = login('nonexistent@anyway.test')
+      const success = login('nonexistent@koda.test')
 
       expect(success).toBe(false)
       expect(useStore.getState().currentUser).toBeNull()
@@ -30,26 +30,26 @@ describe('useStore Zustand actions', () => {
     })
 
     it('normalizes email case for user lookup', () => {
-      const success = useStore.getState().login('Active@Anyway.Test')
+      const success = useStore.getState().login('Active@KODA.Test')
       expect(success).toBe(true)
-      expect(useStore.getState().currentUser?.email).toBe('active@anyway.test')
+      expect(useStore.getState().currentUser?.email).toBe('active@koda.test')
     })
 
     it('normalizes email for orders and cards lookup', () => {
-      useStore.getState().login('Active@Anyway.Test')
-      // active@anyway.test has 3 orders and 1 card
+      useStore.getState().login('Active@KODA.Test')
+      // active@koda.test has 3 orders and 1 card
       expect(useStore.getState().orders.length).toBe(3)
       expect(useStore.getState().cards.length).toBe(1)
     })
 
     it('trims whitespace from email', () => {
-      const success = useStore.getState().login('  active@anyway.test  ')
+      const success = useStore.getState().login('  active@koda.test  ')
       expect(success).toBe(true)
       expect(useStore.getState().orders.length).toBe(3)
     })
 
     it('logout clears all state', () => {
-      useStore.getState().login('active@anyway.test')
+      useStore.getState().login('active@koda.test')
       useStore.getState().logout()
       const state = useStore.getState()
       expect(state.currentUser).toBeNull()
@@ -59,12 +59,12 @@ describe('useStore Zustand actions', () => {
     })
 
     it('loads merchant orders for merchant role', () => {
-      useStore.getState().login('merchant@anyway.test')
+      useStore.getState().login('merchant@koda.test')
       expect(useStore.getState().merchantOrders.length).toBeGreaterThan(0)
     })
 
     it('does not load merchant orders for shopper role', () => {
-      useStore.getState().login('active@anyway.test')
+      useStore.getState().login('active@koda.test')
       expect(useStore.getState().merchantOrders).toEqual([])
     })
   })
@@ -72,7 +72,7 @@ describe('useStore Zustand actions', () => {
   // ─── CREATE ORDER ──────────────────────────────────────────────────────────
   describe('createOrder', () => {
     it('creates a new order with correct structure', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       const product = SEED_PRODUCTS[0] // iPhone, $999
 
       useStore.getState().createOrder(product, 4)
@@ -89,7 +89,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('includes fee in first installment for term > 4', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       const product = SEED_PRODUCTS[1] // MacBook, $2499
 
       useStore.getState().createOrder(product, 6)
@@ -101,7 +101,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('prepends new order to existing orders', () => {
-      useStore.getState().login('active@anyway.test')
+      useStore.getState().login('active@koda.test')
       const initialCount = useStore.getState().orders.length
 
       useStore.getState().createOrder(SEED_PRODUCTS[0], 4)
@@ -114,7 +114,7 @@ describe('useStore Zustand actions', () => {
   // ─── PAY INSTALLMENT ──────────────────────────────────────────────────────
   describe('payInstallment', () => {
     it('pays the next unpaid installment', () => {
-      useStore.getState().login('active@anyway.test')
+      useStore.getState().login('active@koda.test')
       const order = useStore.getState().orders[0]
       const initialPaidCount = order.paidCount
 
@@ -125,7 +125,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('marks order as completed when all installments paid', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       useStore.getState().createOrder(SEED_PRODUCTS[0], 4)
 
       const orderId = useStore.getState().orders[0].id
@@ -140,7 +140,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('does nothing for non-existent order', () => {
-      useStore.getState().login('active@anyway.test')
+      useStore.getState().login('active@koda.test')
       const ordersBefore = useStore.getState().orders
 
       useStore.getState().payInstallment('nonexistent')
@@ -149,7 +149,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('does nothing if all installments already paid', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       useStore.getState().createOrder(SEED_PRODUCTS[0], 4)
       const orderId = useStore.getState().orders[0].id
 
@@ -169,7 +169,7 @@ describe('useStore Zustand actions', () => {
   // ─── SIMULATE REFUND ──────────────────────────────────────────────────────
   describe('simulateRefund', () => {
     it('deducts refund from last unpaid installment first', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       useStore.getState().createOrder(SEED_PRODUCTS[0], 4) // $999, term 4
       const order = useStore.getState().orders[0]
       const lastInstallmentAmount = order.installments[3].amount
@@ -183,7 +183,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('cascades to earlier installments if last one zeroed out', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       useStore.getState().createOrder(SEED_PRODUCTS[5], 4) // Dyson $949, term 4
       const order = useStore.getState().orders[0]
       const lastAmount = order.installments[3].amount
@@ -198,7 +198,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('skips paid installments', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       useStore.getState().createOrder(SEED_PRODUCTS[0], 4)
       const order = useStore.getState().orders[0]
       // installment 0 is already paid
@@ -214,7 +214,7 @@ describe('useStore Zustand actions', () => {
   // ─── KYC ───────────────────────────────────────────────────────────────────
   describe('verifyKYC', () => {
     it('sets verified=true, active status, and grants $8000 credit', () => {
-      useStore.getState().login('new@anyway.test')
+      useStore.getState().login('new@koda.test')
       expect(useStore.getState().currentUser?.verified).toBe(false)
 
       useStore.getState().verifyKYC()
@@ -229,13 +229,13 @@ describe('useStore Zustand actions', () => {
   // ─── ACCOUNT LOCKING ──────────────────────────────────────────────────────
   describe('lockAccount / payOverdue', () => {
     it('lockAccount sets status to locked', () => {
-      useStore.getState().login('active@anyway.test')
+      useStore.getState().login('active@koda.test')
       useStore.getState().lockAccount()
       expect(useStore.getState().currentUser?.accountStatus).toBe('locked')
     })
 
     it('payOverdue restores active status and clears overdueAmount', () => {
-      useStore.getState().login('overdue@anyway.test')
+      useStore.getState().login('overdue@koda.test')
       expect(useStore.getState().currentUser?.accountStatus).toBe('locked')
 
       useStore.getState().payOverdue()
@@ -246,7 +246,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('payOverdue changes overdue orders to active', () => {
-      useStore.getState().login('overdue@anyway.test')
+      useStore.getState().login('overdue@koda.test')
       const overdueOrders = useStore.getState().orders.filter(o => o.status === 'overdue')
       expect(overdueOrders.length).toBeGreaterThan(0)
 
@@ -260,7 +260,7 @@ describe('useStore Zustand actions', () => {
   // ─── CARDS ─────────────────────────────────────────────────────────────────
   describe('Card actions', () => {
     it('addCard appends a new card', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       const initialCount = useStore.getState().cards.length
 
       useStore.getState().addCard({
@@ -276,7 +276,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('removeCard removes the specified card', () => {
-      useStore.getState().login('power@anyway.test')
+      useStore.getState().login('power@koda.test')
       const initialCount = useStore.getState().cards.length
       const cardToRemove = useStore.getState().cards.find(c => !c.isPrimary)!
 
@@ -287,7 +287,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('setPrimaryCard sets only one card as primary', () => {
-      useStore.getState().login('power@anyway.test')
+      useStore.getState().login('power@koda.test')
       const nonPrimary = useStore.getState().cards.find(c => !c.isPrimary)!
 
       useStore.getState().setPrimaryCard(nonPrimary.id)
@@ -302,13 +302,13 @@ describe('useStore Zustand actions', () => {
   // ─── COMPUTED CREDIT ───────────────────────────────────────────────────────
   describe('getUsedCredit / getAvailableCredit', () => {
     it('returns 0 for user with no orders', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       expect(useStore.getState().getUsedCredit()).toBe(0)
       expect(useStore.getState().getAvailableCredit()).toBe(8000)
     })
 
     it('correctly calculates used credit accounting for fee in first payment', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       // Create order with fee: MacBook $2499, term 6
       useStore.getState().createOrder(SEED_PRODUCTS[1], 6) // fee = round(2499 * 0.0398) = 99
 
@@ -318,7 +318,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('excludes completed orders from used credit', () => {
-      useStore.getState().login('power@anyway.test')
+      useStore.getState().login('power@koda.test')
       // power user has completed orders
       const completed = useStore.getState().orders.filter(o => o.status === 'completed')
       expect(completed.length).toBeGreaterThan(0)
@@ -336,7 +336,7 @@ describe('useStore Zustand actions', () => {
     })
 
     it('available credit never goes below 0', () => {
-      useStore.getState().login('maxed@anyway.test')
+      useStore.getState().login('maxed@koda.test')
       expect(useStore.getState().getAvailableCredit()).toBeGreaterThanOrEqual(0)
     })
 

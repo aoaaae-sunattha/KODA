@@ -1,10 +1,10 @@
 # GEMINI.md
 
-This file provides instructional context for Gemini CLI when working with the **Anyway** BNPL mockup project.
+This file provides instructional context for Gemini CLI when working with the **KODA** BNPL mockup project.
 
 ## Project Overview
 
-**Anyway** is a high-fidelity Buy Now, Pay Later (BNPL) solution mockup. It is an interview-ready prototype designed to demonstrate core fintech features including purchase slicing, repayment progress, refund reconciliation, and risk-based account states.
+**KODA** is a high-fidelity Buy Now, Pay Later (BNPL) solution mockup. It is an interview-ready prototype designed to demonstrate core fintech features including purchase slicing, repayment progress, refund reconciliation, and risk-based account states.
 
 ### Core Technologies
 - **Frontend Framework:** React 19 (Vite 8, TypeScript 5.9)
@@ -50,7 +50,7 @@ npm run lint
 ## Development Conventions
 
 - **Priority Order:** Follow the phases in `tasks.md`. Start with Foundation (Phase 1), Merchant Storefront (Phase 1.5), and Dashboard (Phase 2).
-- **Mock Auth:** Authentication is email-only (password is ignored). Emails correspond to scenarios in `account.check.md` (e.g., `active@anyway.test`, `overdue@anyway.test`).
+- **Mock Auth:** Authentication is email-only (password is ignored). Emails correspond to scenarios in `account.check.md` (e.g., `active@koda.test`, `overdue@koda.test`).
 - **Business Logic:**
   - **Slicing:** 4 (Interest-free) to 24 terms.
   - **Fees:** One-time fees added to the first installment for extended terms.

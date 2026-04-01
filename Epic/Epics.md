@@ -1,6 +1,6 @@
-# Epics: Anyway BNPL Solution (Mockup Focused)
+# Epics: KODA BNPL Solution (Mockup Focused)
 
-This document outlines the high-level epics for the Anyway BNPL mockup, prioritized for an interview-ready prototype.
+This document outlines the high-level epics for the KODA BNPL mockup, prioritized for an interview-ready prototype.
 
 ## [PRIORITY 1] Epic 1: Dashboard & Order Progress
 **Goal:** High-visibility visualization of debt and repayment status.

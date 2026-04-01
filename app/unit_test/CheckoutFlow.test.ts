@@ -78,7 +78,7 @@ describe('Checkout Flow & Payment Slicing (Phase 3)', () => {
 
   describe('Store Order Creation', () => {
     it('creates a new order with correct installments and status', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       const product = SEED_PRODUCTS[0] // iPhone 15 Pro, $999
       
       useStore.getState().createOrder(product, 4)

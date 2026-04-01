@@ -29,6 +29,6 @@
 ---
 
 ## 3. Success Metrics for QA Demo
-- [ ] User can log in as `new@anyway.test` and become verified in < 5 seconds.
-- [ ] User can log in as `active@anyway.test`, fail a payment, and see the account lock.
+- [ ] User can log in as `new@koda.test` and become verified in < 5 seconds.
+- [ ] User can log in as `active@koda.test`, fail a payment, and see the account lock.
 - [ ] Locked status correctly blocks the "Buy" button in the store (verified by `useCheckoutGuard`).

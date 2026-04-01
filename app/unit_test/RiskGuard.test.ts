@@ -11,31 +11,31 @@ describe('Risk & Error States (Phase 5)', () => {
 
   describe('useCheckoutGuard Logic', () => {
     it('blocks unverified users', () => {
-      useStore.getState().login('new@anyway.test')
+      useStore.getState().login('new@koda.test')
       const { result } = renderHook(() => useCheckoutGuard())
       expect(result.current.check(100)).toBe('unverified')
     })
 
     it('blocks locked accounts', () => {
-      useStore.getState().login('overdue@anyway.test')
+      useStore.getState().login('overdue@koda.test')
       const { result } = renderHook(() => useCheckoutGuard())
       expect(result.current.check(100)).toBe('locked')
     })
 
     it('blocks action_required accounts', () => {
-      useStore.getState().login('declined@anyway.test')
+      useStore.getState().login('declined@koda.test')
       const { result } = renderHook(() => useCheckoutGuard())
       expect(result.current.check(100)).toBe('action_required')
     })
 
     it('blocks insufficient credit', () => {
-      useStore.getState().login('fresh@anyway.test') // Limit $8000
+      useStore.getState().login('fresh@koda.test') // Limit $8000
       const { result } = renderHook(() => useCheckoutGuard())
       expect(result.current.check(9000)).toBe('insufficient')
     })
 
     it('allows verified, active users with enough credit', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
       const { result } = renderHook(() => useCheckoutGuard())
       expect(result.current.check(1000)).toBe('allowed')
     })
@@ -43,7 +43,7 @@ describe('Risk & Error States (Phase 5)', () => {
 
   describe('Recovery Logic', () => {
     it('payOverdue() unlocks the account', () => {
-      useStore.getState().login('overdue@anyway.test')
+      useStore.getState().login('overdue@koda.test')
       expect(useStore.getState().currentUser?.accountStatus).toBe('locked')
       
       useStore.getState().payOverdue()
@@ -53,7 +53,7 @@ describe('Risk & Error States (Phase 5)', () => {
     })
 
     it('simulateFailure + payOverdue round-trip resolves overdue installment', () => {
-      useStore.getState().login('fresh@anyway.test')
+      useStore.getState().login('fresh@koda.test')
 
       // Create an order and simulate failure
       const product = { ...SEED_PRODUCTS[0], price: 1000 }
@@ -81,7 +81,7 @@ describe('Risk & Error States (Phase 5)', () => {
     })
 
     it('verifyKYC() activates user and grants credit', () => {
-      useStore.getState().login('new@anyway.test')
+      useStore.getState().login('new@koda.test')
       expect(useStore.getState().currentUser?.verified).toBe(false)
       
       useStore.getState().verifyKYC()

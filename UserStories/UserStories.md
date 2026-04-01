@@ -1,4 +1,4 @@
-# User Stories: Anyway BNPL Solution (Mockup Focused)
+# User Stories: KODA BNPL Solution (Mockup Focused)
 
 These stories are prioritized for building a functional mockup that demonstrates AI-powered product development.
 
@@ -10,7 +10,7 @@ These stories are prioritized for building a functional mockup that demonstrates
 
 ## [PRIORITY 1.5: Product Browsing]
 ### US.1.5: Browse & Select Products
-**As a customer,** I want to browse high-value items in a merchant store and select "Buy with Anyway" **so that** I can start the checkout process for a specific purchase.
+**As a customer,** I want to browse high-value items in a merchant store and select "Buy with KODA" **so that** I can start the checkout process for a specific purchase.
 - **AC1:** Display at least 3 items > $500 (MacBook, Camera, Phone).
 - **AC2:** Validate KYC status and credit limit before opening the checkout modal.
 - **AC3:** Show an error if the item price exceeds the available credit limit.
