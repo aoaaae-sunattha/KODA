@@ -56,14 +56,14 @@ export const orderB: Order = {
 }
 
 // Order C — Åberg: just approved, 0 paid
-const planC = calculatePlan(2400, 6)
+const planC = calculatePlan(700, 4)
 export const orderC: Order = {
   id: 'order-c',
   merchant: 'Åberg',
   merchantCategory: 'Fashion',
   purchaseDate: '2026-03-30',
-  principal: 2400,
-  term: 6,
+  principal: 700,
+  term: 4,
   fee: planC.fee,
   monthly: planC.monthly,
   firstPayment: planC.firstPayment,

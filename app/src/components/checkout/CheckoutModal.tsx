@@ -144,6 +144,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <button
                 disabled={isConfirming || !primaryCard}
                 onClick={handleConfirm}
+                data-testid="checkout-confirm-btn"
                 className="w-full py-4 bg-primary text-white rounded-2xl font-bold text-lg shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all active:scale-[0.98] disabled:opacity-50 disabled:grayscale disabled:scale-100 flex items-center justify-center gap-2"
               >
                 {isConfirming ? (
