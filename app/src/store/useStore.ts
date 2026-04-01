@@ -82,8 +82,9 @@ export const useStore = create<AppState>((set, get) => ({
       status: i === 0 ? 'paid' : 'upcoming', // First installment paid at checkout
     }))
 
+    const orderId = `ord_${Math.random().toString(36).substr(2, 9)}`
     const newOrder: Order = {
-      id: `ord_${Math.random().toString(36).substr(2, 9)}`,
+      id: orderId,
       merchant: product.brand,
       merchantCategory: product.category,
       purchaseDate: formatISO(purchaseDate),
@@ -99,8 +100,29 @@ export const useStore = create<AppState>((set, get) => ({
       installments,
     }
 
+    // Generate corresponding MerchantOrder
+    const commission = Math.round(product.price * 0.025 * 100) / 100
+    const newMerchantOrder: MerchantOrder = {
+      id: `m_${Math.random().toString(36).substr(2, 9)}`,
+      orderId: `#${orderId.slice(-4).toUpperCase()}`,
+      amount: product.price,
+      commission,
+      payout: product.price - commission,
+      status: 'pending',
+      date: formatISO(purchaseDate),
+    }
+
     set(state => ({
       orders: [newOrder, ...state.orders],
+      merchantOrders: [newMerchantOrder, ...state.merchantOrders],
+    }))
+  },
+
+  settleOrder: (merchantOrderId: string) => {
+    set(state => ({
+      merchantOrders: state.merchantOrders.map(o =>
+        o.id === merchantOrderId ? { ...o, status: 'settled' as const } : o
+      ),
     }))
   },
 
