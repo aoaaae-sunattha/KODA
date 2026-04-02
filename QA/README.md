@@ -24,11 +24,11 @@ QA/
   01-login/
     TC-LOGIN.md           8 test cases (auth, guards, routing)
   02-dashboard/
-    TC-DASH-credit-gauge.md   6 test cases (gauge states, colors, counters)
-    TC-DASH-alerts.md         7 test cases (locked, action required, KYC, success)
-    TC-DASH-order-cards.md   10 test cases (progress bar, pay, refund, failure)
-    TC-DASH-empty-states.md   3 test cases (zero orders, new user)
-    TC-DASH-animations.md     6 test cases (stagger, counters, transitions)
+    TC-DASH-01-credit-gauge.md   6 test cases (gauge states, colors, counters)
+    TC-DASH-07-alerts.md         7 test cases (locked, action required, KYC, success)
+    TC-DASH-14-order-cards.md   10 test cases (progress bar, pay, refund, failure)
+    TC-DASH-24-empty-states.md   3 test cases (zero orders, new user)
+    TC-DASH-27-animations.md     6 test cases (stagger, counters, transitions)
   03-store-checkout/
     TC-STORE.md              12 test cases (grid, checkout, plan selector, blocking)
   04-refunds/
@@ -52,6 +52,7 @@ Automated test results are stored in `QA/REPORTS/[Date]/` to provide a timeline 
 
 Current reports:
 - [v0.0.0-login.md](./REPORTS/2026-04-01/v0.0.0-login.md) (April 1, 2026)
+- [v0.0.0-dashboard-credit-gauge.md](./REPORTS/2026-04-01/v0.0.0-dashboard-credit-gauge.md) (April 1, 2026)
 - [LATEST_REPORT.md](./REPORTS/LATEST_REPORT.md) (Most Recent)
 
 ## Total: 80 manual test cases across 7 features

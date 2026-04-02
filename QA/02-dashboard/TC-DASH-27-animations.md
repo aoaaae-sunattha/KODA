@@ -4,7 +4,7 @@
 
 ---
 
-### TC-DASH-40: Page load stagger animation
+### TC-DASH-27: Page load stagger animation
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -15,7 +15,7 @@
 
 ---
 
-### TC-DASH-41: Credit counter animation
+### TC-DASH-28: Credit counter animation
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -27,7 +27,7 @@
 
 ---
 
-### TC-DASH-42: Progress bar spring animation
+### TC-DASH-29: Progress bar spring animation
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -38,7 +38,7 @@
 
 ---
 
-### TC-DASH-43: Alert banner exit animation
+### TC-DASH-30: Alert banner exit animation
 **Account:** `overdue@koda.test`
 
 | Step | Action | Expected Result |
@@ -50,7 +50,7 @@
 
 ---
 
-### TC-DASH-44: Order card layout animation
+### TC-DASH-31: Order card layout animation
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -61,7 +61,7 @@
 
 ---
 
-### TC-DASH-45: Page transition animation
+### TC-DASH-32: Page transition animation
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
