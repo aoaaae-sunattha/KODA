@@ -19,6 +19,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `Spec/ImplementationSpecs.md` — Technical logic, formulas, and DB schemas
 - `UserStories/UserStories.md` — User stories with acceptance criteria
 
+## Prerequisites
+
+Node.js v22 via nvm. From repo root: `export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh" && nvm use 22`
+
 ## Tech Stack
 
 React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS v4 + Zustand 5 + react-router-dom v7 + framer-motion + lucide-react icons + date-fns.
@@ -30,24 +34,30 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS v4 + Zustand 5 + react-router-
 All commands run from the root directory (unless specified otherwise):
 
 ```bash
-# E2E Tests (Playwright)
-npm run test:e2e          # run all tests
-npm run test:e2e:report   # run and show HTML report
+# E2E Tests (Playwright) — run from root
+npm run test:e2e                              # run all tests
+npm run test:e2e:report                       # run and show HTML report
+npx playwright test playwright/tests/login.spec.ts  # run single spec
 
 # App commands (run from app/)
-cd app && npm run dev     # or: npx vite
-cd app && npm run build   # runs: tsc -b && vite build
-cd app && npm run lint    # runs: eslint .
-cd app && npm run test    # runs: vitest run
+cd app && npm run dev       # dev server on localhost:5173
+cd app && npm run build     # tsc -b && vite build
+cd app && npm run lint      # eslint .
+cd app && npm run test      # vitest run (all unit tests)
+cd app && npm run test:watch  # vitest watch mode
+cd app && npx vitest run src/store/useStore.test.ts  # single test file
+cd app && npm run preview   # preview production build
 ```
+
+**E2E note:** Playwright auto-starts the dev server (`cd app && npm run dev`) if not already running. Tests target `localhost:5173`.
 
 ## Architecture Notes
 
 - **E2E Automation:** Playwright tests live in the root `playwright/` directory.
 - **POM:** Page Object Model used in `playwright/pages/` for cleaner tests.
 - **Reporting:** Standardized reports in `QA/REPORTS/[Date]/v[Version]-[Feature].md`.
-- **Routing:** `App.tsx` uses `RequireAuth` and `RequireMerchant` wrapper components as route guards. Unknown routes redirect to `/login`.
-- **State:** Single Zustand store (`useStore.ts`) holds all state. Login hydrates from `mockUsers.ts` lookup tables. Logout clears everything. Actions: `login`, `logout`, `createOrder`, `payInstallment`, `simulateRefund`, `simulateFailure`, `verifyKYC`, `lockAccount`, `payOverdue`, `addCard`, `removeCard`, `setPrimaryCard`.
+- **Routing:** `App.tsx` uses `RequireAuth` and `RequireMerchant` wrapper components as route guards. Unknown routes redirect to `/login`. Routes: `/login`, `/dashboard`, `/store`, `/settings/cards`, `/merchant`. Page transitions use framer-motion `AnimatePresence`.
+- **State:** Single Zustand store (`useStore.ts`) with `persist` middleware (data survives page reloads). Login hydrates from `mockUsers.ts` lookup tables. Logout clears everything. Actions: `login`, `logout`, `createOrder`, `payInstallment`, `simulateRefund`, `simulateFailure`, `verifyKYC`, `lockAccount`, `payOverdue`, `addCard`, `removeCard`, `setPrimaryCard`, `settleOrder`.
 - **Credit calculation:** `getUsedCredit()` and `getAvailableCredit()` are derived in the store via `get()`, not stored state.
 - **Components:** `src/components/` has subdirs — `checkout/` (CheckoutModal, PlanSelector, PaymentTimeline, IDVerifyModal, RiskAlertModal), `dashboard/` (CreditGauge, OrderCard, RefundModal), `layout/` (Nav), `settings/` (AddCardModal), `ui/` (Counter). `merchant/` is empty (merchant UI lives in `pages/Merchant.tsx`).
 - **Vite plugins:** `@vitejs/plugin-react` + `@tailwindcss/vite` (configured in `app/vite.config.ts`).
