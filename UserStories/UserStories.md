@@ -18,8 +18,19 @@ These stories are prioritized for building a functional mockup that demonstrates
 ## [PRIORITY 2: Checkout Selection]
 ### US.2: Select Payment Plan
 **As a customer,** I want to toggle between 4, 6, 8, 10, 12, 18, and 24 payments **so that** I can see the monthly cost and fees change dynamically.
-- **AC1:** 4-payment plan is clearly labeled as "0% / Free".
-- **AC2:** 24-payment plan is clearly labeled as "Most Flexible".
+- **AC1:** 4-payment plan is clearly labeled as "0% / Free" with a purple "free" badge.
+- **AC2:** 24-payment plan is clearly labeled as "Most Flexible" with a purple "most flexible" badge.
+- **AC3:** Primary terms (4, 10, 18, 24) are shown as vertical radio-style buttons by default.
+- **AC4:** A "+ other options!" link expands to reveal additional terms (6, 8, 12).
+- **AC5:** Selected term shows a filled purple radio circle with subtle background tint.
+- **AC6:** Terms unavailable due to purchase price threshold are grayed out with a minimum price label.
+
+### US.2.1: View Payment Schedule
+**As a customer,** I want to see my scheduled payments as distinct cards with due dates **so that** I can understand exactly when each installment is due.
+- **AC1:** Each installment is shown as a white rounded card with a circular progress ring containing the installment number.
+- **AC2:** The first installment is labeled "Upon checkout" with a purple ring; subsequent installments show the due date with "Due" subtitle.
+- **AC3:** Payment amounts are right-aligned on each card, with fee note on the first installment if applicable.
+- **AC4:** For high term counts (18, 24), the timeline is scrollable with a max-height container.
 
 ## [PRIORITY 3: Dynamic Adjustment]
 ### US.3: Handle Partial Refund
@@ -36,6 +47,16 @@ These stories are prioritized for building a functional mockup that demonstrates
 ### US.5: Handle Declined Payment
 **As a user,** I want to see an "Upcoming Payment: Action Required" alert if my card is expired or declined **so that** I can fix the issue before I am charged a late fee.
 - **AC1:** Error message explicitly states "Payment failed on [Date] - Update Card".
+
+## [PRIORITY 4.5: Flexible Payments]
+### US.5.1: Choose Payment Type
+**As a user,** I want to choose how I pay — next installment, a specific amount, or full balance — **so that** I can pay off my purchases on my own terms.
+- **AC1:** Clicking "Pay" on an order card opens a Payment Modal with 3 radio options: "Pay my next installment", "Pay specific amount", "Pay off my balance in full".
+- **AC2:** "Pay my next installment" is selected by default and shows the next unpaid amount.
+- **AC3:** "Pay specific amount" reveals a number input field validated between $1 and the remaining balance.
+- **AC4:** "Pay off my balance in full" shows the total remaining balance.
+- **AC5:** A "Confirm Payment" button executes the selected payment type. It is disabled until a valid option is selected.
+- **AC6:** After payment, the order card updates immediately (progress bar, paid count, amounts).
 
 ## [PRIORITY 5: Card Management]
 ### US.6: Manage Saved Cards

@@ -160,6 +160,29 @@ All tickets must meet these criteria before being marked ✅:
 
 ---
 
+## PHASE 8.5 — Design Alignment
+
+| # | Ticket | Description | Status |
+|---|--------|-------------|--------|
+| T-31 | Plan Selector Redesign | Vertical radio layout, primary/secondary terms, purple badges, "+ other options!" | ⬜ |
+| T-32 | Payment Timeline Redesign | Card-based layout with SVG progress rings, "Upon checkout" label, scrollable | ⬜ |
+| T-33 | Payment Modal (Flexible Pay) | New modal with 3 payment type radio options (next/specific/full) | ⬜ |
+| T-34 | Flexible Payment Store Actions | `paySpecificAmount()` and `payFullBalance()` in useStore.ts | ⬜ |
+| T-35 | OrderCard Pay Button Update | Change "Pay $X" to "Pay", wire to PaymentModal | ⬜ |
+| T-36 | Phase 8.5 Unit Tests | Tests for paySpecificAmount, payFullBalance, and edge cases | ⬜ |
+| T-37 | Phase 8.5 E2E Tests | Playwright tests for plan selector, timeline, and payment modal | ⬜ |
+
+### Deliverables for Phase 8.5
+- [ ] Plan selector matches anyday.io design (vertical radio, progressive disclosure, purple badges)
+- [ ] Payment timeline uses card-based layout with circular progress rings
+- [ ] Payment modal offers 3 payment types with validation
+- [ ] Store handles specific-amount and full-balance payments correctly
+- [ ] All new components have `data-testid` attributes for automation
+- [ ] Unit tests pass for new store actions
+- [ ] E2E tests cover new UI flows
+
+---
+
 ## PHASE 9 — E2E Automation ✅
 
 | # | Task | Status |
@@ -186,4 +209,5 @@ React 19, Tailwind 4, Framer Motion 12, Zustand 5, Lucide React, Vitest, Playwri
 6. Risk/KYC ✅
 7. Cards ✅
 8. Polish ✅
+8.5. Design Alignment ← **next**
 9. E2E Automation ✅
