@@ -4,7 +4,7 @@
 
 ---
 
-### TC-DASH-30: Zero orders empty state
+### TC-DASH-24: Zero orders empty state
 **Account:** `fresh@koda.test`
 **Precondition:** Verified, credit limit $8,000, zero orders
 
@@ -20,7 +20,7 @@
 
 ---
 
-### TC-DASH-31: No "Active Purchases" or "Completed" headers when empty
+### TC-DASH-25: No "Active Purchases" or "Completed" headers when empty
 **Account:** `fresh@koda.test`
 
 | Step | Action | Expected Result |
@@ -32,7 +32,7 @@
 
 ---
 
-### TC-DASH-32: New unverified user combined state
+### TC-DASH-26: New unverified user combined state
 **Account:** `new@koda.test`
 **Precondition:** Not verified, $0 credit, no orders, no cards
 

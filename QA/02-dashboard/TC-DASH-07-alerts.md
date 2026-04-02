@@ -5,7 +5,7 @@ Tests the conditional alert banners at the top of the dashboard for locked, acti
 
 ---
 
-### TC-DASH-10: Locked account alert
+### TC-DASH-07: Locked account alert
 **Account:** `overdue@koda.test`
 
 | Step | Action | Expected Result |
@@ -19,7 +19,7 @@ Tests the conditional alert banners at the top of the dashboard for locked, acti
 
 ---
 
-### TC-DASH-11: Pay Now resolves locked state
+### TC-DASH-08: Pay Now resolves locked state
 **Account:** `overdue@koda.test`
 
 | Step | Action | Expected Result |
@@ -33,7 +33,7 @@ Tests the conditional alert banners at the top of the dashboard for locked, acti
 
 ---
 
-### TC-DASH-12: Action Required alert (expired card)
+### TC-DASH-09: Action Required alert (expired card)
 **Account:** `declined@koda.test`
 
 | Step | Action | Expected Result |
@@ -46,7 +46,7 @@ Tests the conditional alert banners at the top of the dashboard for locked, acti
 
 ---
 
-### TC-DASH-13: KYC verification alert (unverified user)
+### TC-DASH-10: KYC verification alert (unverified user)
 **Account:** `new@koda.test`
 
 | Step | Action | Expected Result |
@@ -59,7 +59,7 @@ Tests the conditional alert banners at the top of the dashboard for locked, acti
 
 ---
 
-### TC-DASH-14: KYC modal flow
+### TC-DASH-11: KYC modal flow
 **Account:** `new@koda.test`
 
 | Step | Action | Expected Result |
@@ -76,7 +76,7 @@ Tests the conditional alert banners at the top of the dashboard for locked, acti
 
 ---
 
-### TC-DASH-15: No alerts for healthy account
+### TC-DASH-12: No alerts for healthy account
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -86,7 +86,7 @@ Tests the conditional alert banners at the top of the dashboard for locked, acti
 
 ---
 
-### TC-DASH-16: KYC modal dismiss via backdrop
+### TC-DASH-13: KYC modal dismiss via backdrop
 **Account:** `new@koda.test`
 
 | Step | Action | Expected Result |

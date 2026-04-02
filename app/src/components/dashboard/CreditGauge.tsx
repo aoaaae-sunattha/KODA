@@ -45,7 +45,7 @@ export default function CreditGauge({ used, available, limit }: CreditGaugeProps
 
       <div className="flex justify-between mt-3">
         <span className="text-xs font-bold text-gray-400">
-          <Counter value={used} className="text-gray-900" /> used
+          <span data-testid="used-credit"><Counter value={used} className="text-gray-900" /></span> used
         </span>
         <div className="flex items-center gap-2">
           {statusLabel && (

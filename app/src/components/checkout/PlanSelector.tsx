@@ -75,9 +75,7 @@ export const PlanSelector: React.FC<PlanSelectorProps> = ({
               
               {isSelected && (
                 <motion.div
-                  layoutId="plan-active"
                   className="absolute inset-0 rounded-xl border-2 border-primary pointer-events-none"
-                  initial={false}
                   transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                 />
               )}

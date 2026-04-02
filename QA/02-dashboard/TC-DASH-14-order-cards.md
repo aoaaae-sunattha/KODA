@@ -5,7 +5,7 @@ Tests order card rendering, progress bar segments, tooltips, actions (pay, refun
 
 ---
 
-### TC-DASH-20: Active order card layout
+### TC-DASH-14: Active order card layout
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -18,7 +18,7 @@ Tests order card rendering, progress bar segments, tooltips, actions (pay, refun
 
 ---
 
-### TC-DASH-21: Progress bar segments and tooltips
+### TC-DASH-15: Progress bar segments and tooltips
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -30,7 +30,7 @@ Tests order card rendering, progress bar segments, tooltips, actions (pay, refun
 
 ---
 
-### TC-DASH-22: Refunded order - orange segment
+### TC-DASH-16: Refunded order - orange segment
 **Account:** `active@koda.test`
 **Precondition:** The "Luksus Baby" order has $180 refunded
 
@@ -44,7 +44,7 @@ Tests order card rendering, progress bar segments, tooltips, actions (pay, refun
 
 ---
 
-### TC-DASH-23: Pay Next Installment
+### TC-DASH-17: Pay Next Installment
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -59,7 +59,7 @@ Tests order card rendering, progress bar segments, tooltips, actions (pay, refun
 
 ---
 
-### TC-DASH-24: Pay all installments until completion
+### TC-DASH-18: Pay all installments until completion
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -72,7 +72,7 @@ Tests order card rendering, progress bar segments, tooltips, actions (pay, refun
 
 ---
 
-### TC-DASH-25: Refund button visibility rules
+### TC-DASH-19: Refund button visibility rules
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -84,7 +84,7 @@ Tests order card rendering, progress bar segments, tooltips, actions (pay, refun
 
 ---
 
-### TC-DASH-26: Simulate Failure
+### TC-DASH-20: Simulate Failure
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
@@ -97,7 +97,7 @@ Tests order card rendering, progress bar segments, tooltips, actions (pay, refun
 
 ---
 
-### TC-DASH-27: Overdue order card display
+### TC-DASH-21: Overdue order card display
 **Account:** `overdue@koda.test`
 
 | Step | Action | Expected Result |
@@ -110,7 +110,7 @@ Tests order card rendering, progress bar segments, tooltips, actions (pay, refun
 
 ---
 
-### TC-DASH-28: Completed orders section
+### TC-DASH-22: Completed orders section
 **Account:** `power@koda.test`
 **Precondition:** Has 2 completed + 2 active orders
 
@@ -125,7 +125,7 @@ Tests order card rendering, progress bar segments, tooltips, actions (pay, refun
 
 ---
 
-### TC-DASH-29: Active purchases count in header
+### TC-DASH-23: Active purchases count in header
 **Account:** `active@koda.test`
 
 | Step | Action | Expected Result |
