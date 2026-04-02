@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { PlanSelector } from '../../src/components/checkout/PlanSelector'
-import type { Term } from '../../src/data/types'
+import { PlanSelector } from '../../../src/components/checkout/PlanSelector'
+import type { Term } from '../../../src/data/types'
 import React from 'react'
 
 // Mock framer-motion to avoid animation issues in tests

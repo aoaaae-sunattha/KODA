@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { useCheckoutGuard } from '../../src/hooks/useCheckoutGuard'
-import { useStore } from '../../src/store/useStore'
+import { useCheckoutGuard } from '../../../src/hooks/useCheckoutGuard'
+import { useStore } from '../../../src/store/useStore'
 
 // Mock the store
-vi.mock('../../src/store/useStore', () => ({
+vi.mock('../../../src/store/useStore', () => ({
   useStore: vi.fn(),
 }))
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { calculatePlan, getAvailableTerms } from '../../src/data/feeRates'
+import { calculatePlan, getAvailableTerms } from '../../../src/data/feeRates'
 
 describe('feeRates logic', () => {
   describe('calculatePlan', () => {

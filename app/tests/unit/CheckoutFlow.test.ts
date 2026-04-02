@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { useStore } from '../src/store/useStore'
-import { calculatePlan, getAvailableTerms } from '../src/data/feeRates'
-import { SEED_PRODUCTS } from '../src/data/seedProducts'
+import { useStore } from '../../src/store/useStore'
+import { calculatePlan, getAvailableTerms } from '../../src/data/feeRates'
+import { SEED_PRODUCTS } from '../../src/data/seedProducts'
 
 describe('Checkout Flow & Payment Slicing (Phase 3)', () => {
   beforeEach(() => {
