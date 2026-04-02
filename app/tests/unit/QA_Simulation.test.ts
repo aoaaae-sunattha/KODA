@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { useStore } from '../src/store/useStore'
-import { SEED_PRODUCTS } from '../src/data/seedProducts'
+import { useStore } from '../../src/store/useStore'
+import { SEED_PRODUCTS } from '../../src/data/seedProducts'
 
 describe('QA Scenario Simulation', () => {
   beforeEach(() => {

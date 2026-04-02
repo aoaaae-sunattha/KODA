@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { useStore } from '../src/store/useStore'
+import { useStore } from '../../src/store/useStore'
 
 describe('Card Management (Phase 6)', () => {
   beforeEach(() => {

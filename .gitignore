@@ -25,3 +25,6 @@ test-results.txt
 .claude/
 .agents/
 .gstack/
+
+# Git worktrees
+.worktrees/

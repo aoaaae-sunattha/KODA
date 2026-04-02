@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { renderHook } from '@testing-library/react'
-import { useStore } from '../src/store/useStore'
-import { useCheckoutGuard } from '../src/hooks/useCheckoutGuard'
-import { SEED_PRODUCTS } from '../src/data/seedProducts'
+import { useStore } from '../../src/store/useStore'
+import { useCheckoutGuard } from '../../src/hooks/useCheckoutGuard'
+import { SEED_PRODUCTS } from '../../src/data/seedProducts'
 
 describe('Risk & Error States (Phase 5)', () => {
   beforeEach(() => {

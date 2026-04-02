@@ -28,6 +28,7 @@ This document outlines the high-level epics for the KODA BNPL mockup, prioritize
 **Goal:** Supporting settings for long-term usage.
 - **Payment Methods:** Manage saved Visa/Mastercard tokens.
 - **Manual Actions:** Options to pay early or pay off the full balance.
+- **Flexible Payment Modal:** "Pay" button opens a modal with 3 options — pay next installment, pay a specific amount, or pay off full balance. Requires `paySpecificAmount()` and `payFullBalance()` store actions.
 
 ## [PRIORITY 6] Epic 6: Merchant Lifecycle
 **Goal:** Back-office visibility (Backlog).

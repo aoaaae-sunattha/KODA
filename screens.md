@@ -25,13 +25,13 @@ Used by T-01 (routing) and all UI tickets as the ground truth for scope.
 | ID | Modal Name | Trigger | Parent Route | Status |
 |---|---|---|---|---|
 | M-01 | Checkout / Plan Selector | "Buy with KODA" on product / "New Purchase" CTA | `/store` or `/dashboard` | ⬜ |
-| M-02 | Payment Schedule Preview | Inside M-01, after selecting a plan | M-01 | ⬜ |
+| M-02 | Payment Schedule Preview | Inside M-01, after selecting a plan. Card-based timeline with circular progress rings per installment. | M-01 | ⬜ |
 | M-03 | ID Verify (KYC) | `useCheckoutGuard` when `user.verified = false` | M-01 | ⬜ |
 | M-04 | Refund Simulation | "Simulate Refund" on order card | `/dashboard` | ⬜ |
-| M-05 | Pay Next Installment Confirm | "Pay Next" on order card | `/dashboard` | ⬜ |
+| M-05 | Payment Modal (Flexible Pay) | "Pay" on order card. 3 radio options: next installment, specific amount, full balance. Combines M-05 + M-08. | `/dashboard` | ⬜ |
 | M-06 | Add Card | "Add new card" on cards page | `/settings/cards` | ⬜ |
 | M-07 | Payment Success | After M-01 confirm | `/dashboard` | ⬜ |
-| M-08 | Early Payoff Confirm | "Pay off full balance" on order card | `/dashboard` | ⬜ |
+| M-08 | ~~Early Payoff Confirm~~ | Merged into M-05 (Payment Modal) | `/dashboard` | N/A |
 
 ---
 
