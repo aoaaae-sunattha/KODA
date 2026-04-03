@@ -61,6 +61,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0.5 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            data-testid="checkout-modal"
             className="relative w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden"
           >
             {/* Header */}
@@ -76,6 +77,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
               <button
                 onClick={onClose}
+                data-testid="checkout-close"
                 className="p-2 hover:bg-slate-200 rounded-full transition-colors"
               >
                 <X className="w-5 h-5 text-slate-400" />

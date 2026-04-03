@@ -25,6 +25,8 @@ interface AppState {
 
   createOrder: (product: Product, term: Term) => void
   payInstallment: (orderId: string) => void
+  paySpecificAmount: (orderId: string, amount: number) => void
+  payFullBalance: (orderId: string) => void
   simulateRefund: (orderId: string, amount: number) => void
   verifyKYC: () => void
   lockAccount: () => void
@@ -145,6 +147,55 @@ export const useStore = create<AppState>()(persist((set, get) => ({
           ...order,
           paidCount: newPaidCount,
           status: allPaid ? 'completed' as const : 'active' as const,
+          installments: updatedInstallments,
+        }
+      }),
+    }))
+  },
+
+  // ─── PAY SPECIFIC AMOUNT ──────────────────────────────────────────────────
+  paySpecificAmount: (orderId: string, amount: number) => {
+    if (amount <= 0) return
+    set(state => ({
+      orders: state.orders.map(order => {
+        if (order.id !== orderId) return order
+        let remaining = amount
+        let newPaidCount = order.paidCount
+        const updatedInstallments = order.installments.map(inst => {
+          if (inst.status === 'paid' || remaining <= 0) return inst
+          if (remaining >= inst.amount) {
+            remaining -= inst.amount
+            newPaidCount++
+            return { ...inst, status: 'paid' as const }
+          } else {
+            const newAmount = inst.amount - remaining
+            remaining = 0
+            return { ...inst, amount: newAmount }
+          }
+        })
+        const allPaid = updatedInstallments.every(i => i.status === 'paid')
+        return {
+          ...order,
+          paidCount: newPaidCount,
+          status: allPaid ? 'completed' as const : order.status,
+          installments: updatedInstallments,
+        }
+      }),
+    }))
+  },
+
+  // ─── PAY FULL BALANCE ─────────────────────────────────────────────────────
+  payFullBalance: (orderId: string) => {
+    set(state => ({
+      orders: state.orders.map(order => {
+        if (order.id !== orderId || order.status === 'completed') return order
+        const updatedInstallments = order.installments.map(inst =>
+          inst.status !== 'paid' ? { ...inst, status: 'paid' as const } : inst
+        )
+        return {
+          ...order,
+          paidCount: order.term,
+          status: 'completed' as const,
           installments: updatedInstallments,
         }
       }),

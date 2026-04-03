@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { TERMS, calculatePlan, TERM_THRESHOLDS } from '../../data/feeRates'
 import type { Term } from '../../data/types'
 import { formatCurrency } from '../../utils/format'
+
+const PRIMARY_TERMS: Term[] = [4, 10, 18, 24]
 
 interface PlanSelectorProps {
   price: number
@@ -15,77 +17,97 @@ export const PlanSelector: React.FC<PlanSelectorProps> = ({
   selectedTerm,
   onTermSelect,
 }) => {
+  const [showOtherOptions, setShowOtherOptions] = useState(false)
+
   const plans = useMemo(
     () => Object.fromEntries(TERMS.map(t => [t, calculatePlan(price, t)])) as Record<Term, ReturnType<typeof calculatePlan>>,
     [price]
   )
   const selectedPlan = plans[selectedTerm]
 
+  const visibleTerms: Term[] = useMemo(() => {
+    if (!showOtherOptions) return PRIMARY_TERMS
+    return [...TERMS].sort((a, b) => a - b)
+  }, [showOtherOptions])
+
+  const renderTermRow = (term: Term) => {
+    const isSelected = selectedTerm === term
+    const isAvailable = price >= TERM_THRESHOLDS[term]
+
+    return (
+      <button
+        key={term}
+        data-testid={`plan-option-${term}`}
+        disabled={!isAvailable}
+        onClick={() => isAvailable && onTermSelect(term)}
+        className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-200 text-left ${
+          isSelected
+            ? 'bg-primary/5 ring-1 ring-primary'
+            : isAvailable
+              ? 'bg-white hover:bg-gray-50 cursor-pointer'
+              : 'bg-gray-50/50 opacity-40 cursor-not-allowed'
+        }`}
+      >
+        {/* Radio circle */}
+        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+          isSelected ? 'border-primary bg-primary' : 'border-gray-300'
+        }`}>
+          {isSelected && <div className="w-2 h-2 rounded-full bg-white" />}
+        </div>
+
+        {/* Term label */}
+        <span className={`flex-1 font-semibold ${isSelected ? 'text-primary' : 'text-gray-900'}`}>
+          {term} Payments
+        </span>
+
+        {/* Badges */}
+        {term === 4 && isAvailable && (
+          <span
+            data-testid="plan-badge-free"
+            className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-primary text-white uppercase"
+          >
+            free
+          </span>
+        )}
+        {term === 24 && isAvailable && (
+          <span
+            data-testid="plan-badge-flexible"
+            className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-primary text-white uppercase"
+          >
+            most flexible
+          </span>
+        )}
+
+        {/* Threshold label for disabled terms */}
+        {!isAvailable && (
+          <span className="text-[10px] font-bold text-gray-400 uppercase">
+            {formatCurrency(TERM_THRESHOLDS[term])}+
+          </span>
+        )}
+      </button>
+    )
+  }
+
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-4 gap-2">
-        {TERMS.map((term) => {
-          const plan = plans[term]
-          const isSelected = selectedTerm === term
-          const isAvailable = price >= TERM_THRESHOLDS[term]
-
-          return (
-            <button
-              key={term}
-              disabled={!isAvailable}
-              onClick={() => onTermSelect(term)}
-              className={`relative flex flex-col items-center justify-center p-3 py-4 rounded-xl border-2 transition-all duration-200 text-center group ${
-                isSelected
-                  ? 'border-primary bg-primary/5 ring-1 ring-primary'
-                  : isAvailable
-                    ? 'border-slate-100 bg-white hover:border-slate-200 cursor-pointer'
-                    : 'border-slate-50 bg-slate-50/50 opacity-40 cursor-not-allowed'
-              }`}
-            >
-              <span className={`text-[10px] font-bold uppercase tracking-wider mb-1 ${
-                isSelected ? 'text-primary' : 'text-slate-400 group-hover:text-slate-500'
-              }`}>
-                {term} Months
-              </span>
-              <span className="text-sm font-black text-slate-900 leading-none">
-                {formatCurrency(plan.monthly)}
-              </span>
-
-              {isAvailable && (
-                <div className="mt-1.5 h-4 flex items-center justify-center">
-                  {term === 4 ? (
-                    <span className="px-1.5 py-0.5 rounded-[4px] text-[8px] font-bold bg-success/10 text-success uppercase">
-                      Free
-                    </span>
-                  ) : plan.fee > 0 ? (
-                    <span className="text-[8px] font-bold text-slate-400">
-                      +{formatCurrency(plan.fee)} fee
-                    </span>
-                  ) : null}
-                </div>
-              )}
-              
-              {!isAvailable && (
-                <div className="absolute inset-x-0 -bottom-2 flex justify-center">
-                  <span className="bg-slate-200 text-slate-500 text-[8px] font-bold px-1 rounded uppercase">
-                    ${TERM_THRESHOLDS[term]}+
-                  </span>
-                </div>
-              )}
-              
-              {isSelected && (
-                <motion.div
-                  className="absolute inset-0 rounded-xl border-2 border-primary pointer-events-none"
-                  transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-            </button>
-          )
-        })}
+      {/* Term list */}
+      <div className="bg-gray-50 rounded-2xl p-2 space-y-1">
+        {visibleTerms.map(renderTermRow)}
       </div>
 
+      {/* Expand link */}
+      {!showOtherOptions && (
+        <button
+          data-testid="expand-other-options"
+          onClick={() => setShowOtherOptions(true)}
+          className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors pl-2"
+        >
+          + other options!
+        </button>
+      )}
+
       {/* Summary Card */}
-      <motion.div 
+      <motion.div
         key={selectedTerm}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

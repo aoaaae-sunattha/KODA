@@ -21,7 +21,7 @@ test('TC-SMOKE-01: Critical path — Login → Store → BNPL → Dashboard', as
   await expect(page).toHaveURL(/.*dashboard/);
 
   // Step 2: Navigate to store
-  await page.getByRole('link', { name: /store/i }).click();
+  await page.getByTestId('nav-link-shop').click();
   await expect(page).toHaveURL(/.*store/);
 
   // Step 3: Open checkout on first product
