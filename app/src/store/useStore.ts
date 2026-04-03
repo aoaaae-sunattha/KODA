@@ -164,11 +164,11 @@ export const useStore = create<AppState>()(persist((set, get) => ({
         const updatedInstallments = order.installments.map(inst => {
           if (inst.status === 'paid' || remaining <= 0) return inst
           if (remaining >= inst.amount) {
-            remaining -= inst.amount
+            remaining = Math.round((remaining - inst.amount) * 100) / 100
             newPaidCount++
             return { ...inst, status: 'paid' as const }
           } else {
-            const newAmount = inst.amount - remaining
+            const newAmount = Math.round((inst.amount - remaining) * 100) / 100
             remaining = 0
             return { ...inst, amount: newAmount }
           }
