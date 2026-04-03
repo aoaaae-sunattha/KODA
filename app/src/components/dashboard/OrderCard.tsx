@@ -3,9 +3,10 @@ import { useState } from 'react'
 import { useStore } from '../../store/useStore'
 import { formatCurrency, formatShortDate } from '../../utils/format'
 import type { Order } from '../../data/types'
-import { ChevronRight, Undo2 } from 'lucide-react'
+import { ChevronRight, Undo2, CalendarDays } from 'lucide-react'
 import { RefundModal } from './RefundModal'
 import { PaymentModal } from './PaymentModal'
+import { PaymentTimeline } from '../checkout/PaymentTimeline'
 
 interface OrderCardProps {
   order: Order
@@ -16,6 +17,7 @@ export default function OrderCard({ order }: OrderCardProps) {
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null)
   const [isRefundModalOpen, setIsRefundModalOpen] = useState(false)
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
+  const [isScheduleVisible, setIsScheduleVisible] = useState(false)
 
   const paidAmount = order.installments
     .filter(i => i.status === 'paid')
@@ -132,10 +134,36 @@ export default function OrderCard({ order }: OrderCardProps) {
 
       <div className="flex justify-between items-center text-xs font-bold text-gray-400 mb-6 uppercase tracking-wider">
         <span>{order.paidCount} / {order.term} Payments</span>
-        {nextUnpaid && order.status !== 'completed' && (
-          <span className="text-gray-900">Next: {formatShortDate(nextUnpaid.dueDate)}</span>
-        )}
+        <div className="flex items-center gap-4">
+          {nextUnpaid && order.status !== 'completed' && (
+            <span className="text-gray-900">Next: {formatShortDate(nextUnpaid.dueDate)}</span>
+          )}
+          <button 
+            onClick={() => setIsScheduleVisible(!isScheduleVisible)}
+            className="flex items-center gap-1.5 text-[#5D5FEF] hover:opacity-80 transition-opacity"
+            data-testid="toggle-schedule-btn"
+          >
+            <CalendarDays size={14} />
+            {isScheduleVisible ? 'Hide Schedule' : 'View Schedule'}
+          </button>
+        </div>
       </div>
+
+      {/* Expandable Schedule */}
+      <AnimatePresence>
+        {isScheduleVisible && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden mb-6"
+          >
+            <div className="pt-2 pb-4 border-t border-gray-50">
+               <PaymentTimeline installments={order.installments} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Actions */}
       {order.status !== 'completed' && (
