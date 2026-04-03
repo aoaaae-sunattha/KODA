@@ -88,7 +88,7 @@ jobs:
       # Generate markdown report
       - name: Generate report
         if: always()
-        run: node scripts/generate-e2e-report.mjs
+        run: node tests/e2e/helpers/generate-e2e-report.mjs
 
       # Upload HTML report as artifact
       - name: Upload Playwright report
