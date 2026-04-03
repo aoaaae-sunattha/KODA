@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { PlanSelector } from '../../../src/components/checkout/PlanSelector'
 import type { Term } from '../../../src/data/types'
@@ -15,46 +15,59 @@ vi.mock('framer-motion', () => ({
 describe('PlanSelector Component', () => {
   const mockOnTermSelect = vi.fn()
   const defaultProps = {
-    price: 1000,
+    price: 20000, // High enough to unlock all terms (including term 24 threshold 15000)
     selectedTerm: 4 as Term,
     onTermSelect: mockOnTermSelect,
   }
 
-  it('renders available terms for the price', () => {
-    render(<PlanSelector {...defaultProps} />)
-    // For $1000, terms 4, 6, 8 should be available
-    expect(screen.getByText('4 Months')).toBeDefined()
-    expect(screen.getByText('6 Months')).toBeDefined()
-    expect(screen.getByText('8 Months')).toBeDefined()
+  beforeEach(() => {
+    mockOnTermSelect.mockClear()
   })
 
-  it('shows "Free" badge only for term 4', () => {
+  it('renders primary terms (4, 10, 18, 24) by default', () => {
     render(<PlanSelector {...defaultProps} />)
-    const freeBadge = screen.getByText('Free')
-    expect(freeBadge).toBeDefined()
-    
-    // Check that it's associated with 4 Months (simplified check)
-    const buttons = screen.getAllByRole('button')
-    expect(buttons[0].innerHTML).toContain('Free')
-    expect(buttons[1].innerHTML).not.toContain('Free')
+    expect(screen.getByTestId('plan-option-4')).toBeDefined()
+    expect(screen.getByTestId('plan-option-10')).toBeDefined()
+    expect(screen.getByTestId('plan-option-18')).toBeDefined()
+    expect(screen.getByTestId('plan-option-24')).toBeDefined()
   })
 
-  it('calculates and displays fees for extended terms', () => {
+  it('hides secondary terms (6, 8, 12) by default', () => {
     render(<PlanSelector {...defaultProps} />)
-    // $1000 at term 6 has a fee (3.98% = $40)
-    expect(screen.getByText('+$40 fee')).toBeDefined()
+    expect(screen.queryByTestId('plan-option-6')).toBeNull()
+    expect(screen.queryByTestId('plan-option-8')).toBeNull()
+    expect(screen.queryByTestId('plan-option-12')).toBeNull()
   })
 
-  it('calls onTermSelect when a different term is clicked', () => {
+  it('shows secondary terms after clicking "+ other options!"', () => {
     render(<PlanSelector {...defaultProps} />)
-    fireEvent.click(screen.getByText('6 Months'))
-    expect(mockOnTermSelect).toHaveBeenCalledWith(6)
+    fireEvent.click(screen.getByTestId('expand-other-options'))
+    expect(screen.getByTestId('plan-option-6')).toBeDefined()
+    expect(screen.getByTestId('plan-option-8')).toBeDefined()
+    expect(screen.getByTestId('plan-option-12')).toBeDefined()
   })
 
-  it('displays correct summary for selected term', () => {
-    render(<PlanSelector {...defaultProps} selectedTerm={6 as Term} />)
-    // $1000 / 6 = 166 monthly. Fee = 40. First payment = 166 + 40 = 206
-    expect(screen.getByText('$206')).toBeDefined() // First payment
-    expect(screen.getByText('$1,040')).toBeDefined() // Total
+  it('shows "free" badge on term 4', () => {
+    render(<PlanSelector {...defaultProps} />)
+    expect(screen.getByTestId('plan-badge-free')).toBeDefined()
+  })
+
+  it('shows "most flexible" badge on term 24', () => {
+    render(<PlanSelector {...defaultProps} />)
+    expect(screen.getByTestId('plan-badge-flexible')).toBeDefined()
+  })
+
+  it('calls onTermSelect when a term is clicked', () => {
+    render(<PlanSelector {...defaultProps} />)
+    fireEvent.click(screen.getByTestId('plan-option-10'))
+    expect(mockOnTermSelect).toHaveBeenCalledWith(10)
+  })
+
+  it('disables terms above price threshold', () => {
+    render(<PlanSelector {...{ ...defaultProps, price: 500 }} />)
+    // $500 only qualifies for term 4 (threshold 300)
+    // term 10 threshold is 2000, should be disabled
+    const term10 = screen.getByTestId('plan-option-10')
+    expect(term10.getAttribute('disabled')).not.toBeNull()
   })
 })

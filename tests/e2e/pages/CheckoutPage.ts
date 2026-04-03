@@ -16,26 +16,26 @@ export class CheckoutPage {
   constructor(page: Page) {
     this.page = page;
     this.modal = page.getByTestId('checkout-modal');
-    this.confirmButton = page.getByTestId('checkout-confirm');
+    this.confirmButton = page.getByTestId('checkout-confirm-btn');
     this.closeButton = page.getByTestId('checkout-close');
   }
 
   /** Click "Buy with KODA" on the first visible product card */
   async openCheckout() {
-    await this.page.getByTestId('buy-with-koda').first().click();
+    await this.page.getByTestId('buy-with-koda-btn').first().click();
   }
 
   /** Click "Buy with KODA" on a specific product by name */
   async openCheckoutFor(productName: string) {
     await this.page
       .locator('[data-testid="product-card"]', { hasText: productName })
-      .getByTestId('buy-with-koda')
+      .getByTestId('buy-with-koda-btn')
       .click();
   }
 
-  /** Select a plan term pill (e.g., 4, 6, 8) */
+  /** Select a plan term (e.g., 4, 10, 24) */
   async selectTerm(term: Term) {
-    await this.page.getByTestId(`term-pill-${term}`).click();
+    await this.page.getByTestId(`plan-option-${term}`).click();
   }
 
   /** Click the Confirm Purchase button */

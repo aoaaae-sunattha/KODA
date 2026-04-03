@@ -5,15 +5,17 @@ import { formatCurrency, formatShortDate } from '../../utils/format'
 import type { Order } from '../../data/types'
 import { ChevronRight, Undo2 } from 'lucide-react'
 import { RefundModal } from './RefundModal'
+import { PaymentModal } from './PaymentModal'
 
 interface OrderCardProps {
   order: Order
 }
 
 export default function OrderCard({ order }: OrderCardProps) {
-  const { payInstallment, simulateFailure } = useStore()
+  const { payInstallment, paySpecificAmount, payFullBalance, simulateFailure } = useStore()
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null)
   const [isRefundModalOpen, setIsRefundModalOpen] = useState(false)
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
 
   const paidAmount = order.installments
     .filter(i => i.status === 'paid')
@@ -140,11 +142,11 @@ export default function OrderCard({ order }: OrderCardProps) {
         <div className="flex gap-3">
           {nextUnpaid && (
             <button
-              onClick={() => payInstallment(order.id)}
-              data-testid="pay-installment-btn"
+              onClick={() => setIsPaymentModalOpen(true)}
+              data-testid="pay-btn"
               className="flex-1 py-3 px-4 rounded-2xl bg-[#5D5FEF] text-white text-sm font-bold shadow-lg shadow-[#5D5FEF]/20 hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
-              Pay {formatCurrency(nextUnpaid.amount)}
+              Pay
               <ChevronRight size={16} />
             </button>
           )}
@@ -175,6 +177,26 @@ export default function OrderCard({ order }: OrderCardProps) {
         order={order}
         isOpen={isRefundModalOpen}
         onClose={() => setIsRefundModalOpen(false)}
+      />
+
+      <PaymentModal
+        order={order}
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        onConfirm={(type, amount) => {
+          switch (type) {
+            case 'next':
+              payInstallment(order.id)
+              break
+            case 'specific':
+              paySpecificAmount(order.id, amount)
+              break
+            case 'full':
+              payFullBalance(order.id)
+              break
+          }
+          setIsPaymentModalOpen(false)
+        }}
       />
     </motion.div>
   )
