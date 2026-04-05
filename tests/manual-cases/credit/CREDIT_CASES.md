@@ -2,6 +2,12 @@
 
 These cases cover the visual and logical states of the Credit Gauge on the Dashboard, ensuring it accurately reflects user credit utilization and limits.
 
+**Note for Automation:** Use the following mock user mappings:
+- TC-CRDT-001: `fresh@koda.test` ($8,000, 0%)
+- TC-CRDT-002: (Not currently mapped, use active@koda.test and calculate)
+- TC-CRDT-003: `active@koda.test` ($10,000, 22% used, but can be scaled for test)
+- TC-CRDT-004: `maxed@koda.test` ($10,000, 99%)
+
 ## [TC-CRDT-001] Gauge - Initial/Full Available State
 **Description:** Verify the gauge shows 100% available credit for a new or zero-balance user.
 - **Preconditions:** User logged in with `totalLimit: 5000` and `usedCredit: 0`.
@@ -33,7 +39,7 @@ These cases cover the visual and logical states of the Credit Gauge on the Dashb
 - **Expected:** 
   - Gauge fill is at 40% (Available).
   - Text displays "$2,000 available".
-  - [BVA] Gauge color shifts or displays a warning state/hint if configured for >60% usage.
+  - [BVA] Gauge color shifts to Amber (60-89% utilization).
 
 ## [TC-CRDT-004] Gauge - Near Limit (90% Utilization)
 **Description:** Verify the gauge reflects "Near Limit" state at 90% utilization.
@@ -44,7 +50,7 @@ These cases cover the visual and logical states of the Credit Gauge on the Dashb
 - **Expected:** 
   - Gauge fill is at 10% (Available).
   - Text displays "$500 available".
-  - [BVA] Gauge displays high-utilization warning (e.g., Orange/Yellow).
+  - [BVA] Gauge color shifts to RED (#EF4444) at >=90% utilization.
 
 ## [TC-CRDT-005] Gauge - Fully Exhausted Limit
 **Description:** Verify the gauge shows 0% available when limit is reached.
