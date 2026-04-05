@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .folder-tree { font-family: monospace; background: #f4f4f4; padding: 15px; border-radius: 8px; }
+        .feature { color: #5D5FEF; font-weight: bold; margin-top: 10px; }
+        .sub-feature { color: #3EB489; margin-left: 20px; }
+        .test-case { color: #666; margin-left: 40px; }
+    </style>
+</head>
+<body>
+    <div class="folder-tree">
+        /tests/e2e/regression<br>
+        ├── <span class="feature">login/</span><br>
+        │   ├── <span class="sub-feature">auth-methods/</span><br>
+        │   │   ├── TC-LOGIN-02-email-success.spec.ts<br>
+        │   │   └── TC-LOGIN-18-google-success.spec.ts<br>
+        │   └── <span class="sub-feature">validation/</span><br>
+        │       ├── TC-LOGIN-04-invalid-email.spec.ts<br>
+        │       └── TC-LOGIN-16-attribute-checks.spec.ts<br>
+        ├── <span class="feature">checkout/</span><br>
+        │   ├── <span class="sub-feature">slicing-logic/</span><br>
+        │   │   ├── TC-CHKT-01-four-installments.spec.ts<br>
+        │   │   └── TC-CHKT-02-six-installments-with-fee.spec.ts<br>
+        │   └── <span class="sub-feature">kyc-gate/</span><br>
+        │       └── TC-CHKT-05-block-unverified.spec.ts<br>
+        └── <span class="feature">dashboard/</span><br>
+            ├── <span class="sub-feature">payments/</span><br>
+            │   └── TC-DASH-01-pay-installment.spec.ts<br>
+            └── <span class="sub-feature">refunds/</span><br>
+                └── TC-DASH-10-refund-last-first.spec.ts
+    </div>
+</body>
+</html>

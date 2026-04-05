@@ -53,3 +53,15 @@
 - **Expected:**
   - "Confirm Payment" button is disabled OR an error message "Amount must be greater than 0" appears.
   - No payment is processed.
+
+## TC-PYMT-006: Amount Exceeds Remaining Balance (Boundary)
+- **Priority:** P1
+- **Context:** Order has total remaining balance of $200.
+- **Steps:**
+  1. Select "Pay specific amount".
+  2. Enter **$250**.
+  3. Click "Confirm".
+- **Expected:**
+  - Error message "Amount cannot exceed remaining balance of $200".
+  - "Confirm Payment" button is disabled.
+  - No payment is processed.
