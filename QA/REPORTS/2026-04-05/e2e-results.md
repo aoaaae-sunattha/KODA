@@ -2,18 +2,40 @@
 
 **Date:** 2026-04-05
 **Service:** Koda Pay
-**Duration:** 50.3s
+**Duration:** 65.2s
 
 ## Summary
 
 | Total | Passed | Failed | Skipped | Status |
 |-------|--------|--------|---------|--------|
-| 29 | 28 | 1 | 0 | FAIL |
+| 51 | 50 | 1 | 0 | FAIL |
 
 ## Test Results
 
 | Test | Status |
 |------|--------|
+| TC-LOGIN-01: Login page renders correctly @smoke @auth | PASS |
+| TC-LOGIN-01: Login page renders correctly @smoke @auth | PASS |
+| TC-LOGIN-15: Demo shortcut data-binding @regression @auth | PASS |
+| TC-LOGIN-15: Demo shortcut data-binding @regression @auth | PASS |
+| TC-LOGIN-13: Form submission via Enter key @regression @auth | PASS |
+| TC-LOGIN-13: Form submission via Enter key @regression @auth | PASS |
+| TC-LOGIN-16: Input field attribute validation @regression @auth | PASS |
+| TC-LOGIN-16: Input field attribute validation @regression @auth | PASS |
+| TC-LOGIN-04: Invalid email (verify error message) @regression @auth | PASS |
+| TC-LOGIN-04: Invalid email (verify error message) @regression @auth | PASS |
+| TC-LOGIN-03: Login with mock account active@koda.test @regression @auth | PASS |
+| TC-LOGIN-03: Login with mock account overdue@koda.test @regression @auth | PASS |
+| TC-LOGIN-03: Login with mock account merchant@koda.test @regression @auth | PASS |
+| TC-LOGIN-03: Login with mock account active@koda.test @regression @auth | PASS |
+| TC-LOGIN-03: Login with mock account overdue@koda.test @regression @auth | PASS |
+| TC-LOGIN-03: Login with mock account merchant@koda.test @regression @auth | PASS |
+| TC-LOGIN-17: Verification of Automation Selectors (Data-TestIDs) @regression @auth | PASS |
+| TC-LOGIN-17: Verification of Automation Selectors (Data-TestIDs) @regression @auth | PASS |
+| TC-LOGIN-14: Session persistence on page refresh @regression @auth | PASS |
+| TC-LOGIN-14: Session persistence on page refresh @regression @auth | PASS |
+| TC-LOGIN-02: Successful login with valid email @regression @auth | PASS |
+| TC-LOGIN-02: Successful login with valid email @regression @auth | PASS |
 | TC-DASH-01: Healthy credit state (< 60% used) | PASS |
 | TC-DASH-02: Near-limit credit state (>= 90% used) | PASS |
 | TC-DASH-03: Zero credit (new unverified user) | PASS |
