@@ -34,14 +34,15 @@
 - **Expected:** 
   - Successful login to `/dashboard`.
   - Application logic trims and lowercases input before matching.
+- **Note:** [Verify First] Check if app actually trims/normalizes before automating.
 
 ## TC-AUTH-004: Session Persistence (Positive)
 - **Priority:** P1
 - **User:** `active@koda.test`
+- **Precondition:** User is logged in successfully.
 - **Steps:**
-  1. Log in successfully.
-  2. Close the browser tab.
-  3. Re-open the tab and navigate to `/dashboard`.
+  1. Close the browser tab.
+  2. Re-open the tab and navigate to `/dashboard`.
 - **Expected:** 
   - User is still logged in (Zustand persist middleware).
   - No need to re-authenticate.
@@ -49,8 +50,51 @@
 ## TC-AUTH-005: Logout Flow (Happy Path)
 - **Priority:** P1
 - **User:** `active@koda.test`
+- **Precondition:** User is logged in successfully.
 - **Steps:**
   1. Click the Logout button in the navigation.
 - **Expected:** 
   - Redirect to `/login`.
   - Navigating back to `/dashboard` redirects user to `/login` (Auth Guard).
+  - Zustand state (user object) is cleared from localStorage.
+
+## TC-AUTH-006: Merchant Routing (Happy Path)
+- **Priority:** P1
+- **User:** `active@koda.test`
+- **Precondition:** User is logged out.
+- **Steps:**
+  1. Navigate to `/merchant`.
+  2. Enter `active@koda.test`.
+  3. Click "Log In".
+- **Expected:** 
+  - Successful login to `/merchant` dashboard.
+  - Redirect logic respects the portal entry point.
+
+## TC-AUTH-007: Auth Guard (Security)
+- **Priority:** P0
+- **User:** Guest (Logged out)
+- **Steps:**
+  1. Manually navigate to `/dashboard`, `/cards`, or `/store` while logged out.
+- **Expected:** 
+  - Redirect to `/login` immediately.
+  - Protected routes are inaccessible to unauthenticated users.
+
+## TC-AUTH-008: Declined Card User (Negative)
+- **Priority:** P1
+- **User:** `declined@koda.test`
+- **Steps:**
+  1. Log in with `declined@koda.test`.
+- **Expected:** 
+  - Successful login.
+  - Dashboard displays "Action Required" state for the primary card.
+  - Red banner or warning visible in the header/dashboard.
+
+## TC-AUTH-009: New User / KYC Deferred (Logic)
+- **Priority:** P1
+- **User:** `new@koda.test`
+- **Steps:**
+  1. Log in with `new@koda.test`.
+- **Expected:** 
+  - Successful login.
+  - Dashboard shows "Unverified" state.
+  - Credit limit visible but cannot be used until KYC is complete.
