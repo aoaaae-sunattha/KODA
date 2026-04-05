@@ -100,3 +100,98 @@
   - Successful login.
   - Dashboard shows "Unverified" state.
   - Credit limit visible but cannot be used until KYC is complete.
+
+## TC-AUTH-010: Empty Email Submit (Boundary)
+- **Priority:** P1
+- **Steps:**
+  1. Navigate to `/login`.
+  2. Leave email field empty.
+  3. Enter any password.
+  4. Click "Log In".
+- **Expected:** 
+  - Browser-native validation tooltip appears ("Please fill out this field").
+  - Form is not submitted.
+
+## TC-AUTH-011: Empty Password Submit (Boundary)
+- **Priority:** P1
+- **Steps:**
+  1. Navigate to `/login`.
+  2. Enter valid email.
+  3. Leave password field empty.
+  4. Click "Log In".
+- **Expected:** 
+  - Browser-native validation tooltip appears.
+  - Form is not submitted.
+
+## TC-AUTH-012: Invalid Email Format (Negative)
+- **Priority:** P1
+- **Steps:**
+  1. Navigate to `/login`.
+  2. Enter "notanemail".
+  3. Enter any password.
+  4. Click "Log In".
+- **Expected:** 
+  - Browser-native validation tooltip appears (e.g., "Please include an '@' in the email address").
+  - Form is not submitted.
+
+## TC-AUTH-013: Password is not Validated (Mock Behavior)
+- **Priority:** P2
+- **User:** `active@koda.test`
+- **Steps:**
+  1. Navigate to `/login`.
+  2. Enter `active@koda.test`.
+  3. Enter any string as password (even whitespace).
+  4. Click "Log In".
+- **Expected:** 
+  - Successful login to `/dashboard`.
+  - Password field is present but value is not checked by mock auth logic.
+
+## TC-AUTH-014: Demo Account Quick-Fill Button (Happy Path)
+- **Priority:** P1
+- **Steps:**
+  1. Navigate to `/login`.
+  2. Click the `active@koda.test` link in the "Try a demo account" panel.
+  3. Click "Log In".
+- **Expected:** 
+  - Email field is populated with `active@koda.test`.
+  - Successful login to `/dashboard`.
+
+## TC-AUTH-015: Error State Clears on Valid Re-attempt (Edge)
+- **Priority:** P2
+- **Steps:**
+  1. Navigate to `/login`.
+  2. Enter unknown email `ghost@koda.test` and click "Log In".
+  3. Verify error message "No account found for this email." is displayed.
+  4. Enter valid email `active@koda.test` and click "Log In".
+- **Expected:** 
+  - Error message disappears on new attempt.
+  - Successful redirect to `/dashboard`.
+
+## TC-AUTH-016: Overdue/Locked User Login (Happy Path)
+- **Priority:** P1
+- **User:** `overdue@koda.test`
+- **Steps:**
+  1. Log in with `overdue@koda.test`.
+- **Expected:** 
+  - Successful login.
+  - Redirect to `/dashboard`.
+  - Dashboard shows locked account state / overdue banner.
+
+## TC-AUTH-017: RequireMerchant Guard — Non-Merchant Blocked (Security)
+- **Priority:** P1
+- **Precondition:** Logged in as `active@koda.test` (shopper role).
+- **Steps:**
+  1. Manually navigate to `/merchant`.
+- **Expected:** 
+  - Redirect to `/dashboard`.
+  - Merchant portal is restricted to users with 'merchant' role.
+
+## TC-AUTH-018: Already-authenticated User visits /login (Edge)
+- **Priority:** P3
+- **Precondition:** User is logged in.
+- **Steps:**
+  1. Navigate to `/login`.
+- **Expected:** 
+  - Login page renders normally.
+  - User can see the login form while still being authenticated (no auto-redirect).
+  - Potential UX gap — documented as known behavior.
