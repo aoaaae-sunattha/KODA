@@ -1,22 +1,19 @@
 # E2E Test Report
 
-**Date:** 2026-04-03
+**Date:** 2026-04-05
 **Service:** Koda Pay
-**Duration:** 52.0s
+**Duration:** 50.3s
 
 ## Summary
 
 | Total | Passed | Failed | Skipped | Status |
 |-------|--------|--------|---------|--------|
-| 29 | 29 | 0 | 0 | PASS |
+| 29 | 28 | 1 | 0 | FAIL |
 
 ## Test Results
 
 | Test | Status |
 |------|--------|
-| TC-SMOKE-01: Critical path — Login → Store → BNPL → Dashboard | PASS |
-| TC-SMOKE-02: Auth guard blocks unauthenticated access | PASS |
-| TC-SMOKE-03: Merchant guard blocks shoppers from /merchant | PASS |
 | TC-DASH-01: Healthy credit state (< 60% used) | PASS |
 | TC-DASH-02: Near-limit credit state (>= 90% used) | PASS |
 | TC-DASH-03: Zero credit (new unverified user) | PASS |
@@ -25,7 +22,7 @@
 | expands secondary terms when "+ other options!" is clicked | PASS |
 | shows free badge on term 4 and most flexible on term 24 | PASS |
 | renders timeline cards with progress rings | PASS |
-| first card shows "Upon checkout" | PASS |
+| first card shows "Upon checkout" | FAIL |
 | opens payment modal when Pay button is clicked | PASS |
 | shows all 3 payment options | PASS |
 | pay next installment updates order card | PASS |
@@ -43,3 +40,6 @@
 | TC-LOGIN-15: Demo shortcut data-binding | PASS |
 | TC-LOGIN-16: Input field attribute validation | PASS |
 | TC-LOGIN-17: Verification of Automation Selectors (Data-TestIDs) | PASS |
+| TC-SMOKE-01: Critical path — Login → Store → BNPL → Dashboard | PASS |
+| TC-SMOKE-02: Auth guard blocks unauthenticated access | PASS |
+| TC-SMOKE-03: Merchant guard blocks shoppers from /merchant | PASS |
