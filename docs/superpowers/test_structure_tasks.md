@@ -71,12 +71,12 @@ The config must switch to tag-based `grep` so smoke/regression execution still w
 
 ---
 
-## Phase 2 — Extract `login.spec.ts` → `tests/e2e/auth/`
+## Phase 2 — Extract `login.spec.ts` → `tests/e2e/auth/` [x]
 
 8 tests → 8 atomic files + 1 parametrized exception.
 
-- [ ] **2.1** Create `tests/e2e/auth/` directory
-- [ ] **2.2** Extract each test, adding tags to the `test()` call:
+- [x] **2.1** Create `tests/e2e/auth/` directory
+- [x] **2.2** Extract each test, adding tags to the `test()` call:
 
   | New file | TC | Tags |
   |---|---|---|
@@ -95,8 +95,8 @@ The config must switch to tag-based `grep` so smoke/regression execution still w
   test('TC-LOGIN-01: Login page renders correctly @smoke @auth', async () => {
   ```
 
-- [ ] **2.3** Run `npx playwright test tests/e2e/auth/` — all 10 cases pass
-- [ ] **2.4** Commit: `test: extract login tests to atomic auth/ files`
+- [x] **2.3** Run `npx playwright test tests/e2e/auth/` — all 10 cases pass
+- [x] **2.4** Commit: `test: extract login tests to atomic auth/ files`
 
 ---
 
