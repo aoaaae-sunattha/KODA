@@ -17,12 +17,16 @@ export default defineConfig({
   projects: [
     {
       name: 'smoke',
-      testMatch: '**/smoke/**/*.spec.ts',
+      grep: /@smoke/,
       use: { ...devices['Desktop Chrome'] },
     },
     {
       name: 'regression',
-      testMatch: '**/regression/**/*.spec.ts',
+      grep: /@regression/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'all',
       use: { ...devices['Desktop Chrome'] },
     },
   ],
