@@ -1,14 +1,45 @@
-# QA REPORT [2026-04-02]
-## Version: v1.0
-## Feature: DESIGN_ALIGNMENT
+# E2E Test Report
 
-### Summary
-- Finalized unit test fixes for Phase 8.5 foundation.
-- Verified 85/85 unit tests passing.
-- Screenshot captured for design alignment verification.
+**Date:** 2026-04-03
+**Service:** Koda Pay
+**Duration:** 52.0s
 
-### Evidence
-- ![Design Alignment](./v1.0-DESIGN_ALIGNMENT.png)
+## Summary
 
-### Status
-- **PASS**
+| Total | Passed | Failed | Skipped | Status |
+|-------|--------|--------|---------|--------|
+| 29 | 29 | 0 | 0 | PASS |
+
+## Test Results
+
+| Test | Status |
+|------|--------|
+| TC-SMOKE-01: Critical path — Login → Store → BNPL → Dashboard | PASS |
+| TC-SMOKE-02: Auth guard blocks unauthenticated access | PASS |
+| TC-SMOKE-03: Merchant guard blocks shoppers from /merchant | PASS |
+| TC-DASH-01: Healthy credit state (< 60% used) | PASS |
+| TC-DASH-02: Near-limit credit state (>= 90% used) | PASS |
+| TC-DASH-03: Zero credit (new unverified user) | PASS |
+| TC-DASH-04: Full credit available (verified, no orders) | PASS |
+| shows primary terms and hides secondary terms by default | PASS |
+| expands secondary terms when "+ other options!" is clicked | PASS |
+| shows free badge on term 4 and most flexible on term 24 | PASS |
+| renders timeline cards with progress rings | PASS |
+| first card shows "Upon checkout" | PASS |
+| opens payment modal when Pay button is clicked | PASS |
+| shows all 3 payment options | PASS |
+| pay next installment updates order card | PASS |
+| pay specific amount shows input field | PASS |
+| pay off full balance completes the order | PASS |
+| cancel closes the modal | PASS |
+| TC-LOGIN-01: Login page renders correctly | PASS |
+| TC-LOGIN-02: Successful login with valid email | PASS |
+| TC-LOGIN-03: Login with mock account active@koda.test | PASS |
+| TC-LOGIN-03: Login with mock account overdue@koda.test | PASS |
+| TC-LOGIN-03: Login with mock account merchant@koda.test | PASS |
+| TC-LOGIN-04: Invalid email (verify error message) | PASS |
+| TC-LOGIN-13: Form submission via Enter key | PASS |
+| TC-LOGIN-14: Session persistence on page refresh | PASS |
+| TC-LOGIN-15: Demo shortcut data-binding | PASS |
+| TC-LOGIN-16: Input field attribute validation | PASS |
+| TC-LOGIN-17: Verification of Automation Selectors (Data-TestIDs) | PASS |
