@@ -83,6 +83,7 @@ export const useStore = create<AppState>()(persist((set, get) => ({
     const installments: Installment[] = plan.installments.map((amount, i) => ({
       index: i,
       amount,
+      originalAmount: amount,
       dueDate: formatISO(addMonths(purchaseDate, i)),
       status: i === 0 ? 'paid' : 'upcoming', // First installment paid at checkout
     }))
@@ -204,35 +205,65 @@ export const useStore = create<AppState>()(persist((set, get) => ({
 
   // ─── SIMULATE REFUND ───────────────────────────────────────────────────────
   simulateRefund: (orderId: string, amount: number) => {
-    set(state => ({
-      orders: state.orders.map(order => {
-        if (order.id !== orderId) return order
+    set(state => {
+      const order = state.orders.find(o => o.id === orderId)
+      if (!order) return state
+
+      // Calculate total unpaid across all installments
+      const totalUnpaid = order.installments
+        .filter(i => i.status !== 'paid')
+        .reduce((sum, i) => sum + i.amount, 0)
+
+      // Cap refund at what is actually owed
+      const actualRefund = Math.min(amount, totalUnpaid)
+      if (actualRefund <= 0) return state
+
+      let remaining = actualRefund
+      const updatedInstallments = [...order.installments]
+      
+      // Apply refund to last unpaid installment first, then work backwards
+      for (let i = updatedInstallments.length - 1; i >= 0 && remaining > 0; i--) {
+        const inst = updatedInstallments[i]
+        if (inst.status === 'paid') continue 
         
-        // Apply refund to last unpaid installment first, then work backwards
-        let remaining = amount
-        const updatedInstallments = [...order.installments]
-        
-        for (let i = updatedInstallments.length - 1; i >= 0 && remaining > 0; i--) {
-          const inst = updatedInstallments[i]
-          if (inst.status === 'paid') continue // Spec: refund only unpaid installments
-          
-          const deductable = Math.min(inst.amount, remaining)
-          updatedInstallments[i] = { ...inst, amount: inst.amount - deductable }
-          remaining -= deductable
+        const deductable = Math.min(inst.amount, remaining)
+        updatedInstallments[i] = { 
+          ...inst, 
+          amount: Math.round((inst.amount - deductable) * 100) / 100 
         }
+        remaining = Math.round((remaining - deductable) * 100) / 100
+      }
 
-        const newTotal = order.total - (amount - remaining)
-        const allSettled = updatedInstallments.every(i => i.status === 'paid' || i.amount === 0)
+      const newTotal = Math.round((order.total - actualRefund) * 100) / 100
+      const allSettled = updatedInstallments.every(i => i.status === 'paid' || i.amount === 0)
 
-        return {
-          ...order,
-          refundedAmount: order.refundedAmount + (amount - remaining),
+      // Adjust corresponding MerchantOrder payout
+      const updatedMerchantOrders = state.merchantOrders.map(mo => {
+        if (mo.orderId === `#${orderId.slice(-4).toUpperCase()}`) {
+          const newAmount = Math.max(0, mo.amount - actualRefund)
+          const newCommission = Math.round(newAmount * 0.025 * 100) / 100
+          return {
+            ...mo,
+            amount: newAmount,
+            commission: newCommission,
+            payout: newAmount - newCommission
+          }
+        }
+        return mo
+      })
+
+      return {
+        ...state,
+        orders: state.orders.map(o => o.id === orderId ? {
+          ...o,
+          refundedAmount: Math.round((o.refundedAmount + actualRefund) * 100) / 100,
           total: newTotal,
           installments: updatedInstallments,
-          status: allSettled ? 'completed' : order.status,
-        }
-      }),
-    }))
+          status: allSettled ? 'completed' : o.status,
+        } : o),
+        merchantOrders: updatedMerchantOrders
+      }
+    })
   },
 
   // ─── KYC ────────────────────────────────────────────────────────────────────

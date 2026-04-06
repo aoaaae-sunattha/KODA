@@ -11,15 +11,15 @@
 | Priority | Module   | Manual Total | ✅ Covered | ❌ Missing | Orphaned | Coverage | Status |
 |----------|----------|:------------:|:----------:|:----------:|:--------:|:--------:|--------|
 | 🔴 P1    | auth     | 23           | 23         | 0          | 0        | **100%** | ✅ Done |
-| 🔴 P1    | checkout | 27           | 0          | 27         | 0        | **0%**   | ❌ Dir absent |
-| 🔴 P1    | risk     | 4            | 0          | 4          | 0        | **0%**   | ❌ Dir absent |
-| 🟠 P2    | payment  | 6            | 3          | 3          | 0        | **50%**  | 🚧 In progress |
-| 🟠 P2    | credit   | 6            | 3          | 3          | 1        | **50%**  | 🚧 In progress |
+| 🔴 P1    | checkout | 27           | 27         | 0          | 0        | **100%** | ✅ Done |
+| 🔴 P1    | risk     | 18           | 0          | 18         | 0        | **0%**   | 🚧 In progress |
+| 🟠 P2    | payment  | 11           | 0          | 11         | 0        | **0%**   | 🚧 In progress |
+| 🟠 P2    | credit   | 9            | 3          | 6          | 1        | **33%**  | 🚧 In progress |
 | 🟠 P2    | kyc      | 3            | 0          | 3          | 0        | **0%**   | ❌ Dir absent |
 | 🟡 P3    | cards    | 3            | 0          | 3          | 0        | **0%**   | ❌ Dir absent |
-| 🟡 P3    | merchant | 3            | 1          | 2          | 0        | **33%**  | 🚧 In progress |
+| 🟡 P3    | merchant | 6            | 1          | 5          | 0        | **17%**  | 🚧 In progress |
 | 🟡 P3    | schedule | 4            | 2          | 2          | 0        | **50%**  | 🚧 In progress |
-| —        | **Total**| **79**       | **32**     | **47**     | **1**    | **41%**  | |
+| —        | **Total**| **104**      | **56**     | **48**     | **1**    | **54%**  | |
 
 ### Priority Key
 
@@ -68,88 +68,106 @@
 
 ---
 
-### 🔴 checkout — 0% ❌ Not started
+### 🔴 checkout — 100% ✅ Done
 > Core BNPL purchase flow. Contains P0 guards (credit limit, KYC).
 
 | # | TC ID | Title | Priority | E2E Spec | Status |
 |---|-------|-------|----------|----------|--------|
-| 1 | TC-CHKT-001 | Term Threshold Disables Unavailable Options (BVA) | P1 | — | ❌ |
-| 2 | TC-CHKT-002 | Credit Limit Guard | P0 | — | ❌ |
-| 3 | TC-CHKT-003 | Fee Calculation Accuracy — MacBook $2,499 / Term 6 | P1 | — | ❌ |
-| 4 | TC-CHKT-004 | Plan Selector "Other Options" Expand | P2 | — | ❌ |
-| 5 | TC-CHKT-005 | KYC Gate Blocks Checkout — IDVerify Modal Shown | P0 | — | ❌ |
-| 6 | TC-CHKT-006 | Checkout Completion — Success Toast + Dashboard Redirect | P1 | — | ❌ |
-| 7 | TC-CHKT-007 | Term 4 Shows "Free" Badge and Zero Fee | P2 | — | ❌ |
-| 8 | TC-CHKT-008 | Locked Account Blocks Checkout — Account Locked Alert | P1 | — | ❌ |
-| 9 | TC-CHKT-009 | Term 24 Shows "Most Flexible" Badge | P2 | — | ❌ |
-| 10 | TC-CHKT-010 | Term 24 Minimum Threshold BVA | P2 | — | ❌ |
-| 11 | TC-CHKT-011 | Checkout Modal — Close via X Button | P3 | — | ❌ |
-| 12 | TC-CHKT-012 | Store Loads with Product Catalog | P3 | — | ❌ |
-| 13 | TC-CHKT-013 | Action Required Blocks Checkout — Payment Issue Alert | P1 | — | ❌ |
-| 14 | TC-CHKT-014 | Term 6/8 Threshold BVA — Disabled After Expand | P1 | — | ❌ |
-| 15 | TC-CHKT-015 | Checkout Modal — Close via Backdrop Click | P2 | — | ❌ |
-| 16 | TC-CHKT-016 | No Primary Card — Confirm Disabled | P1 | — | ❌ |
-| 17 | TC-CHKT-017 | action_required CTA Navigates to /settings/cards | P1 | — | ❌ |
-| 18 | TC-CHKT-018 | KYC Completion Flow — Full 3-Step Walkthrough | P1 | — | ❌ |
-| 19 | TC-CHKT-019 | Term Selection Change Updates Payment Timeline | P2 | — | ❌ |
-| 20 | TC-CHKT-020 | Fee Calculation Accuracy — Term 18 on Eames Chair | P2 | — | ❌ |
-| 21 | TC-CHKT-021 | Product Image Click Also Triggers Checkout Guard | P3 | — | ❌ |
-| 22 | TC-CHKT-022 | Insufficient Credit — "Back to Shop" CTA Closes Modal | P1 | — | ❌ |
-| 23 | TC-CHKT-023 | Locked Account — "Go to Dashboard to Pay" CTA Navigates | P1 | — | ❌ |
-| 24 | TC-CHKT-024 | Checkout Modal Resets to Term-4 on Reopen | P2 | — | ❌ |
-| 25 | TC-CHKT-025 | Term-10 Enabled at $2,000+ Threshold BVA | P2 | — | ❌ |
-| 26 | TC-CHKT-026 | Risk Alert Modal — Close via X Button | P3 | — | ❌ |
-| 27 | TC-CHKT-027 | Plan Selector Expand Link Disappears After Click | P3 | — | ❌ |
-
-> ⚠️ **Known Bug (TC-CHKT-013/017):** `RiskAlertModal.tsx:59` calls `navigate('/cards')` — correct route is `/settings/cards`. "Manage Cards" CTA redirects to `/login` until fixed.
->
-> 📁 Create `tests/e2e/checkout/` before writing specs.
+| 1 | TC-CHKT-001 | Term Threshold Disables Unavailable Options (BVA) | P1 | checkout-term-threshold.spec.ts | ✅ |
+| 2 | TC-CHKT-002 | Credit Limit Guard | P0 | checkout-credit-limit-guard.spec.ts | ✅ |
+| 3 | TC-CHKT-003 | Fee Calculation Accuracy — MacBook $2,499 / Term 6 | P1 | checkout-fee-calculation.spec.ts | ✅ |
+| 4 | TC-CHKT-004 | Plan Selector "Other Options" Expand | P2 | checkout-plan-expand.spec.ts | ✅ |
+| 5 | TC-CHKT-005 | KYC Gate Blocks Checkout — IDVerify Modal Shown | P0 | checkout-kyc-gate.spec.ts | ✅ |
+| 6 | TC-CHKT-006 | Checkout Completion — Success Toast + Dashboard Redirect | P1 | checkout-happy-path.spec.ts | ✅ |
+| 7 | TC-CHKT-007 | Term 4 Shows "Free" Badge and Zero Fee | P2 | checkout-free-badge.spec.ts | ✅ |
+| 8 | TC-CHKT-008 | Locked Account Blocks Checkout — Account Locked Alert | P1 | checkout-locked-account.spec.ts | ✅ |
+| 9 | TC-CHKT-009 | Term 24 Shows "Most Flexible" Badge | P2 | checkout-term24-badge.spec.ts | ✅ |
+| 10 | TC-CHKT-010 | Term 24 Minimum Threshold BVA | P2 | checkout-term24-threshold.spec.ts | ✅ |
+| 11 | TC-CHKT-011 | Checkout Modal — Close via X Button | P3 | checkout-modal-close.spec.ts | ✅ |
+| 12 | TC-CHKT-012 | Store Loads with Product Catalog | P3 | checkout-store-renders.spec.ts | ✅ |
+| 13 | TC-CHKT-013 | Action Required Blocks Checkout — Payment Issue Alert | P1 | checkout-action-required.spec.ts | ✅ |
+| 14 | TC-CHKT-014 | Term 6/8 Threshold BVA — Disabled After Expand | P1 | checkout-secondary-term-threshold.spec.ts | ✅ |
+| 15 | TC-CHKT-015 | Checkout Modal — Close via Backdrop Click | P2 | checkout-backdrop-close.spec.ts | ✅ |
+| 16 | TC-CHKT-016 | No Primary Card — Confirm Disabled | P1 | checkout-no-card.spec.ts | ✅ |
+| 17 | TC-CHKT-017 | action_required CTA Navigates to /settings/cards | P1 | checkout-action-required-cta.spec.ts | ✅ |
+| 18 | TC-CHKT-018 | KYC Completion Flow — Full 3-Step Walkthrough | P1 | checkout-kyc-completion.spec.ts | ✅ |
+| 19 | TC-CHKT-019 | Term Selection Change Updates Payment Timeline | P2 | checkout-selection-reactivity.spec.ts | ✅ |
+| 20 | TC-CHKT-020 | Fee Calculation Accuracy — Term 18 on Eames Chair | P2 | checkout-high-tier-fee.spec.ts | ✅ |
+| 21 | TC-CHKT-021 | Product Image Click Also Triggers Checkout Guard | P3 | checkout-image-click.spec.ts | ✅ |
+| 22 | TC-CHKT-022 | Insufficient Credit — "Back to Shop" CTA Closes Modal | P1 | checkout-insufficient-credit-cta.spec.ts | ✅ |
+| 23 | TC-CHKT-023 | Locked Account — "Go to Dashboard to Pay" CTA Navigates | P1 | checkout-locked-account-cta.spec.ts | ✅ |
+| 24 | TC-CHKT-024 | Checkout Modal Resets to Term-4 on Reopen | P2 | checkout-modal-reset.spec.ts | ✅ |
+| 25 | TC-CHKT-025 | Term-10 Enabled at $2,000+ Threshold BVA | P2 | checkout-term10-threshold-enabled.spec.ts | ✅ |
+| 26 | TC-CHKT-026 | Risk Alert Modal — Close via X Button | P3 | checkout-risk-alert-close.spec.ts | ✅ |
+| 27 | TC-CHKT-027 | Plan Selector Expand Link Disappears After Click | P3 | checkout-plan-expand-link-hidden.spec.ts | ✅ |
 
 ---
 
-### 🔴 risk — 0% ❌ Not started
-> Overdue/locked account protection and refund engine. Contains P0 case.
+### 🔴 risk — 0% 🚧 In progress
+> Overdue/locked account protection and refund engine. Contains P0 cases.
 
 | # | TC ID | Title | Priority | E2E Spec | Status |
 |---|-------|-------|----------|----------|--------|
 | 1 | TC-RISK-001 | Locked Account Blocks Checkout | P0 | — | ❌ |
-| 2 | TC-RISK-002 | Pay Overdue Balance Unlocks Account | P1 | — | ❌ |
-| 3 | TC-RFND-001 | Backward Refund Reconciliation (BVA) | P1 | — | ❌ |
-| 4 | TC-RFND-002 | Full Refund Completes Order | P1 | — | ❌ |
+| 2 | TC-RISK-002 | Unverified Account KYC Guard | P0 | — | ❌ |
+| 3 | TC-RISK-003 | Action Required (Declined Card) Guard | P1 | — | ❌ |
+| 4 | TC-RISK-004 | Unlock Account via Pay Overdue | P0 | — | ❌ |
+| 5 | TC-RISK-005 | Simulate Payment Failure | P1 | — | ❌ |
+| 6 | TC-RISK-006 | ID Verification Simulator | P1 | — | ❌ |
+| 7 | TC-RFND-001 | Partial Refund - Backward Allocation (BVA) | P1 | — | ❌ |
+| 8 | TC-RFND-002 | Refund Matching Multiple Installments | P2 | — | ❌ |
+| 9 | TC-RFND-003 | Full Refund (All Unpaid) | P1 | — | ❌ |
+| 10 | TC-RFND-004 | Refund > Unpaid Balance (Mock behavior) | P2 | — | ❌ |
+| 11 | TC-RFND-005 | Refund UI Price Strikethrough | P2 | — | ❌ |
+| 12 | TC-RFND-006 | Refund Skipping Paid Installments (Unit only) | P1 | — | ❌ |
+| 13 | TC-RISK-007 | KYC Credit Limit Grant Verification | P2 | — | ❌ |
+| 14 | TC-RISK-008 | Action Required Banner & Navigation | P1 | — | ❌ |
+| 15 | TC-RISK-009 | Dashboard KYC Banner for Unverified User | P1 | — | ❌ |
+| 16 | TC-RFND-007 | Refund Button Visibility Conditions | P1 | — | ❌ |
+| 17 | TC-RFND-008 | RefundModal — Input, Quick-Select, Max Cap | P2 | — | ❌ |
+| 18 | TC-RFND-009 | RefundModal — Processing Animation and Simulation Label | P2 | — | ❌ |
 
-> 📁 Create `tests/e2e/risk/` before writing specs.
-
----
-
-### 🟠 payment — 50% 🚧 In progress
-> Installment repayment flow. P0 cases partially covered via legacy regression spec.
-
-| # | TC ID | Title | Priority | E2E Spec | Status |
-|---|-------|-------|----------|----------|--------|
-| 1 | TC-PYMT-001 | Pay Next Installment | P0 | regression/dashboard.spec.ts | ⚠️ behavioral (legacy grouped spec) |
-| 2 | TC-PYMT-002 | Pay Specific Amount — Exact | P1 | — | ❌ |
-| 3 | TC-PYMT-003 | Pay Specific Amount — Overlap | P1 | — | ❌ |
-| 4 | TC-PYMT-004 | Pay Full Balance | P0 | regression/dashboard.spec.ts | ⚠️ behavioral (legacy grouped spec) |
-| 5 | TC-PYMT-005 | Invalid Amount ($0 or negative) | P1 | — | ❌ |
-| 6 | TC-PYMT-006 | Amount Exceeds Remaining Balance | P1 | — | ❌ |
-
-> 📁 Create `tests/e2e/payment/` and write atomic specs; retire `regression/dashboard.spec.ts` payment tests once done.
+> 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create `tests/e2e/risk/` for specs.
 
 ---
 
-### 🟠 credit — 50% 🚧 In progress
-> Credit gauge visual states. All specs use legacy `TC-DASH-NN` IDs — rename needed.
+### 🟠 payment — 0% 🚧 In progress
+> Installment repayment flow.
 
 | # | TC ID | Title | Priority | E2E Spec | Status |
 |---|-------|-------|----------|----------|--------|
-| 1 | TC-CRDT-001 | Gauge — Full Available (0% used) | P1 | credit-full-verified.spec.ts | ✅ 🔄 legacy-id (TC-DASH-04) |
-| 2 | TC-CRDT-002 | Gauge — Partial Utilization (50%) | P1 | credit-healthy-state.spec.ts | ⚠️ behavioral (spec tests 22%, not 50%) |
+| 1 | TC-PAY-001 | Pay Specific Amount - Exact Match | P1 | — | ❌ |
+| 2 | TC-PAY-002 | Pay Specific Amount - Partial | P1 | — | ❌ |
+| 3 | TC-PAY-003 | Pay Specific Amount - Multi-Installment | P2 | — | ❌ |
+| 4 | TC-PAY-004 | Pay Full Balance (New Flow) | P1 | — | ❌ |
+| 5 | TC-PAY-005 | Flexible Payment Input Validation | P2 | — | ❌ |
+| 6 | TC-PAY-006 | Partial Payment UI Update | P2 | — | ❌ |
+| 7 | TC-PAY-007 | Payment Modal Default Selection | P1 | — | ❌ |
+| 8 | TC-PAY-008 | Pay Next Installment (Happy Path) | P1 | — | ❌ |
+| 9 | TC-PAY-009 | Payment Modal Shows All 3 Options | P2 | — | ❌ |
+| 10 | TC-PAY-010 | Payment Modal Header Shows Merchant Name and Balance | P2 | — | ❌ |
+| 11 | TC-PAY-011 | Payment Modal Cancel Dismisses Without Payment | P2 | — | ❌ |
+
+> 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create `tests/e2e/payment/` and write atomic specs.
+
+---
+
+### 🟠 credit — 33% 🚧 In progress
+> Credit gauge visual states.
+
+| # | TC ID | Title | Priority | E2E Spec | Status |
+|---|-------|-------|----------|----------|--------|
+| 1 | TC-CRDT-001 | Gauge — Full Available (0% used) | P1 | credit-full-verified.spec.ts | ✅ 🔄 legacy-id |
+| 2 | TC-CRDT-002 | Gauge — Partial Utilization (50%) | P1 | credit-healthy-state.spec.ts | ⚠️ behavioral |
 | 3 | TC-CRDT-003 | Gauge — Warning Threshold (60% BVA) | P1 | — | ❌ |
-| 4 | TC-CRDT-004 | Gauge — Near Limit (90%) | P1 | credit-near-limit-state.spec.ts | ✅ 🔄 legacy-id (TC-DASH-02) |
+| 4 | TC-CRDT-004 | Gauge — Near Limit (90%) | P1 | credit-near-limit-state.spec.ts | ✅ 🔄 legacy-id |
 | 5 | TC-CRDT-005 | Gauge — Fully Exhausted (0% available) | P1 | — | ❌ |
 | 6 | TC-CRDT-006 | Gauge — Real-time Update after Checkout | P2 | — | ❌ |
+| 7 | TC-CRED-001 | Insufficient Credit Guard | P0 | — | ❌ |
+| 8 | TC-CRED-002 | Credit Calculation Consistency | P1 | — | ❌ |
+| 9 | TC-CRED-003 | Exact Credit Limit Purchase | P3 | — | ❌ |
 
-> 🔄 Rename `TC-DASH-01/02/03/04` → `TC-CRDT-001/002/003/004` in credit/ specs.
+> 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`.
 
 ---
 
@@ -187,8 +205,11 @@
 | 1 | TC-MRCH-001 | Settle Order — Release Funds | P1 | — | ❌ |
 | 2 | TC-MRCH-002 | Payout Calculation (2.5% fee) | P1 | — | ❌ |
 | 3 | TC-MRCH-003 | Merchant Guard — Non-Merchant Blocked | P1 | smoke/critical-path.spec.ts (TC-SMOKE-03) | ⚠️ behavioral |
+| 4 | TC-MRCH-004 | Refund Impact on Merchant Payout | P1 | — | ❌ |
+| 5 | TC-MRCH-005 | Merchant Settle Button (Happy Path) | P1 | — | ❌ |
+| 6 | TC-MRCH-006 | Merchant Portal Nav Shows Business Name | P3 | — | ❌ |
 
-> 📁 Create `tests/e2e/merchant/` and write atomic specs.
+> 📁 Manual cases at `tests/manual-cases/merchant/MERCHANT_CASES.md` and `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create `tests/e2e/merchant/` and write atomic specs.
 
 ---
 
@@ -224,9 +245,9 @@ These are not coverage gaps — they are technical debt items that should be res
 
 ## Next Actions (Priority Order)
 
-- [ ] 🔴 Write `tests/e2e/checkout/` — TC-CHKT-001 to TC-CHKT-021 (P0 first: TC-002 credit guard, TC-005 KYC gate)
+- [x] 🔴 Write `tests/e2e/checkout/` — TC-CHKT-001 to TC-CHKT-027 ✅ 100% done
 - [ ] 🔴 Write `tests/e2e/risk/` — TC-RISK-001 to TC-RFND-002 (P0 locked checkout first)
-- [ ] 🟠 Write `tests/e2e/payment/` — TC-PYMT-001 to TC-PYMT-006 (atomic, retire regression coverage)
+- [ ] 🟠 Write `tests/e2e/payment/` — TC-PAY-001 to TC-PAY-011 (atomic, retire regression coverage)
 - [ ] 🟠 Write `tests/e2e/kyc/` — TC-KYC-001, TC-KYC-002
 - [ ] 🟠 Write missing credit specs — TC-CRDT-003, TC-CRDT-005, TC-CRDT-006
 - [ ] 🟡 Write `tests/e2e/cards/` — TC-CARD-001 to TC-CARD-003
