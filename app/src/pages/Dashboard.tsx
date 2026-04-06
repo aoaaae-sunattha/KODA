@@ -79,6 +79,7 @@ export default function Dashboard() {
             {currentUser.accountStatus === 'action_required' && (
               <motion.div 
                 key="action-alert"
+                data-testid="action-banner"
                 variants={itemVariants}
                 exit={{ height: 0, opacity: 0, scale: 0.95 }}
                 className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
@@ -88,7 +89,7 @@ export default function Dashboard() {
                 </div>
                 <div className="flex-1">
                   <h4 className="text-sm font-bold text-amber-900">Action Required</h4>
-                  <p className="text-xs text-amber-700 font-medium">Update your payment method to avoid service interruption.</p>
+                  <p className="text-xs text-amber-700 font-medium">Payment failed on {new Date().toLocaleDateString()} - Update Card</p>
                 </div>
                 <button 
                   onClick={() => navigate('/cards')}

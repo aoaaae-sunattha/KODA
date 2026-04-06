@@ -8,7 +8,7 @@ const mockAccounts = [
 ];
 
 for (const account of mockAccounts) {
-  test(`TC-LOGIN-03: Login with mock account ${account.email} @regression @auth`, async ({ page }) => {
+  test(`TC-AUTH-006: Login with mock account ${account.email} @regression @auth`, async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
     await loginPage.login(account.email);
