@@ -56,8 +56,7 @@ export const RiskAlertModal: React.FC<RiskAlertModalProps> = ({
       buttonText: 'Manage Cards',
       onClick: () => {
         onClose()
-        navigate('/cards')
-      },
+        navigate('/settings/cards')      },
       bgColor: 'bg-orange-50',
       iconBg: 'bg-orange-100',
       btnBg: 'bg-orange-600',
@@ -80,10 +79,12 @@ export const RiskAlertModal: React.FC<RiskAlertModalProps> = ({
             initial={{ y: '100%', opacity: 0.5 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0.5 }}
+            data-testid="risk-alert-modal"
             className="relative w-full max-w-sm bg-white rounded-t-[32px] sm:rounded-[32px] shadow-2xl overflow-hidden p-8 text-center"
           >
-            <button 
+            <button
               onClick={onClose}
+              data-testid="risk-alert-close"
               className="absolute top-4 right-4 p-2 hover:bg-slate-100 rounded-full transition-colors"
             >
               <X size={20} className="text-slate-400" />
@@ -93,13 +94,14 @@ export const RiskAlertModal: React.FC<RiskAlertModalProps> = ({
               {config.icon}
             </div>
 
-            <h2 className="text-2xl font-black text-slate-900 mb-2">{config.title}</h2>
-            <p className="text-sm text-slate-500 mb-8 leading-relaxed">
+            <h2 data-testid="risk-alert-title" className="text-2xl font-black text-slate-900 mb-2">{config.title}</h2>
+            <p data-testid="risk-alert-message" className="text-sm text-slate-500 mb-8 leading-relaxed">
               {config.message}
             </p>
 
             <button
               onClick={config.onClick}
+              data-testid="risk-alert-btn"
               className={`w-full py-4 ${config.btnBg} text-white rounded-2xl font-bold hover:opacity-90 transition-all shadow-lg flex items-center justify-center gap-2 active:scale-[0.98]`}
             >
               <span>{config.buttonText}</span>

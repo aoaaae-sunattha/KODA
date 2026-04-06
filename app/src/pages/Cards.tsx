@@ -72,6 +72,7 @@ export default function Cards() {
                   key={card.id} 
                   variants={itemVariants}
                   exit={{ opacity: 0, scale: 0.95, x: -20 }}
+                  data-testid="card-item"
                   className="bg-white rounded-2xl p-5 shadow-sm flex items-center justify-between"
                 >
                   <div className="flex items-center gap-4">
@@ -112,7 +113,7 @@ export default function Cards() {
                         Set primary
                       </button>
                     )}
-                    {!card.isPrimary && (
+                    {(!card.isPrimary || cards.length === 1) && (
                       <button
                         onClick={() => removeCard(card.id)}
                         className="text-xs hover:underline text-red-500"

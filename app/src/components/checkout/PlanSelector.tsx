@@ -115,7 +115,7 @@ export const PlanSelector: React.FC<PlanSelectorProps> = ({
       >
         <div className="flex justify-between items-center mb-3">
           <span className="text-slate-500 font-medium">Total to pay</span>
-          <span className="text-xl font-bold text-slate-900">
+          <span data-testid="plan-summary-total" className="text-xl font-bold text-slate-900">
             {formatCurrency(selectedPlan.total)}
           </span>
         </div>
@@ -123,7 +123,7 @@ export const PlanSelector: React.FC<PlanSelectorProps> = ({
         <div className="space-y-2 pt-3 border-t border-slate-200 text-sm">
           <div className="flex justify-between">
             <span className="text-slate-500">First payment (Today)</span>
-            <span className="font-bold text-slate-900">
+            <span data-testid="plan-summary-first-payment" className="font-bold text-slate-900">
               {formatCurrency(selectedPlan.firstPayment)}
             </span>
           </div>

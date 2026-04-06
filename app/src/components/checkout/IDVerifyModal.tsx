@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShieldCheck, Check } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import { useStore } from '../../store/useStore'
 
 interface IDVerifyModalProps {
@@ -12,6 +13,7 @@ export const IDVerifyModal: React.FC<IDVerifyModalProps> = ({ isOpen, onClose })
   const [step, setStep] = useState<'intro' | 'scanning' | 'success'>('intro')
   const [progress, setProgress] = useState(0)
   const verifyKYC = useStore(s => s.verifyKYC)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (isOpen) {
@@ -42,6 +44,7 @@ export const IDVerifyModal: React.FC<IDVerifyModalProps> = ({ isOpen, onClose })
   const handleFinish = () => {
     verifyKYC()
     onClose()
+    navigate('/dashboard')
   }
 
   return (
@@ -60,6 +63,7 @@ export const IDVerifyModal: React.FC<IDVerifyModalProps> = ({ isOpen, onClose })
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
+            data-testid="id-verify-modal"
             className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden p-8 text-center"
           >
             {step === 'intro' && (
@@ -67,12 +71,13 @@ export const IDVerifyModal: React.FC<IDVerifyModalProps> = ({ isOpen, onClose })
                 <div className="w-20 h-20 bg-indigo-50 rounded-3xl flex items-center justify-center text-indigo-600 mx-auto mb-6">
                   <ShieldCheck size={40} />
                 </div>
-                <h2 className="text-2xl font-black text-slate-900 mb-2">Identity Verify</h2>
+                <h2 data-testid="id-verify-title" className="text-2xl font-black text-slate-900 mb-2">Identity Verify</h2>
                 <p className="text-sm text-slate-500 mb-8">
                   We need to verify your identity to establish your <strong>$8,000</strong> credit limit.
                 </p>
                 <button
                   onClick={handleStart}
+                  data-testid="id-verify-start-btn"
                   className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-100"
                 >
                   Start Verification
@@ -81,7 +86,7 @@ export const IDVerifyModal: React.FC<IDVerifyModalProps> = ({ isOpen, onClose })
             )}
 
             {step === 'scanning' && (
-              <div className="py-8">
+              <div data-testid="id-verify-scanning" className="py-8">
                 <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-8 relative overflow-hidden">
                   <motion.div 
                     animate={{ y: [-20, 20, -20] }}
@@ -108,12 +113,13 @@ export const IDVerifyModal: React.FC<IDVerifyModalProps> = ({ isOpen, onClose })
                 <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-600 mx-auto mb-6">
                   <Check size={40} />
                 </div>
-                <h2 className="text-2xl font-black text-slate-900 mb-2">Verified!</h2>
+                <h2 data-testid="id-verify-title" className="text-2xl font-black text-slate-900 mb-2">Verified!</h2>
                 <p className="text-sm text-slate-500 mb-8">
                   Your account is now active. You have been granted a <strong>$8,000 credit limit</strong>.
                 </p>
                 <button
                   onClick={handleFinish}
+                  data-testid="id-verify-finish-btn"
                   className="w-full py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-100"
                 >
                   Go to Dashboard

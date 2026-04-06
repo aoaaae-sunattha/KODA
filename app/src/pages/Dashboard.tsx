@@ -92,8 +92,7 @@ export default function Dashboard() {
                   <p className="text-xs text-amber-700 font-medium">Payment failed on {new Date().toLocaleDateString()} - Update Card</p>
                 </div>
                 <button 
-                  onClick={() => navigate('/cards')}
-                  className="px-4 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-amber-200 hover:bg-amber-700 transition-colors"
+                  onClick={() => navigate('/settings/cards')}                  className="px-4 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-amber-200 hover:bg-amber-700 transition-colors"
                 >
                   Update Card
                 </button>

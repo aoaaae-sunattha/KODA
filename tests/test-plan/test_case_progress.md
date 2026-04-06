@@ -11,7 +11,7 @@
 | Priority | Module   | Manual Total | ✅ Covered | ❌ Missing | Orphaned | Coverage | Status |
 |----------|----------|:------------:|:----------:|:----------:|:--------:|:--------:|--------|
 | 🔴 P1    | auth     | 23           | 23         | 0          | 0        | **100%** | ✅ Done |
-| 🔴 P1    | checkout | 4            | 0          | 4          | 0        | **0%**   | ❌ Dir absent |
+| 🔴 P1    | checkout | 27           | 0          | 27         | 0        | **0%**   | ❌ Dir absent |
 | 🔴 P1    | risk     | 4            | 0          | 4          | 0        | **0%**   | ❌ Dir absent |
 | 🟠 P2    | payment  | 6            | 3          | 3          | 0        | **50%**  | 🚧 In progress |
 | 🟠 P2    | credit   | 6            | 3          | 3          | 1        | **50%**  | 🚧 In progress |
@@ -19,7 +19,7 @@
 | 🟡 P3    | cards    | 3            | 0          | 3          | 0        | **0%**   | ❌ Dir absent |
 | 🟡 P3    | merchant | 3            | 1          | 2          | 0        | **33%**  | 🚧 In progress |
 | 🟡 P3    | schedule | 4            | 2          | 2          | 0        | **50%**  | 🚧 In progress |
-| —        | **Total**| **56**       | **32**     | **24**     | **1**    | **57%**  | |
+| —        | **Total**| **79**       | **32**     | **47**     | **1**    | **41%**  | |
 
 ### Priority Key
 
@@ -69,15 +69,40 @@
 ---
 
 ### 🔴 checkout — 0% ❌ Not started
-> Core BNPL purchase flow. Contains P0 credit-limit guard.
+> Core BNPL purchase flow. Contains P0 guards (credit limit, KYC).
 
 | # | TC ID | Title | Priority | E2E Spec | Status |
 |---|-------|-------|----------|----------|--------|
-| 1 | TC-CHKT-001 | Unlock Terms via Purchase Amount (BVA) | P1 | — | ❌ |
+| 1 | TC-CHKT-001 | Term Threshold Disables Unavailable Options (BVA) | P1 | — | ❌ |
 | 2 | TC-CHKT-002 | Credit Limit Guard | P0 | — | ❌ |
-| 3 | TC-CHKT-003 | Fee Calculation Accuracy (BVA) | P1 | — | ❌ |
-| 4 | TC-CHKT-004 | Plan Selector "Other Options" expand | P2 | — | ❌ |
+| 3 | TC-CHKT-003 | Fee Calculation Accuracy — MacBook $2,499 / Term 6 | P1 | — | ❌ |
+| 4 | TC-CHKT-004 | Plan Selector "Other Options" Expand | P2 | — | ❌ |
+| 5 | TC-CHKT-005 | KYC Gate Blocks Checkout — IDVerify Modal Shown | P0 | — | ❌ |
+| 6 | TC-CHKT-006 | Checkout Completion — Success Toast + Dashboard Redirect | P1 | — | ❌ |
+| 7 | TC-CHKT-007 | Term 4 Shows "Free" Badge and Zero Fee | P2 | — | ❌ |
+| 8 | TC-CHKT-008 | Locked Account Blocks Checkout — Account Locked Alert | P1 | — | ❌ |
+| 9 | TC-CHKT-009 | Term 24 Shows "Most Flexible" Badge | P2 | — | ❌ |
+| 10 | TC-CHKT-010 | Term 24 Minimum Threshold BVA | P2 | — | ❌ |
+| 11 | TC-CHKT-011 | Checkout Modal — Close via X Button | P3 | — | ❌ |
+| 12 | TC-CHKT-012 | Store Loads with Product Catalog | P3 | — | ❌ |
+| 13 | TC-CHKT-013 | Action Required Blocks Checkout — Payment Issue Alert | P1 | — | ❌ |
+| 14 | TC-CHKT-014 | Term 6/8 Threshold BVA — Disabled After Expand | P1 | — | ❌ |
+| 15 | TC-CHKT-015 | Checkout Modal — Close via Backdrop Click | P2 | — | ❌ |
+| 16 | TC-CHKT-016 | No Primary Card — Confirm Disabled | P1 | — | ❌ |
+| 17 | TC-CHKT-017 | action_required CTA Navigates to /settings/cards | P1 | — | ❌ |
+| 18 | TC-CHKT-018 | KYC Completion Flow — Full 3-Step Walkthrough | P1 | — | ❌ |
+| 19 | TC-CHKT-019 | Term Selection Change Updates Payment Timeline | P2 | — | ❌ |
+| 20 | TC-CHKT-020 | Fee Calculation Accuracy — Term 18 on Eames Chair | P2 | — | ❌ |
+| 21 | TC-CHKT-021 | Product Image Click Also Triggers Checkout Guard | P3 | — | ❌ |
+| 22 | TC-CHKT-022 | Insufficient Credit — "Back to Shop" CTA Closes Modal | P1 | — | ❌ |
+| 23 | TC-CHKT-023 | Locked Account — "Go to Dashboard to Pay" CTA Navigates | P1 | — | ❌ |
+| 24 | TC-CHKT-024 | Checkout Modal Resets to Term-4 on Reopen | P2 | — | ❌ |
+| 25 | TC-CHKT-025 | Term-10 Enabled at $2,000+ Threshold BVA | P2 | — | ❌ |
+| 26 | TC-CHKT-026 | Risk Alert Modal — Close via X Button | P3 | — | ❌ |
+| 27 | TC-CHKT-027 | Plan Selector Expand Link Disappears After Click | P3 | — | ❌ |
 
+> ⚠️ **Known Bug (TC-CHKT-013/017):** `RiskAlertModal.tsx:59` calls `navigate('/cards')` — correct route is `/settings/cards`. "Manage Cards" CTA redirects to `/login` until fixed.
+>
 > 📁 Create `tests/e2e/checkout/` before writing specs.
 
 ---
@@ -199,7 +224,7 @@ These are not coverage gaps — they are technical debt items that should be res
 
 ## Next Actions (Priority Order)
 
-- [ ] 🔴 Write `tests/e2e/checkout/` — TC-CHKT-001 to TC-CHKT-004 (P0 credit guard first)
+- [ ] 🔴 Write `tests/e2e/checkout/` — TC-CHKT-001 to TC-CHKT-021 (P0 first: TC-002 credit guard, TC-005 KYC gate)
 - [ ] 🔴 Write `tests/e2e/risk/` — TC-RISK-001 to TC-RFND-002 (P0 locked checkout first)
 - [ ] 🟠 Write `tests/e2e/payment/` — TC-PYMT-001 to TC-PYMT-006 (atomic, retire regression coverage)
 - [ ] 🟠 Write `tests/e2e/kyc/` — TC-KYC-001, TC-KYC-002
