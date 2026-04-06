@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 
-test('TC-LOGIN-13: Form submission via Enter key @regression @auth', async ({ page }) => {
+test('TC-AUTH-013: Form submission via Enter key @regression @auth', async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
   await loginPage.emailInput.fill('active@koda.test');

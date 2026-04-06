@@ -51,7 +51,9 @@ export default function Nav() {
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex flex-col text-right">
             <span className="text-sm font-bold" style={{ color: '#1A1A2E' }}>{currentUser.name}</span>
-            <span className="text-[11px] font-medium uppercase tracking-wider" style={{ color: '#9CA3AF' }}>{currentUser.accountStatus}</span>
+            <span className="text-[11px] font-medium uppercase tracking-wider" style={{ color: '#9CA3AF' }}>
+              {currentUser.accountStatus === 'kyc_pending' ? 'Unverified' : currentUser.accountStatus.replace('_', ' ')}
+            </span>
           </div>
           <div className="w-9 h-9 rounded-full flex items-center justify-center border text-[#5D5FEF]" style={{ borderColor: '#E5E7EB', backgroundColor: '#F9FAFB' }}>
             <User size={18} />

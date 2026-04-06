@@ -1,13 +1,14 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 
-test('TC-AUTH-004: Session persistence on page refresh @regression @auth', async ({ page }) => {
+test('TC-AUTH-003: Email Normalization @regression @auth', async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
-  await loginPage.login('active@koda.test');
-  await expect(page).toHaveURL(/.*dashboard/);
   
-  await page.reload();
+  // Enter email with leading/trailing spaces and mixed casing
+  await loginPage.login('  ACTIVE@KODA.TEST  ');
+  
+  // Should normalize and log in successfully
   await expect(page).toHaveURL(/.*dashboard/);
   await expect(page.locator('nav').first()).toContainText('Alex Johnson');
 });

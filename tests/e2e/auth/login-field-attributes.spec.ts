@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 
-test('TC-LOGIN-16: Input field attribute validation @regression @auth', async ({ page }) => {
+test('TC-AUTH-010: Input field attribute validation @regression @auth', async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
   

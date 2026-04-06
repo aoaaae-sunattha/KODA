@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 
-test('TC-LOGIN-02: Successful login with valid email @regression @auth', async ({ page }) => {
+test('TC-AUTH-001: Successful login with valid email @regression @auth', async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
   await loginPage.login('active@koda.test');
