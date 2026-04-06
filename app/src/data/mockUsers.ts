@@ -11,6 +11,7 @@ function makeInstallments(
   return plan.installments.map((amount, i) => ({
     index: i,
     amount,
+    originalAmount: amount,
     dueDate: format(i === 0 ? startDate : addMonths(startDate, i), 'yyyy-MM-dd'),
     status: (i < paidCount ? 'paid' : 'upcoming') as 'paid' | 'upcoming' | 'overdue',
   }))

@@ -8,7 +8,8 @@ export type CardBrand = 'visa' | 'mastercard'
 
 export interface Installment {
   index: number       // 0-based
-  amount: number
+  amount: number      // Current amount due (decreases with partial payments)
+  originalAmount: number // Original amount scheduled
   dueDate: string     // ISO date string
   status: 'paid' | 'upcoming' | 'overdue'
 }
