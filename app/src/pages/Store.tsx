@@ -102,6 +102,7 @@ export default function Store() {
                 key={product.id} 
                 variants={itemVariants}
                 whileHover={{ y: -8 }}
+                data-testid="product-card"
                 className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col group"
               >
                 <div 
@@ -177,6 +178,7 @@ export default function Store() {
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
+            data-testid="checkout-success-toast"
             className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[60] bg-success text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 font-bold"
           >
             <CheckCircle2 className="w-6 h-6" />

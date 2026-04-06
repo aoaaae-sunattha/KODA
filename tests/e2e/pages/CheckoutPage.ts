@@ -48,8 +48,8 @@ export class CheckoutPage {
     await this.closeButton.click();
   }
 
-  /** Close the modal by clicking the backdrop */
+  /** Close the modal by clicking the backdrop (top-left corner of the page) */
   async closeViaBackdrop() {
-    await this.page.getByTestId('checkout-backdrop').click({ force: true });
+    await this.page.mouse.click(5, 5);
   }
 }

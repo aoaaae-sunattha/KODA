@@ -310,11 +310,9 @@ export const useStore = create<AppState>()(persist((set, get) => ({
   },
 
   removeCard: (cardId: string) => {
-    set(state => {
-      const card = state.cards.find(c => c.id === cardId)
-      if (card?.isPrimary) return state // Cannot remove primary card
-      return { cards: state.cards.filter(c => c.id !== cardId) }
-    })
+    set(state => ({
+      cards: state.cards.filter(c => c.id !== cardId)
+    }))
   },
 
   setPrimaryCard: (cardId: string) => {

@@ -229,18 +229,6 @@
 - **Expected:** 
   - Redirect to `/login`. Zustand persist uses localStorage; incognito starts with fresh localStorage — no stored session found.
 
-## TC-AUTH-023: Deep Link to Protected Route — No Redirect-Back (Logic)
-- **Priority:** P3
-- **Precondition:** User is logged out.
-- **Steps:**
-  1. Directly navigate to `/store` or `/settings/cards` while logged out.
-  2. Observe redirect to `/login`.
-  3. Log in with `active@koda.test`.
-- **Expected:**
-  - After login, user is redirected to `/dashboard` (not the originally requested route).
-  - `RequireAuth` in `App.tsx` does not preserve intended destination — no redirect-back logic implemented.
-- **Note:** Known limitation. `<Navigate to="/login" replace />` (App.tsx:13) discards the original URL. Document only; not a bug.
-
 ## TC-AUTH-022: Repeated Failed Login — Error Persists (Negative)
 - **Priority:** P2
 - **Steps:**
@@ -253,3 +241,15 @@
 - **Expected:** 
   - Error message "No account found for this email." remains visible.
   - Error is not cleared between consecutive failed attempts.
+
+## TC-AUTH-023: Deep Link to Protected Route — No Redirect-Back (Logic)
+- **Priority:** P3
+- **Precondition:** User is logged out.
+- **Steps:**
+  1. Directly navigate to `/store` or `/settings/cards` while logged out.
+  2. Observe redirect to `/login`.
+  3. Log in with `active@koda.test`.
+- **Expected:**
+  - After login, user is redirected to `/dashboard` (not the originally requested route).
+  - `RequireAuth` in `App.tsx` does not preserve intended destination — no redirect-back logic implemented.
+- **Note:** Known limitation. `<Navigate to="/login" replace />` (App.tsx:13) discards the original URL. Document only; not a bug.

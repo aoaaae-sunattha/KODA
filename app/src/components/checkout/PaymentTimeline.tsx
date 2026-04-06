@@ -123,7 +123,7 @@ export const PaymentTimeline: React.FC<PaymentTimelineProps> = ({ price, term, i
                     {formatCurrency(inst.amount)}
                   </p>
                   {isFirst && hasFee && (
-                    <p className="text-[9px] font-bold text-primary/60 uppercase">
+                    <p data-testid="timeline-fee-label" className="text-[9px] font-bold text-primary/60 uppercase">
                       Incl. Fee
                     </p>
                   )}
