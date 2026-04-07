@@ -1,103 +1,134 @@
-# KODA — BNPL Mockup (QA & Testing Guide)
+# KODA — BNPL QA Automation Project
 
-Welcome to the **KODA** testing repository. This project is a high-fidelity mockup of a Buy Now, Pay Later (BNPL) service, designed specifically for QA engineers to practice manual testing, exploratory testing, and E2E automation.
+> **Visual presentation →** open [`showcase/index.html`](showcase/index.html) in your browser for the full portfolio walkthrough.
 
----
-
-## Getting Started
-
-### Prerequisites
-- Node.js v22 via nvm
-- npm
-
-### Installation
-```bash
-cd app
-export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh" && nvm use 22
-npm install
-```
-
-### Run the App
-```bash
-npm run dev
-```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+[![104 Test Cases](https://img.shields.io/badge/Test%20Cases-104-5D5FEF?style=flat-square)](tests/manual-cases/)
+[![70% Automated](https://img.shields.io/badge/Automated-70%25-3EB489?style=flat-square)](tests/e2e/)
+[![CI Passing](https://img.shields.io/badge/CI-Passing-22c55e?style=flat-square)](.github/workflows/ci.yml)
 
 ---
 
-## QA Testing Scenarios
+## What is this?
 
-The app uses Mock Authentication. You can trigger different account states by logging in with specific emails (any password works).
+**KODA** is a fully functional Buy Now, Pay Later (BNPL) app — built from scratch as a QA portfolio project for the **QA Automation Engineer** position at anyday.io.
 
-### 1. The Happy Path (Standard User)
-- **Email:** `active@koda.test`
-- **Goal:** Verify the core dashboard experience.
-- **Checklist:**
-    - [ ] Credit Gauge animates on load.
-    - [ ] Active purchases show segmented progress bars.
-    - [ ] Clicking "Pay Next" on an order card updates the progress bar and credit gauge in real-time.
-
-### 2. KYC & Onboarding (New User)
-- **Email:** `new@koda.test`
-- **Goal:** Test the "Unverified" state and identity verification flow.
-- **Checklist:**
-    - [ ] Dashboard shows "Identity Verification" alert.
-    - [ ] Credit limit is $0.
-    - [ ] Clicking "Verify" opens the `IDVerifyModal`.
-    - [ ] Completing verification unlocks credit ($8,000) and clears the alert.
-
-### 3. Risk & Blocking (Locked Account)
-- **Email:** `overdue@koda.test`
-- **Goal:** Verify that delinquent accounts cannot make new purchases.
-- **Checklist:**
-    - [ ] Dashboard shows a red "Account Locked" alert.
-    - [ ] Navigate to **Shop** and try to buy any item.
-    - [ ] **Expectation:** The `RiskAlertModal` should appear, blocking the checkout.
-    - [ ] Click "Pay Now" in the dashboard alert to unlock the account.
+The goal: go beyond writing tests for someone else's software. Instead, build a realistic app with complex business logic, then apply a complete QA testing cycle on top of it — from planning through automation through CI/CD.
 
 ---
 
-## Unit Testing
+## The Testing Cycle
 
-The business logic (fees, refunds, state transitions) is covered by Vitest.
-```bash
-cd app
-npm run test              # single run
-npm run test:watch        # watch mode
-npx vitest run unit_test/CheckoutFlow.test.ts  # single file
-```
+A real QA process, applied end-to-end:
+
+### Step 1 — Test Plan
+Defined scope, priorities, and objectives before writing any test cases. 9 modules identified and prioritized by business impact (P1 = revenue-critical, P3 = supporting flows).
+
+📄 [`tests/test-plan/test_case_progress.md`](tests/test-plan/test_case_progress.md)
 
 ---
 
-## E2E Automation (Playwright)
+### Step 2 — Manual Test Cases
+104 test cases written by hand, one file per module. Each case includes preconditions, steps, expected result, and priority.
 
-The project includes a Playwright framework located in the `/playwright` directory.
+📁 [`tests/manual-cases/`](tests/manual-cases/)
 
-### Key Selectors (data-testid)
-The app has been instrumented with stable selectors for automation:
-- `login-email`, `login-password`, `login-submit`
-- `order-card`, `pay-installment-btn`, `simulate-failure-btn`
-- `buy-with-koda-btn`, `checkout-confirm-btn`
-- `nav-link-dashboard`, `nav-link-shop`, `logout-btn`
+| Module | Cases | Priority |
+|--------|-------|----------|
+| Auth | 23 | 🔴 P1 |
+| Checkout | 27 | 🔴 P1 |
+| Risk | 18 | 🔴 P1 |
+| Payment | 11 | 🟠 P2 |
+| Credit | 9 | 🟠 P2 |
+| KYC | 3 | 🟠 P2 |
+| Cards | 3 | 🟡 P3 |
+| Merchant | 6 | 🟡 P3 |
+| Schedule | 4 | 🟡 P3 |
 
-### Run Automation
+---
+
+### Step 3 — Automation Scripts
+73 of 104 cases automated. P1 modules (auth, checkout, risk) are 100% covered. Atomic structure — one spec file per test case.
+
+📁 [`tests/e2e/`](tests/e2e/) — Playwright end-to-end specs  
+📁 [`app/tests/unit/`](app/tests/unit/) — Vitest unit tests for business logic
+
+---
+
+### Step 4 — CI/CD Pipeline
+GitHub Actions runs three quality gates automatically on every pull request:
+
+1. **Lint + Type Check** — ESLint + TypeScript compiler
+2. **Unit Tests** — Vitest (business logic: fees, refunds, state)
+3. **E2E Tests** — Playwright in Chromium (full user flows)
+
+Results are posted as a comment on the PR. All three must pass before merging.
+
+⚙️ [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
+
+---
+
+## Tech Stack
+
+| Layer | Tools |
+|-------|-------|
+| **App** | React 19, TypeScript, Vite, Zustand, Tailwind CSS v4, Framer Motion |
+| **E2E Testing** | Playwright, Page Object Model |
+| **Unit Testing** | Vitest |
+| **CI/CD** | GitHub Actions |
+
+---
+
+## How to Run
+
+**Prerequisites:** Node.js v22
+
 ```bash
-# Run all tests
+# 1. Run the app (opens at http://localhost:5173)
+cd app && npm install && npm run dev
+
+# 2. Run unit tests
+cd app && npm run test
+
+# 3. Run E2E tests (auto-starts the dev server)
+npx playwright install chromium   # first time only
 npx playwright test
 
-# Run tests in UI mode (interactive)
+# Interactive UI mode
 npx playwright test --ui
 ```
 
 ---
 
-## Project Documentation
-- [Screens & Modals](screens.md) — Inventory of all UI states.
-- [Technical Specs](Spec/ImplementationSpecs.md) — Business logic and math.
-- [Account Scenarios](account.check.md) — Detailed list of all test accounts.
-- [Design Tokens](design-reference.md) — Colors, typography, and spacing.
+## Test Accounts
+
+Login with any of these emails (any password works):
+
+| Email | Scenario |
+|-------|----------|
+| `active@koda.test` | Standard user — 3 active orders |
+| `new@koda.test` | Pre-KYC, no orders |
+| `fresh@koda.test` | Verified, zero orders |
+| `overdue@koda.test` | Locked account — overdue payments |
+| `declined@koda.test` | Expired card — payment failed |
+| `maxed@koda.test` | 99% credit used |
+| `power@koda.test` | Power user, 2 cards |
+| `merchant@koda.test` | Merchant back-office view |
 
 ---
 
-## Notes for Testers
-This app is designed to be "broken" in specific ways (e.g., via the "Simulate Failure" button on order cards) to test your observation skills. If you find an unexpected edge case, document it in your test report.
+## Where to Find Things
+
+| What | Location |
+|------|----------|
+| Test plan & coverage tracker | [`tests/test-plan/`](tests/test-plan/) |
+| Manual test cases | [`tests/manual-cases/`](tests/manual-cases/) |
+| E2E automation scripts | [`tests/e2e/`](tests/e2e/) |
+| Unit tests | [`app/tests/unit/`](app/tests/unit/) |
+| CI/CD config | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) |
+| Page Object Model | [`playwright/pages/`](playwright/pages/) |
+| App source code | [`app/src/`](app/src/) |
+| Mock accounts detail | [`account.check.md`](account.check.md) |
+
+---
+
+> Full visual presentation: [`showcase/index.html`](showcase/index.html)
