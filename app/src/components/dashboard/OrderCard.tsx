@@ -4,8 +4,6 @@ import { useStore } from '../../store/useStore'
 import { formatCurrency, formatShortDate } from '../../utils/format'
 import type { Order } from '../../data/types'
 import { ChevronRight, Undo2, CalendarDays } from 'lucide-react'
-import { RefundModal } from './RefundModal'
-import { PaymentModal } from './PaymentModal'
 import { PaymentTimeline } from '../checkout/PaymentTimeline'
 
 interface OrderCardProps {

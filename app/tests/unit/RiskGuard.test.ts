@@ -3,6 +3,7 @@ import { renderHook } from '@testing-library/react'
 import { useStore } from '../../src/store/useStore'
 import { useCheckoutGuard } from '../../src/hooks/useCheckoutGuard'
 import { SEED_PRODUCTS } from '../../src/data/seedProducts'
+import type { Product } from '../../src/data/types'
 
 describe('Risk & Error States (Phase 5)', () => {
   beforeEach(() => {
@@ -56,8 +57,8 @@ describe('Risk & Error States (Phase 5)', () => {
       useStore.getState().login('fresh@koda.test')
 
       // Create an order and simulate failure
-      const product = { ...SEED_PRODUCTS[0], price: 1000 }
-      useStore.getState().createOrder(product as any, 4)
+      const product: Product = { ...SEED_PRODUCTS[0], price: 1000 }
+      useStore.getState().createOrder(product, 4)
       const orderId = useStore.getState().orders[0].id
 
       useStore.getState().simulateFailure(orderId)

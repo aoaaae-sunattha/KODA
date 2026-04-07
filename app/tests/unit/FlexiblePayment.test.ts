@@ -104,7 +104,7 @@ describe('Flexible Payment Actions', () => {
 
     it('does nothing for non-existent order', () => {
       const ordersBefore = useStore.getState().orders
-      // @ts-ignore
+      // @ts-expect-error - testing invalid ID
       useStore.getState().payFullBalance('nonexistent')
       expect(useStore.getState().orders).toEqual(ordersBefore)
     })

@@ -330,20 +330,30 @@ export const useStore = create<AppState>()(persist((set, get) => ({
   // ─── CARDS ──────────────────────────────────────────────────────────────────
   addCard: (cardData) => {
     set(state => {
-      const isPrimary = state.cards.length === 0 ? true : cardData.isPrimary
+      const isFirst = state.cards.length === 0
+      const isPrimary = isFirst ? true : cardData.isPrimary
       const newCard: Card = { 
         ...cardData, 
         id: `card-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
         isPrimary 
       }
-      return { cards: [...state.cards, newCard] }
+      
+      let updatedCards = state.cards
+      if (isPrimary) {
+        // If we're adding a new primary card, demote others
+        updatedCards = updatedCards.map(c => ({ ...c, isPrimary: false }))
+      }
+      
+      return { cards: [...updatedCards, newCard] }
     })
   },
 
   removeCard: (cardId: string) => {
-    set(state => ({
-      cards: state.cards.filter(c => c.id !== cardId)
-    }))
+    set(state => {
+      const cardToRemove = state.cards.find(c => c.id === cardId)
+      if (!cardToRemove || cardToRemove.isPrimary) return {}
+      return { cards: state.cards.filter(c => c.id !== cardId) }
+    })
   },
 
   setPrimaryCard: (cardId: string) => {
