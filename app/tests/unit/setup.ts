@@ -1,4 +1,4 @@
-import { vi, beforeEach } from 'vitest';
+import { beforeEach } from 'vitest';
 
 class LocalStorageMock {
   store: Record<string, string> = {};

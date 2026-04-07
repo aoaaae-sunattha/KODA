@@ -109,7 +109,7 @@ export const PaymentTimeline: React.FC<PaymentTimelineProps> = ({ price, term, i
                     isOverdue ? 'text-red-900' :
                     isFirst ? 'text-primary' : 'text-slate-900'
                   }`}>
-                    {inst.status === 'paid' ? 'Paid' : isOverdue ? 'Overdue' : isFirst && !installments ? 'Upon checkout' : `Payment ${i + 1}`}
+                    {isFirst && !installments ? 'Upon checkout' : inst.status === 'paid' ? 'Paid' : isOverdue ? 'Overdue' : `Payment ${i + 1}`}
                   </p>
                   <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
                     {formatShortDate(inst.dueDate)}

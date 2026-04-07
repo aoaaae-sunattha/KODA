@@ -1,6 +1,6 @@
 # Test Case Progress — KODA BNPL
 
-> **Last updated:** 2026-04-06
+> **Last updated:** 2026-04-07
 > **Source of truth:** `tests/manual-cases/` (manual) · `tests/e2e/` (automation)
 > **Coverage rule:** ✅ = has running E2E spec · ❌ = no spec · ⚠️ = partial/behavioral-only · 🔄 = legacy TC-ID mismatch
 
@@ -12,14 +12,14 @@
 |----------|----------|:------------:|:----------:|:----------:|:--------:|:--------:|--------|
 | 🔴 P1    | auth     | 23           | 23         | 0          | 0        | **100%** | ✅ Done |
 | 🔴 P1    | checkout | 27           | 27         | 0          | 0        | **100%** | ✅ Done |
-| 🔴 P1    | risk     | 18           | 0          | 18         | 0        | **0%**   | 🚧 In progress |
-| 🟠 P2    | payment  | 11           | 0          | 11         | 0        | **0%**   | 🚧 In progress |
-| 🟠 P2    | credit   | 9            | 3          | 6          | 1        | **33%**  | 🚧 In progress |
+| 🔴 P1    | risk     | 18           | 13         | 5          | 0        | **72%**  | 🚧 In progress |
+| 🟠 P2    | payment  | 11           | 3          | 8          | 0        | **27%**  | 🚧 In progress |
+| 🟠 P2    | credit   | 9            | 4          | 5          | 1        | **44%**  | 🚧 In progress |
 | 🟠 P2    | kyc      | 3            | 0          | 3          | 0        | **0%**   | ❌ Dir absent |
 | 🟡 P3    | cards    | 3            | 0          | 3          | 0        | **0%**   | ❌ Dir absent |
 | 🟡 P3    | merchant | 6            | 1          | 5          | 0        | **17%**  | 🚧 In progress |
 | 🟡 P3    | schedule | 4            | 2          | 2          | 0        | **50%**  | 🚧 In progress |
-| —        | **Total**| **104**      | **56**     | **48**     | **1**    | **54%**  | |
+| —        | **Total**| **104**      | **73**     | **31**     | **1**    | **70%**  | |
 
 ### Priority Key
 
@@ -103,35 +103,35 @@
 
 ---
 
-### 🔴 risk — 0% 🚧 In progress
+### 🔴 risk — 72% 🚧 In progress
 > Overdue/locked account protection and refund engine. Contains P0 cases.
 
 | # | TC ID | Title | Priority | E2E Spec | Status |
 |---|-------|-------|----------|----------|--------|
-| 1 | TC-RISK-001 | Locked Account Blocks Checkout | P0 | — | ❌ |
-| 2 | TC-RISK-002 | Unverified Account KYC Guard | P0 | — | ❌ |
-| 3 | TC-RISK-003 | Action Required (Declined Card) Guard | P1 | — | ❌ |
-| 4 | TC-RISK-004 | Unlock Account via Pay Overdue | P0 | — | ❌ |
-| 5 | TC-RISK-005 | Simulate Payment Failure | P1 | — | ❌ |
-| 6 | TC-RISK-006 | ID Verification Simulator | P1 | — | ❌ |
-| 7 | TC-RFND-001 | Partial Refund - Backward Allocation (BVA) | P1 | — | ❌ |
+| 1 | TC-RISK-001 | Locked Account Blocks Checkout | P0 | risk-locked-account-guard.spec.ts | ✅ |
+| 2 | TC-RISK-002 | Unverified Account KYC Guard | P0 | risk-unverified-kyc-guard.spec.ts | ✅ |
+| 3 | TC-RISK-003 | Action Required (Declined Card) Guard | P1 | risk-declined-card-guard.spec.ts | ✅ |
+| 4 | TC-RISK-004 | Unlock Account via Pay Overdue | P0 | risk-unlock-via-overdue.spec.ts | ✅ |
+| 5 | TC-RISK-005 | Simulate Payment Failure | P1 | risk-simulate-failure.spec.ts | ✅ |
+| 6 | TC-RISK-006 | ID Verification Simulator | P1 | risk-id-verify-simulator.spec.ts | ✅ |
+| 7 | TC-RFND-001 | Partial Refund - Backward Allocation (BVA) | P1 | refunds/refund-backward-allocation.spec.ts | ✅ |
 | 8 | TC-RFND-002 | Refund Matching Multiple Installments | P2 | — | ❌ |
-| 9 | TC-RFND-003 | Full Refund (All Unpaid) | P1 | — | ❌ |
+| 9 | TC-RFND-003 | Full Refund (All Unpaid) | P1 | refunds/refund-full-complete.spec.ts | ✅ |
 | 10 | TC-RFND-004 | Refund > Unpaid Balance (Mock behavior) | P2 | — | ❌ |
 | 11 | TC-RFND-005 | Refund UI Price Strikethrough | P2 | — | ❌ |
 | 12 | TC-RFND-006 | Refund Skipping Paid Installments (Unit only) | P1 | — | ❌ |
 | 13 | TC-RISK-007 | KYC Credit Limit Grant Verification | P2 | — | ❌ |
-| 14 | TC-RISK-008 | Action Required Banner & Navigation | P1 | — | ❌ |
-| 15 | TC-RISK-009 | Dashboard KYC Banner for Unverified User | P1 | — | ❌ |
-| 16 | TC-RFND-007 | Refund Button Visibility Conditions | P1 | — | ❌ |
-| 17 | TC-RFND-008 | RefundModal — Input, Quick-Select, Max Cap | P2 | — | ❌ |
-| 18 | TC-RFND-009 | RefundModal — Processing Animation and Simulation Label | P2 | — | ❌ |
+| 14 | TC-RISK-008 | Action Required Banner & Navigation | P1 | risk-action-required-banner.spec.ts | ✅ |
+| 15 | TC-RISK-009 | Dashboard KYC Banner for Unverified User | P1 | risk-kyc-banner.spec.ts | ✅ |
+| 16 | TC-RFND-007 | Refund Button Visibility Conditions | P1 | refunds/refund-button-visibility.spec.ts | ✅ |
+| 17 | TC-RFND-008 | RefundModal — Input, Quick-Select, Max Cap | P2 | refunds/refund-modal-input.spec.ts | ✅ |
+| 18 | TC-RFND-009 | RefundModal — Processing Animation and Simulation Label | P2 | refunds/refund-processing-label.spec.ts | ✅ |
 
 > 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create nested specs at `tests/e2e/risk/` and `tests/e2e/risk/refunds/`.
 
 ---
 
-### 🟠 payment — 0% 🚧 In progress
+### 🟠 payment — 27% 🚧 In progress
 > Installment repayment flow.
 
 | # | TC ID | Title | Priority | E2E Spec | Status |
@@ -144,15 +144,15 @@
 | 6 | TC-PAY-006 | Partial Payment UI Update | P2 | — | ❌ |
 | 7 | TC-PAY-007 | Payment Modal Default Selection | P1 | — | ❌ |
 | 8 | TC-PAY-008 | Pay Next Installment (Happy Path) | P1 | — | ❌ |
-| 9 | TC-PAY-009 | Payment Modal Shows All 3 Options | P2 | — | ❌ |
-| 10 | TC-PAY-010 | Payment Modal Header Shows Merchant Name and Balance | P2 | — | ❌ |
-| 11 | TC-PAY-011 | Payment Modal Cancel Dismisses Without Payment | P2 | — | ❌ |
+| 9 | TC-PAY-009 | Payment Modal Shows All 3 Options | P2 | payment/payment-modal-options.spec.ts | ✅ |
+| 10 | TC-PAY-010 | Payment Modal Header Shows Merchant Name and Balance | P2 | payment/payment-modal-header.spec.ts | ✅ |
+| 11 | TC-PAY-011 | Payment Modal Cancel Dismisses Without Payment | P2 | payment/payment-modal-cancel.spec.ts | ✅ |
 
 > 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create nested specs at `tests/e2e/risk/payment/`.
 
 ---
 
-### 🟠 credit — 33% 🚧 In progress
+### 🟠 credit — 44% 🚧 In progress
 > Credit gauge visual states.
 
 | # | TC ID | Title | Priority | E2E Spec | Status |
@@ -163,7 +163,7 @@
 | 4 | TC-CRDT-004 | Gauge — Near Limit (90%) | P1 | credit-near-limit-state.spec.ts | ✅ 🔄 legacy-id |
 | 5 | TC-CRDT-005 | Gauge — Fully Exhausted (0% available) | P1 | — | ❌ |
 | 6 | TC-CRDT-006 | Gauge — Real-time Update after Checkout | P2 | — | ❌ |
-| 7 | TC-CRED-001 | Insufficient Credit Guard | P0 | — | ❌ |
+| 7 | TC-CRED-001 | Insufficient Credit Guard | P0 | credit/credit-insufficient-guard.spec.ts | ✅ |
 | 8 | TC-CRED-002 | Credit Calculation Consistency | P1 | — | ❌ |
 | 9 | TC-CRED-003 | Exact Credit Limit Purchase | P3 | — | ❌ |
 
@@ -246,10 +246,10 @@ These are not coverage gaps — they are technical debt items that should be res
 ## Next Actions (Priority Order)
 
 - [x] 🔴 Write `tests/e2e/checkout/` — TC-CHKT-001 to TC-CHKT-027 ✅ 100% done
-- [ ] 🔴 Write `tests/e2e/risk/` — TC-RISK-001 to TC-RISK-009, TC-RFND-001 to TC-RFND-009
-- [ ] 🟠 Write `tests/e2e/risk/payment/` — TC-PAY-001 to TC-PAY-011 (atomic, retire regression coverage)
+- [~] 🔴 Write `tests/e2e/risk/` — TC-RISK-001 to TC-RISK-009, TC-RFND-001 to TC-RFND-009 (72% done — missing: TC-RFND-002, TC-RFND-004, TC-RFND-005, TC-RFND-006, TC-RISK-007)
+- [~] 🟠 Write `tests/e2e/risk/payment/` — TC-PAY-001 to TC-PAY-011 (27% done — TC-PAY-009/010/011 ✅; missing: TC-PAY-001 to TC-PAY-008)
 - [ ] 🟠 Write `tests/e2e/kyc/` — TC-KYC-001, TC-KYC-002
-- [ ] 🟠 Write missing credit specs at `tests/e2e/risk/credit/` — TC-CRDT-003, TC-CRDT-005, TC-CRDT-006, TC-CRED-001 to TC-CRED-003
+- [~] 🟠 Write missing credit specs at `tests/e2e/risk/credit/` — TC-CRDT-003, TC-CRDT-005, TC-CRDT-006, TC-CRED-002, TC-CRED-003 (TC-CRED-001 ✅)
 - [ ] 🟡 Write `tests/e2e/cards/` — TC-CARD-001 to TC-CARD-003
 - [ ] 🟡 Write `tests/e2e/risk/merchant/` — TC-MRCH-001, TC-MRCH-002, TC-MRCH-004 to TC-MRCH-006
 - [ ] 🟡 Write missing schedule specs — TC-SCHD-003, TC-SCHD-004

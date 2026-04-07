@@ -12,7 +12,7 @@ describe('useCheckoutGuard Hook', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    ;(useStore as any).mockReturnValue({
+    vi.mocked(useStore).mockReturnValue({
       currentUser: null,
       getAvailableCredit: mockGetAvailableCredit,
     })
@@ -24,7 +24,7 @@ describe('useCheckoutGuard Hook', () => {
   })
 
   it('returns unverified if user is not verified (KYC check is priority 1)', () => {
-    ;(useStore as any).mockReturnValue({
+    vi.mocked(useStore).mockReturnValue({
       currentUser: { accountStatus: 'active', verified: false },
       getAvailableCredit: mockGetAvailableCredit,
     })
@@ -33,7 +33,7 @@ describe('useCheckoutGuard Hook', () => {
   })
 
   it('returns unverified for kyc_pending status', () => {
-    ;(useStore as any).mockReturnValue({
+    vi.mocked(useStore).mockReturnValue({
       currentUser: { accountStatus: 'kyc_pending', verified: false },
       getAvailableCredit: mockGetAvailableCredit,
     })
@@ -42,7 +42,7 @@ describe('useCheckoutGuard Hook', () => {
   })
 
   it('returns locked if accountStatus is locked (priority 2, after KYC)', () => {
-    ;(useStore as any).mockReturnValue({
+    vi.mocked(useStore).mockReturnValue({
       currentUser: { accountStatus: 'locked', verified: true },
       getAvailableCredit: mockGetAvailableCredit,
     })
@@ -51,7 +51,7 @@ describe('useCheckoutGuard Hook', () => {
   })
 
   it('returns action_required if accountStatus is action_required', () => {
-    ;(useStore as any).mockReturnValue({
+    vi.mocked(useStore).mockReturnValue({
       currentUser: { accountStatus: 'action_required', verified: true },
       getAvailableCredit: mockGetAvailableCredit,
     })
@@ -61,7 +61,7 @@ describe('useCheckoutGuard Hook', () => {
 
   it('returns insufficient if price exceeds available credit', () => {
     mockGetAvailableCredit.mockReturnValue(500)
-    ;(useStore as any).mockReturnValue({
+    vi.mocked(useStore).mockReturnValue({
       currentUser: { accountStatus: 'active', verified: true },
       getAvailableCredit: mockGetAvailableCredit,
     })
@@ -71,7 +71,7 @@ describe('useCheckoutGuard Hook', () => {
 
   it('returns allowed if all conditions are met', () => {
     mockGetAvailableCredit.mockReturnValue(5000)
-    ;(useStore as any).mockReturnValue({
+    vi.mocked(useStore).mockReturnValue({
       currentUser: { accountStatus: 'active', verified: true },
       getAvailableCredit: mockGetAvailableCredit,
     })
@@ -80,7 +80,7 @@ describe('useCheckoutGuard Hook', () => {
   })
 
   it('KYC check takes priority over locked status per spec', () => {
-    ;(useStore as any).mockReturnValue({
+    vi.mocked(useStore).mockReturnValue({
       currentUser: { accountStatus: 'locked', verified: false },
       getAvailableCredit: mockGetAvailableCredit,
     })

@@ -8,5 +8,10 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./tests/unit/setup.ts'],
     include: ['./tests/unit/**/*.test.{ts,tsx}'],
+    poolOptions: {
+      threads: {
+        singleThread: true,
+      },
+    },
   },
 })
