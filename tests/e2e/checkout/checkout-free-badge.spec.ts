@@ -28,6 +28,9 @@ test.describe('Checkout Plan Badges', () => {
     
     // First payment = monthly payment = Math.floor(999/4) = $249
     await expect(page.getByTestId('timeline-amount-0')).toHaveText('$249');
+    // Installments 1–2: $249 each
+    await expect(page.getByTestId('timeline-amount-1')).toHaveText('$249');
+    await expect(page.getByTestId('timeline-amount-2')).toHaveText('$249');
     // Last installment (3) = $252 ($249 + $3 rounding remainder)
     await expect(page.getByTestId('timeline-amount-3')).toHaveText('$252');
   });

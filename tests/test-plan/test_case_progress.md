@@ -127,7 +127,7 @@
 | 17 | TC-RFND-008 | RefundModal — Input, Quick-Select, Max Cap | P2 | — | ❌ |
 | 18 | TC-RFND-009 | RefundModal — Processing Animation and Simulation Label | P2 | — | ❌ |
 
-> 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create `tests/e2e/risk/` for specs.
+> 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create nested specs at `tests/e2e/risk/` and `tests/e2e/risk/refunds/`.
 
 ---
 
@@ -148,7 +148,7 @@
 | 10 | TC-PAY-010 | Payment Modal Header Shows Merchant Name and Balance | P2 | — | ❌ |
 | 11 | TC-PAY-011 | Payment Modal Cancel Dismisses Without Payment | P2 | — | ❌ |
 
-> 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create `tests/e2e/payment/` and write atomic specs.
+> 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create nested specs at `tests/e2e/risk/payment/`.
 
 ---
 
@@ -167,7 +167,7 @@
 | 8 | TC-CRED-002 | Credit Calculation Consistency | P1 | — | ❌ |
 | 9 | TC-CRED-003 | Exact Credit Limit Purchase | P3 | — | ❌ |
 
-> 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`.
+> 📁 Manual cases at `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create nested specs at `tests/e2e/risk/credit/`.
 
 ---
 
@@ -209,7 +209,7 @@
 | 5 | TC-MRCH-005 | Merchant Settle Button (Happy Path) | P1 | — | ❌ |
 | 6 | TC-MRCH-006 | Merchant Portal Nav Shows Business Name | P3 | — | ❌ |
 
-> 📁 Manual cases at `tests/manual-cases/merchant/MERCHANT_CASES.md` and `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create `tests/e2e/merchant/` and write atomic specs.
+> 📁 Manual cases at `tests/manual-cases/merchant/MERCHANT_CASES.md` and `tests/manual-cases/risk-refunds/RISK_REFUND_CASES.md`. Create nested specs at `tests/e2e/risk/merchant/`.
 
 ---
 
@@ -246,12 +246,12 @@ These are not coverage gaps — they are technical debt items that should be res
 ## Next Actions (Priority Order)
 
 - [x] 🔴 Write `tests/e2e/checkout/` — TC-CHKT-001 to TC-CHKT-027 ✅ 100% done
-- [ ] 🔴 Write `tests/e2e/risk/` — TC-RISK-001 to TC-RFND-002 (P0 locked checkout first)
-- [ ] 🟠 Write `tests/e2e/payment/` — TC-PAY-001 to TC-PAY-011 (atomic, retire regression coverage)
+- [ ] 🔴 Write `tests/e2e/risk/` — TC-RISK-001 to TC-RISK-009, TC-RFND-001 to TC-RFND-009
+- [ ] 🟠 Write `tests/e2e/risk/payment/` — TC-PAY-001 to TC-PAY-011 (atomic, retire regression coverage)
 - [ ] 🟠 Write `tests/e2e/kyc/` — TC-KYC-001, TC-KYC-002
-- [ ] 🟠 Write missing credit specs — TC-CRDT-003, TC-CRDT-005, TC-CRDT-006
+- [ ] 🟠 Write missing credit specs at `tests/e2e/risk/credit/` — TC-CRDT-003, TC-CRDT-005, TC-CRDT-006, TC-CRED-001 to TC-CRED-003
 - [ ] 🟡 Write `tests/e2e/cards/` — TC-CARD-001 to TC-CARD-003
-- [ ] 🟡 Write `tests/e2e/merchant/` — TC-MRCH-001, TC-MRCH-002
+- [ ] 🟡 Write `tests/e2e/risk/merchant/` — TC-MRCH-001, TC-MRCH-002, TC-MRCH-004 to TC-MRCH-006
 - [ ] 🟡 Write missing schedule specs — TC-SCHD-003, TC-SCHD-004
 - [ ] 🔧 Fix `AUTH_CASES.md` ordering (TC-AUTH-023 / TC-AUTH-022)
 - [ ] 🔧 Rename `TC-DASH-NN` → `TC-CRDT-NNN` in credit/ specs

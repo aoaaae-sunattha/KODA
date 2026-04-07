@@ -4,15 +4,23 @@ import { AlertCircle, AlertTriangle, ShieldCheck, ShoppingBag, CheckCircle2 } fr
 import CreditGauge from '../components/dashboard/CreditGauge'
 import OrderCard from '../components/dashboard/OrderCard'
 import { IDVerifyModal } from '../components/checkout/IDVerifyModal'
+import { RefundModal } from '../components/dashboard/RefundModal'
+import { PaymentModal } from '../components/dashboard/PaymentModal'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import type { Order } from '../data/types'
 
 export default function Dashboard() {
-  const { currentUser, orders, payOverdue } = useStore()
+  const { currentUser, orders, payOverdue, payInstallment, paySpecificAmount, payFullBalance } = useStore()
   const used = useStore(s => s.getUsedCredit())
   const available = useStore(s => s.getAvailableCredit())
   const [isKYCOpen, setIsKYCOpen] = useState(false)
   const [showPaySuccess, setShowPaySuccess] = useState(false)
+  
+  // Shared Modal State
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
+  const [modalType, setModalType] = useState<'payment' | 'refund' | null>(null)
+
   const navigate = useNavigate()
 
   if (!currentUser) return null
@@ -56,6 +64,7 @@ export default function Dashboard() {
             {currentUser.accountStatus === 'locked' && (
               <motion.div 
                 key="locked-alert"
+                data-testid="locked-banner"
                 variants={itemVariants}
                 exit={{ height: 0, opacity: 0, scale: 0.95 }}
                 className="bg-red-50 border border-red-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
@@ -69,6 +78,7 @@ export default function Dashboard() {
                 </div>
                 <button 
                   onClick={handlePayOverdue}
+                  data-testid="pay-overdue-btn"
                   className="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-red-200 hover:bg-red-700 transition-colors"
                 >
                   Pay Now
@@ -92,7 +102,9 @@ export default function Dashboard() {
                   <p className="text-xs text-amber-700 font-medium">Payment failed on {new Date().toLocaleDateString()} - Update Card</p>
                 </div>
                 <button 
-                  onClick={() => navigate('/settings/cards')}                  className="px-4 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-amber-200 hover:bg-amber-700 transition-colors"
+                  onClick={() => navigate('/settings/cards')}
+                  data-testid="update-card-btn"
+                  className="px-4 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-amber-200 hover:bg-amber-700 transition-colors"
                 >
                   Update Card
                 </button>
@@ -102,6 +114,7 @@ export default function Dashboard() {
             {showPaySuccess && (
               <motion.div 
                 key="pay-success"
+                data-testid="pay-success-banner"
                 initial={{ height: 0, opacity: 0, scale: 0.95 }}
                 animate={{ height: 'auto', opacity: 1, scale: 1 }}
                 exit={{ height: 0, opacity: 0, scale: 0.95 }}
@@ -120,6 +133,7 @@ export default function Dashboard() {
             {!currentUser.verified && (
               <motion.div 
                 key="verify-alert"
+                data-testid="verify-banner"
                 variants={itemVariants}
                 className="bg-indigo-50 border border-indigo-200 rounded-2xl p-4 flex gap-4 items-center shadow-sm overflow-hidden"
               >
@@ -132,6 +146,7 @@ export default function Dashboard() {
                 </div>
                 <button 
                   onClick={() => setIsKYCOpen(true)}
+                  data-testid="verify-now-btn"
                   className="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-200"
                 >
                   Verify
@@ -142,6 +157,41 @@ export default function Dashboard() {
         </div>
 
         <IDVerifyModal isOpen={isKYCOpen} onClose={() => setIsKYCOpen(false)} />
+
+        {/* Global Modals for Orders */}
+        <RefundModal 
+          order={selectedOrder}
+          isOpen={modalType === 'refund'}
+          onClose={() => {
+            setModalType(null)
+            setSelectedOrder(null)
+          }}
+        />
+
+        <PaymentModal
+          order={selectedOrder}
+          isOpen={modalType === 'payment'}
+          onClose={() => {
+            setModalType(null)
+            setSelectedOrder(null)
+          }}
+          onConfirm={(type, amount) => {
+            if (!selectedOrder) return
+            switch (type) {
+              case 'next':
+                payInstallment(selectedOrder.id)
+                break
+              case 'specific':
+                paySpecificAmount(selectedOrder.id, amount)
+                break
+              case 'full':
+                payFullBalance(selectedOrder.id)
+                break
+            }
+            setModalType(null)
+            setSelectedOrder(null)
+          }}
+        />
 
         {/* Credit Utilization Gauge */}
         <motion.div variants={itemVariants}>
@@ -171,7 +221,17 @@ export default function Dashboard() {
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <OrderCard order={order} />
+                      <OrderCard 
+                        order={order} 
+                        onOpenPayment={() => {
+                          setSelectedOrder(order)
+                          setModalType('payment')
+                        }}
+                        onOpenRefund={() => {
+                          setSelectedOrder(order)
+                          setModalType('refund')
+                        }}
+                      />
                     </motion.div>
                   ))}
                 </AnimatePresence>
@@ -212,7 +272,18 @@ export default function Dashboard() {
               </h2>
               <div className="space-y-3">
                 {completedOrders.map(order => (
-                  <OrderCard key={order.id} order={order} />
+                  <OrderCard 
+                    key={order.id} 
+                    order={order} 
+                    onOpenPayment={() => {
+                      setSelectedOrder(order)
+                      setModalType('payment')
+                    }}
+                    onOpenRefund={() => {
+                      setSelectedOrder(order)
+                      setModalType('refund')
+                    }}
+                  />
                 ))}
               </div>
             </motion.section>

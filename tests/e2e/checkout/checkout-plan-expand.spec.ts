@@ -15,12 +15,13 @@ test.describe('Checkout Plan Expansion', () => {
     await checkoutPage.openCheckoutFor('MacBook Pro 14"');
     await expect(checkoutPage.modal).toBeVisible();
 
-    // Observe default terms (4, 18, 24)
+    // Observe default primary terms (4, 10, 18, 24)
     await expect(page.getByTestId('plan-option-4')).toBeVisible();
     await expect(page.getByTestId('plan-option-18')).toBeVisible();
     await expect(page.getByTestId('plan-option-24')).toBeVisible();
+    await expect(page.getByTestId('plan-option-10')).toBeVisible(); // primary term
 
-    // Secondary terms (6, 8, 10, 12) should be hidden
+    // Secondary terms (6, 8, 12) should be hidden
     await expect(page.getByTestId('plan-option-6')).not.toBeVisible();
     await expect(page.getByTestId('plan-option-8')).not.toBeVisible();
     await expect(page.getByTestId('plan-option-12')).not.toBeVisible();

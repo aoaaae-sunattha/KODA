@@ -40,8 +40,8 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const refundVal = Math.round(parseFloat(amount))
-    if (isNaN(refundVal) || refundVal <= 0 || refundVal > maxRefundable) return
+    const refundVal = Math.round(parseFloat(amount) * 100) / 100
+    if (isNaN(refundVal) || refundVal <= 0 || refundVal > (maxRefundable + 0.01)) return
 
     setIsProcessing(true)
     // Simulate API delay
@@ -74,12 +74,14 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
+            data-testid="refund-modal"
             className="relative w-full max-w-sm bg-white rounded-t-[32px] sm:rounded-[32px] shadow-2xl overflow-hidden"
           >
             {isSuccess ? (
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
+                data-testid="refund-success"
                 className="p-12 text-center"
               >
                 <div className="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center text-orange-500 mx-auto mb-6">
@@ -89,6 +91,10 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
                 <p className="text-sm text-slate-500">
                   {formatCurrency(Math.round(parseFloat(amount)))} has been deducted from the final installments of your {order.merchant} order.
                 </p>
+                <div className="mt-4 flex items-center justify-center gap-2 text-slate-400">
+                  <ShieldCheck size={14} />
+                  <span data-testid="refund-simulation-label-success" className="text-[10px] font-bold uppercase tracking-widest leading-none">Simulation only · No real funds moved</span>
+                </div>
               </motion.div>
             ) : (
               <>
@@ -102,7 +108,11 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{order.merchant}</p>
                     </div>
                   </div>
-                  <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                  <button 
+                    onClick={onClose} 
+                    data-testid="refund-close-btn"
+                    className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+                  >
                     <X size={20} className="text-slate-400" />
                   </button>
                 </div>
@@ -113,7 +123,7 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
                       <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
                         Refund Amount
                       </label>
-                      <span className="text-[10px] font-bold text-slate-400">
+                      <span data-testid="refund-max-amount" className="text-[10px] font-bold text-slate-400">
                         Max: {formatCurrency(maxRefundable)}
                       </span>
                     </div>
@@ -127,6 +137,7 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
                         min="1"
                         max={maxRefundable}
                         required
+                        data-testid="refund-amount-input"
                         className="w-full pl-10 pr-4 py-5 bg-slate-50 border-2 border-transparent focus:border-orange-500 rounded-2xl font-black text-3xl text-slate-900 transition-all outline-none"
                       />
                     </div>
@@ -139,6 +150,7 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
                         key={pct}
                         type="button"
                         onClick={() => handleQuickSelect(pct)}
+                        data-testid={`refund-percent-${pct * 100}`}
                         className="flex-1 py-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:border-orange-200 hover:bg-orange-50/30 transition-all"
                       >
                         {pct * 100}%
@@ -166,12 +178,14 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
                     <button
                       type="submit"
                       disabled={isProcessing || !amount || Math.round(parseFloat(amount)) > maxRefundable}
+                      data-testid="refund-submit-btn"
                       className="w-full py-5 bg-orange-500 text-white rounded-2xl font-bold text-lg hover:bg-orange-600 transition-all shadow-lg shadow-orange-100 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale active:scale-[0.98]"
                     >
                       {isProcessing ? (
                         <>
                           <motion.div 
                             animate={{ rotate: 360 }}
+                            data-testid="refund-spinner"
                             transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
                             className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
                           />
@@ -186,7 +200,7 @@ export const RefundModal: React.FC<RefundModalProps> = ({ order, isOpen, onClose
                     </button>
                     <div className="mt-4 flex items-center justify-center gap-2 text-slate-400">
                       <ShieldCheck size={14} />
-                      <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Simulation only · No real funds moved</span>
+                      <span data-testid="refund-simulation-label" className="text-[10px] font-bold uppercase tracking-widest leading-none">Simulation only · No real funds moved</span>
                     </div>
                   </div>
                 </form>

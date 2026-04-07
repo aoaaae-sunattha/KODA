@@ -39,6 +39,13 @@ test.describe('Checkout Fee Calculation', () => {
     // Verify first payment (Installment 0)
     const installment0 = page.getByTestId('timeline-amount-0');
     await expect(installment0).toHaveText('$515');
+
+    // Timeline card shows "Incl. Fee" label on first payment
+    await expect(page.getByTestId('timeline-fee-label')).toBeVisible();
+
+    // Summary card describes the fee composition (TC-CHKT-003: "Includes first installment + $99 one-time setup fee")
+    await expect(page.getByTestId('plan-summary-first-payment')).toHaveText('$515');
+    await expect(page.locator('text=/Includes first installment.*\\$99.*one-time setup fee/')).toBeVisible();
     
     // Verify intermediate payments (Installments 1-4)
     for (let i = 1; i <= 4; i++) {

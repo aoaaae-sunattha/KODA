@@ -14,7 +14,8 @@ test.describe('Store Rendering', () => {
 
     // Expected: At least 3 product cards are visible
     const productCards = page.getByTestId('product-card');
-    await expect(productCards).toHaveCount(await productCards.count() >= 3 ? await productCards.count() : 3);
+    const count = await productCards.count();
+    expect(count).toBeGreaterThanOrEqual(3);
     
     // Each card has a visible price and "Buy with KODA" button
     const firstCard = productCards.first();
