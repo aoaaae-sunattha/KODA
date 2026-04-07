@@ -52,4 +52,11 @@ export class CheckoutPage {
   async closeViaBackdrop() {
     await this.page.mouse.click(5, 5);
   }
+
+  /** Close modal if it is open */
+  async closeIfOpen() {
+    if (await this.modal.isVisible()) {
+      await this.close();
+    }
+  }
 }

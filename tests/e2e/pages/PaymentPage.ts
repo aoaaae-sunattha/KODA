@@ -21,7 +21,7 @@ export class PaymentPage {
     this.orderCards = page.getByTestId('order-card');
     this.refundModal = page.getByTestId('refund-modal');
     this.refundInput = page.getByTestId('refund-amount-input');
-    this.applyRefundButton = page.getByTestId('apply-refund-button');
+    this.applyRefundButton = page.getByTestId('refund-submit-btn');
     this.refundSuccessScreen = page.getByTestId('refund-success');
   }
 
@@ -30,14 +30,21 @@ export class PaymentPage {
     return this.orderCards.nth(index);
   }
 
-  /** Click "Pay Now" on a specific order card */
-  async payNow(index = 0) {
-    await this.orderCard(index).getByTestId('pay-now-button').click();
+  /** Get an order card by merchant name */
+  orderCardByMerchant(name: string): Locator {
+    return this.page.locator(`[data-merchant="${name}"]`);
+  }
+
+  /** Click "Pay" on a specific order card to open PaymentModal */
+  async openPayment(indexOrName: number | string) {
+    const card = typeof indexOrName === 'number' ? this.orderCard(indexOrName) : this.orderCardByMerchant(indexOrName);
+    await card.getByTestId('pay-btn').click();
   }
 
   /** Open the refund modal on a specific order card */
-  async openRefund(index = 0) {
-    await this.orderCard(index).getByTestId('refund-button').click();
+  async openRefund(indexOrName: number | string) {
+    const card = typeof indexOrName === 'number' ? this.orderCard(indexOrName) : this.orderCardByMerchant(indexOrName);
+    await card.getByTestId('open-refund-modal-btn').click();
   }
 
   /** Click a quick-select refund percentage button */
@@ -48,6 +55,8 @@ export class PaymentPage {
   /** Enter a custom refund amount */
   async enterRefundAmount(amount: number) {
     await this.refundInput.fill(String(amount));
+    await this.refundInput.dispatchEvent('input');
+    await this.refundInput.dispatchEvent('change');
   }
 
   /** Submit the refund */
@@ -57,7 +66,7 @@ export class PaymentPage {
 
   /** Click "Simulate Failure" on a specific order card */
   async simulateFailure(index = 0) {
-    await this.orderCard(index).getByTestId('simulate-failure-button').click();
+    await this.orderCard(index).getByTestId('simulate-failure-btn').click();
   }
 
   /** Get the progress bar fill locator for an order card */

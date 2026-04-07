@@ -10,13 +10,13 @@ import { PaymentTimeline } from '../checkout/PaymentTimeline'
 
 interface OrderCardProps {
   order: Order
+  onOpenPayment: () => void
+  onOpenRefund: () => void
 }
 
-export default function OrderCard({ order }: OrderCardProps) {
-  const { payInstallment, paySpecificAmount, payFullBalance, simulateFailure } = useStore()
+export default function OrderCard({ order, onOpenPayment, onOpenRefund }: OrderCardProps) {
+  const { simulateFailure } = useStore()
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null)
-  const [isRefundModalOpen, setIsRefundModalOpen] = useState(false)
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   const [isScheduleVisible, setIsScheduleVisible] = useState(false)
 
   const paidAmount = order.installments
@@ -59,8 +59,19 @@ export default function OrderCard({ order }: OrderCardProps) {
           <div className="flex flex-col items-end">
             <div className="flex items-center gap-2 mb-1">
               {order.status === 'overdue' && (
-                <span className="px-2 py-0.5 bg-red-100 text-red-600 text-[8px] font-black uppercase tracking-tighter rounded-md border border-red-200">
+                <span 
+                  data-testid="order-status"
+                  className="px-2 py-0.5 bg-red-100 text-red-600 text-[8px] font-black uppercase tracking-tighter rounded-md border border-red-200"
+                >
                   Overdue
+                </span>
+              )}
+              {order.status === 'completed' && (
+                <span 
+                  data-testid="order-status"
+                  className="px-2 py-0.5 bg-emerald-100 text-emerald-600 text-[8px] font-black uppercase tracking-tighter rounded-md border border-emerald-200"
+                >
+                  Completed
                 </span>
               )}
               <div className="text-xl font-black text-gray-900">
@@ -170,7 +181,7 @@ export default function OrderCard({ order }: OrderCardProps) {
         <div className="flex gap-3">
           {nextUnpaid && (
             <button
-              onClick={() => setIsPaymentModalOpen(true)}
+              onClick={onOpenPayment}
               data-testid="pay-btn"
               className="flex-1 py-3 px-4 rounded-2xl bg-[#5D5FEF] text-white text-sm font-bold shadow-lg shadow-[#5D5FEF]/20 hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
@@ -180,7 +191,7 @@ export default function OrderCard({ order }: OrderCardProps) {
           )}
           {order.paidCount > 0 && maxRefundable > 0 && (
             <button
-              onClick={() => setIsRefundModalOpen(true)}
+              onClick={onOpenRefund}
               data-testid="open-refund-modal-btn"
               className="py-3 px-6 rounded-2xl border-2 border-gray-100 text-sm font-bold text-gray-500 hover:bg-gray-50 transition-colors flex items-center gap-2"
             >
@@ -200,32 +211,6 @@ export default function OrderCard({ order }: OrderCardProps) {
           )}
         </div>
       )}
-
-      <RefundModal 
-        order={order}
-        isOpen={isRefundModalOpen}
-        onClose={() => setIsRefundModalOpen(false)}
-      />
-
-      <PaymentModal
-        order={order}
-        isOpen={isPaymentModalOpen}
-        onClose={() => setIsPaymentModalOpen(false)}
-        onConfirm={(type, amount) => {
-          switch (type) {
-            case 'next':
-              payInstallment(order.id)
-              break
-            case 'specific':
-              paySpecificAmount(order.id, amount)
-              break
-            case 'full':
-              payFullBalance(order.id)
-              break
-          }
-          setIsPaymentModalOpen(false)
-        }}
-      />
     </motion.div>
   )
 }
