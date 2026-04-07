@@ -1,0 +1,51 @@
+<h2>How should we present KODA to non-tech interviewers?</h2>
+<p class="subtitle">Pick the approach that best fits your interview style — or mix ideas from multiple options</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Story-First README</h3>
+      <p><strong>Narrative arc:</strong> "I built an app → wrote a test plan → automated it → wired up CI/CD."<br>
+      README tells the story in plain English with a visual testing-cycle diagram. One HTML "showcase" page embedded as a link — shows screenshots + numbered steps. Best for interviewers who read top-to-bottom.</p>
+      <ul>
+        <li>✅ Easy to scan, no tech jargon</li>
+        <li>✅ Clear "why I did this" story</li>
+        <li>⚠️ Requires interviewer to click around the repo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Self-Contained HTML Showcase Page</h3>
+      <p><strong>One file, everything inside:</strong> An HTML page that is the presentation. Sections: What is KODA → The Testing Cycle (with animated steps) → Coverage Dashboard (numbers) → CI/CD flow diagram → How to run it. README becomes a short index pointing here.</p>
+      <ul>
+        <li>✅ Interviewer opens one file — done</li>
+        <li>✅ Visual, polished, impressive</li>
+        <li>✅ Screenshots embedded directly</li>
+        <li>⚠️ Slightly heavier to build</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Dual-Layer: README + Showcase Page</h3>
+      <p><strong>Best of both:</strong> README is completely rewritten for non-tech readers with a clear testing-cycle timeline, quick-start commands, and links to key files. A separate <code>showcase/index.html</code> is a visual portfolio page with screenshots, coverage chart, and CI/CD diagram — linked prominently at the top of the README.</p>
+      <ul>
+        <li>✅ README works standalone for quick readers</li>
+        <li>✅ HTML page impresses visual thinkers</li>
+        <li>✅ Both non-tech and tech interviewers are served</li>
+        <li>⚠️ Two things to maintain (minor)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 2rem; padding: 1rem; background: #f0f4ff; border-radius: 8px; border-left: 4px solid #5D5FEF;">
+  <p class="label">My recommendation</p>
+  <p><strong>Option C</strong> — since the interviewer is non-tech but "might be hands-on to the tech side," you want both layers. The README gives the story immediately; the showcase page gives visual proof. anyday.io is a tech company — a well-made HTML page signals frontend awareness even in a QA role.</p>
+</div>

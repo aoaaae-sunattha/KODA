@@ -1,0 +1,67 @@
+<h2>What should the HTML showcase page feel like?</h2>
+<p class="subtitle">This shapes the visual language — colors, layout, and how information is presented</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="portfolio" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <!-- Portfolio mockup -->
+      <div style="background: #0f0f1a; padding: 1.5rem; border-radius: 6px; font-family: monospace;">
+        <div style="color: #5D5FEF; font-size: 1.4rem; font-weight: bold; margin-bottom: 0.25rem;">KODA — QA Portfolio</div>
+        <div style="color: #888; font-size: 0.75rem; margin-bottom: 1.2rem;">Built by [Your Name] · anyday.io interview project</div>
+        <div style="display: flex; gap: 0.75rem; margin-bottom: 1rem;">
+          <div style="background: #5D5FEF22; border: 1px solid #5D5FEF; border-radius: 4px; padding: 0.4rem 0.8rem; color: #5D5FEF; font-size: 0.7rem;">104 Test Cases</div>
+          <div style="background: #3EB48922; border: 1px solid #3EB489; border-radius: 4px; padding: 0.4rem 0.8rem; color: #3EB489; font-size: 0.7rem;">70% Automated</div>
+          <div style="background: #f59e0b22; border: 1px solid #f59e0b; border-radius: 4px; padding: 0.4rem 0.8rem; color: #f59e0b; font-size: 0.7rem;">CI/CD Passing</div>
+        </div>
+        <div style="background: #1a1a2e; border-radius: 4px; padding: 0.75rem; color: #aaa; font-size: 0.7rem; line-height: 1.6;">
+          <span style="color: #5D5FEF;">◆</span> Built a full BNPL app to have real software to test<br>
+          <span style="color: #3EB489;">◆</span> Wrote 104 manual test cases across 9 modules<br>
+          <span style="color: #f59e0b;">◆</span> Automated with Playwright + GitHub Actions CI/CD
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Dark Portfolio Style</h3>
+      <p>Tech-forward, personal branding feel. Dark background, purple + green accent (matches KODA's own colors). Feels like a developer/QA engineer's portfolio page. Makes a strong first impression.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="clean" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <!-- Clean doc mockup -->
+      <div style="background: #F5F0EC; padding: 1.5rem; border-radius: 6px; font-family: system-ui, sans-serif;">
+        <div style="color: #1a1a1a; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.25rem;">KODA — Buy Now Pay Later</div>
+        <div style="color: #666; font-size: 0.75rem; margin-bottom: 1rem;">QA Automation Project · Interview Submission</div>
+        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+          <div style="text-align: center;">
+            <div style="font-size: 1.6rem; font-weight: 800; color: #5D5FEF;">104</div>
+            <div style="font-size: 0.65rem; color: #888; text-transform: uppercase;">Test Cases</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.6rem; font-weight: 800; color: #3EB489;">70%</div>
+            <div style="font-size: 0.65rem; color: #888; text-transform: uppercase;">Automated</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.6rem; font-weight: 800; color: #22c55e;">✓</div>
+            <div style="font-size: 0.65rem; color: #888; text-transform: uppercase;">CI Passing</div>
+          </div>
+        </div>
+        <div style="background: white; border-radius: 6px; padding: 0.75rem; font-size: 0.7rem; color: #444; line-height: 1.7; border: 1px solid #e5e7eb;">
+          <strong>Testing Cycle</strong><br>
+          1. Test Plan → 2. Manual Cases → 3. Automation → 4. CI/CD
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Clean Documentation Style</h3>
+      <p>Light, warm background (matches KODA's own cream #F5F0EC), big stat numbers, clear sections. Feels like professional documentation. Easier to read for non-tech people. Approachable and trustworthy.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top: 1.5rem; padding: 1rem; background: #f0f4ff; border-radius: 8px; border-left: 4px solid #5D5FEF;">
+  <p class="label">My recommendation</p>
+  <p><strong>Clean Documentation Style</strong> — since the audience is non-tech. Light backgrounds are easier to read, the big stat numbers communicate QA quality instantly, and the warm cream matches KODA's own branding. Feels polished without being intimidating.</p>
+</div>

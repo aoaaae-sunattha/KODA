@@ -1,0 +1,75 @@
+<h2>Which sections should the showcase page include?</h2>
+<p class="subtitle">Select all that apply — I'll arrange them into a single scrolling page</p>
+
+<div class="options" data-multiselect>
+
+  <div class="option" data-choice="hero" onclick="toggleSelect(this)">
+    <div class="letter">1</div>
+    <div class="content">
+      <h3>Hero — What is this project?</h3>
+      <p>Top of page: your name, the role (QA Automation Engineer), what KODA is, and 3 stat badges (104 test cases · 70% automated · CI passing). Hook for any reader in 5 seconds.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="why" onclick="toggleSelect(this)">
+    <div class="letter">2</div>
+    <div class="content">
+      <h3>Why I Built the App</h3>
+      <p>"To test software, you need software worth testing." — short paragraph explaining the thinking: built KODA from scratch so there was a real, complex BNPL app to write a complete test suite against.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="cycle" onclick="toggleSelect(this)">
+    <div class="letter">3</div>
+    <div class="content">
+      <h3>The Testing Cycle (step-by-step)</h3>
+      <p>Visual numbered steps: Test Plan → Manual Cases → Automation Scripts → CI/CD. Each step links to the actual files. This is the core story of the project.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="coverage" onclick="toggleSelect(this)">
+    <div class="letter">4</div>
+    <div class="content">
+      <h3>Coverage Dashboard</h3>
+      <p>Table or visual bars showing 9 modules, how many test cases each has, and automation % per module. Shows completeness at a glance.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="cicd" onclick="toggleSelect(this)">
+    <div class="letter">5</div>
+    <div class="content">
+      <h3>CI/CD Flow</h3>
+      <p>Diagram showing: PR opened → 3 jobs run (Lint+Types, Unit Tests, E2E Tests) → results posted as PR comment → merge. Explains what automated quality gates are in plain English.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="howtorun" onclick="toggleSelect(this)">
+    <div class="letter">6</div>
+    <div class="content">
+      <h3>How to Run It</h3>
+      <p>3 command blocks: run the app, run unit tests, run E2E tests. With a note explaining what each does in plain English for non-tech readers.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="screenshots" onclick="toggleSelect(this)">
+    <div class="letter">7</div>
+    <div class="content">
+      <h3>App Screenshots</h3>
+      <p>Screenshots of KODA itself — login, dashboard, checkout modal, risk alert. Shows the app is real and polished. Anchors everything for non-tech readers.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="filelinks" onclick="toggleSelect(this)">
+    <div class="letter">8</div>
+    <div class="content">
+      <h3>Where to Find Things</h3>
+      <p>Quick-reference table: Manual test cases → tests/manual-cases/ · E2E scripts → tests/e2e/ · Unit tests → app/tests/unit/ · Test plan → tests/test-plan/ · CI config → .github/workflows/ci.yml</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top: 1.5rem; padding: 1rem; background: #1a1a2e; border-radius: 8px; border-left: 4px solid #5D5FEF;">
+  <p class="label" style="color: #5D5FEF;">My recommendation — select all 8</p>
+  <p style="color: #ccc; font-size: 0.9rem;">Together they tell a complete story: what it is → why → how you tested it → proof it works → how to verify. Each section is short. The page scrolls in under 2 minutes.</p>
+</div>
