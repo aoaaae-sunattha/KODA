@@ -13,7 +13,13 @@ function buildInstallments(
     const dueDate = i === 0 ? startDate : addMonths(startDate, i)
     let status: Installment['status'] = 'upcoming'
     if (i < paidCount) status = 'paid'
-    return { index: i, amount, dueDate: format(dueDate, 'yyyy-MM-dd'), status }
+    return { 
+      index: i, 
+      amount, 
+      originalAmount: amount,
+      dueDate: format(dueDate, 'yyyy-MM-dd'), 
+      status 
+    }
   })
 }
 

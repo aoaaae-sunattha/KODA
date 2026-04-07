@@ -15,15 +15,16 @@ export const PaymentTimeline: React.FC<PaymentTimelineProps> = ({ price, term, i
   const plan = React.useMemo(() => (price && term ? calculatePlan(price, term) : null), [price, term])
   
   // Use provided installments or calculate a new plan
-  const items = React.useMemo(() => {
+  const items = React.useMemo<Installment[]>(() => {
     const today = new Date()
     if (installments) return installments
     if (plan) {
       return plan.installments.map((amount, i) => ({
         index: i,
         amount,
+        originalAmount: amount,
         dueDate: addMonths(today, i).toISOString(),
-        status: (i === 0 ? 'paid' : 'upcoming') as const
+        status: i === 0 ? 'paid' : 'upcoming'
       }))
     }
     return []
