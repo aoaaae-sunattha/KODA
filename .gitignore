@@ -28,3 +28,6 @@ test-results.txt
 
 # Git worktrees
 .worktrees/
+
+# Brainstorm visual companion sessions
+.superpowers/brainstorm/
