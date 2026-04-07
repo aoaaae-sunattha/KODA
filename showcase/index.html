@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KODA — QA Automation Portfolio</title>
+  <style>
+    :root {
+      --bg:       #0b0b14;
+      --surface:  #12121f;
+      --card:     #1a1a2e;
+      --border:   #2a2a40;
+      --purple:   #5D5FEF;
+      --green:    #3EB489;
+      --amber:    #f59e0b;
+      --red:      #ef4444;
+      --text:     #e2e2f0;
+      --muted:    #8888aa;
+      --code-bg:  #0f0f1a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: var(--purple); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+    section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #fff;
+    }
+    h3 { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 0.5rem;
+    }
+
+    .muted { color: var(--muted); font-size: 0.95rem; }
+
+    /* ── Hero ── */
+    #hero {
+      padding: 5rem 0 4rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #hero .logo {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--purple);
+      letter-spacing: -0.03em;
+    }
+
+    #hero .tagline {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin: 0.4rem 0 2rem;
+    }
+
+    .badges {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid;
+    }
+
+    .badge-purple { background: #5d5fef22; border-color: var(--purple); color: var(--purple); }
+    .badge-green  { background: #3eb48922; border-color: var(--green);  color: var(--green); }
+    .badge-amber  { background: #f59e0b22; border-color: var(--amber);  color: var(--amber); }
+
+    #hero .role {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ── Why ── */
+    .why-text {
+      font-size: 1.05rem;
+      color: var(--text);
+      max-width: 680px;
+      line-height: 1.8;
+    }
+
+    .why-text strong { color: var(--purple); }
+
+    /* ── Tech Stack ── */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 600px) { .stack-grid { grid-template-columns: 1fr; } }
+
+    .stack-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .stack-card .stack-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .stack-title.app  { color: var(--purple); }
+    .stack-title.qa   { color: var(--green); }
+
+    .stack-pill-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .pill {
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    /* ── Testing Cycle ── */
+    .cycle-steps { display: flex; flex-direction: column; gap: 0; margin-top: 1.5rem; }
+
+    .cycle-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .step-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .step-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      flex-shrink: 0;
+      border: 2px solid;
+      z-index: 1;
+    }
+
+    .step-line {
+      width: 2px;
+      flex: 1;
+      min-height: 2rem;
+      background: var(--border);
+      margin: 4px 0;
+    }
+
+    .cycle-step:last-child .step-line { display: none; }
+
+    .step-body {
+      padding-bottom: 2rem;
+    }
+
+    .step-body h3 { margin-bottom: 0.3rem; }
+    .step-body p  { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.6rem; }
+
+    .step-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-family: 'Courier New', monospace;
+      padding: 0.2rem 0.6rem;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--muted);
+    }
+
+    .step-link:hover { color: var(--purple); border-color: var(--purple); text-decoration: none; }
+
+    .s1 { color: var(--purple); border-color: var(--purple); background: #5d5fef18; }
+    .s2 { color: var(--green);  border-color: var(--green);  background: #3eb48918; }
+    .s3 { color: var(--amber);  border-color: var(--amber);  background: #f59e0b18; }
+    .s4 { color: #60a5fa;       border-color: #60a5fa;       background: #60a5fa18; }
+
+    /* ── Coverage ── */
+    .coverage-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .coverage-table th {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .coverage-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .coverage-table tr:last-child td { border-bottom: none; }
+
+    .coverage-table tr:hover td { background: var(--card); }
+
+    .pct-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .pct-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .pct-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--green);
+      transition: width 0.6s ease;
+    }
+
+    .pct-bar-fill.partial { background: var(--amber); }
+    .pct-bar-fill.zero    { background: var(--red); }
+
+    .pct-label { font-size: 0.8rem; font-weight: 600; min-width: 2.5rem; text-align: right; }
+    .pct-100 { color: var(--green); }
+    .pct-mid { color: var(--amber); }
+    .pct-low { color: var(--red); }
+
+    .priority-badge {
+      display: inline-block;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .p1 { background: #ef444422; color: #ef4444; }
+    .p2 { background: #f59e0b22; color: #f59e0b; }
+    .p3 { background: #60a5fa22; color: #60a5fa; }
+
+    .total-row td { font-weight: 700; color: #fff; background: var(--card); }
+
+    /* ── CI/CD ── */
+    .cicd-diagram {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .cicd-trigger {
+      background: var(--card);
+      border: 1px solid var(--purple);
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .cicd-trigger .icon { font-size: 1.5rem; }
+    .cicd-trigger h3 { margin: 0; font-size: 1rem; }
+    .cicd-trigger p  { margin: 0; color: var(--muted); font-size: 0.85rem; }
+
+    .cicd-arrow {
+      text-align: center;
+      color: var(--border);
+      font-size: 1.2rem;
+    }
+
+    .cicd-jobs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 600px) { .cicd-jobs { grid-template-columns: 1fr; } }
+
+    .cicd-job {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .cicd-job .job-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .cicd-job h3 { font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .cicd-job p  { color: var(--muted); font-size: 0.8rem; }
+    .cicd-job .job-tag {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .tag-lint  { background: #5d5fef22; color: var(--purple); }
+    .tag-unit  { background: #3eb48922; color: var(--green); }
+    .tag-e2e   { background: #f59e0b22; color: var(--amber); }
+
+    .cicd-result {
+      background: var(--card);
+      border: 1px solid var(--green);
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .cicd-result .icon { font-size: 1.5rem; }
+    .cicd-result h3 { margin: 0; font-size: 1rem; }
+    .cicd-result p  { margin: 0; color: var(--muted); font-size: 0.85rem; }
+
+    .cicd-note {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--card);
+      border-left: 3px solid var(--purple);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ── Screenshots ── */
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 600px) { .screenshots-grid { grid-template-columns: 1fr; } }
+
+    .screenshot-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      display: block;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .screenshot-card .caption {
+      padding: 0.6rem 0.9rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .screenshot-card .caption strong { color: var(--text); }
+
+    /* ── How to Run ── */
+    .run-blocks { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.5rem; }
+
+    .run-block {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .run-block-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .run-block-header .icon { font-size: 1.1rem; }
+    .run-block-header .title { font-weight: 600; font-size: 0.95rem; }
+    .run-block-header .desc  { font-size: 0.8rem; color: var(--muted); margin-left: auto; }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1rem 1.25rem;
+      font-size: 0.82rem;
+      font-family: 'Courier New', monospace;
+      color: #b0b8d0;
+      overflow-x: auto;
+      line-height: 1.8;
+    }
+
+    pre .comment { color: #555577; }
+    pre .cmd     { color: #a0d8ef; }
+    pre .flag    { color: var(--green); }
+
+    /* ── File Map ── */
+    .filemap {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      font-size: 0.88rem;
+    }
+
+    .filemap th {
+      text-align: left;
+      padding: 0.5rem 1rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .filemap td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .filemap tr:last-child td { border-bottom: none; }
+    .filemap tr:hover td { background: var(--card); }
+
+    .filemap code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: var(--purple);
+      background: var(--code-bg);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .filemap .what { color: var(--muted); font-size: 0.85rem; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ① HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="logo">-Koda</div>
+    <div class="tagline">Buy Now, Pay Later — QA Automation Project</div>
+
+    <div class="badges">
+      <span class="badge badge-purple">📋 104 Test Cases</span>
+      <span class="badge badge-green">⚙️ 70% Automated</span>
+      <span class="badge badge-amber">✅ CI/CD Passing</span>
+    </div>
+
+    <div class="role muted">
+      Built for the <strong style="color:var(--text)">QA Automation Engineer</strong> position at <strong style="color:var(--text)">anyday.io</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ② WHY I BUILT THE APP -->
+<section id="why">
+  <div class="container">
+    <div class="section-label">Why I Built the App</div>
+    <h2>To test software, you need real software to test.</h2>
+    <br>
+    <p class="why-text">
+      Most QA portfolios demonstrate testing skills on someone else's app. I wanted to go further —
+      so I <strong>built KODA from scratch</strong>: a fully functional Buy Now, Pay Later service
+      with a real checkout flow, installment logic, risk rules, and edge-case account states.
+      <br><br>
+      That gave me something worth testing. I then applied a complete QA cycle on top of it —
+      from structured test planning, through 104 hand-written manual test cases, all the way to
+      Playwright automation and a three-gate CI/CD pipeline that runs on every pull request.
+      <br><br>
+      The result is a project that demonstrates <strong>the full testing lifecycle</strong>,
+      not just the ability to write a script.
+    </p>
+  </div>
+</section>
+
+<!-- ③ TECH STACK -->
+<section id="stack">
+  <div class="container">
+    <div class="section-label">Tech Stack</div>
+    <h2>App + QA toolchain</h2>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-title app">App (what I built to test)</div>
+        <div class="stack-pill-group">
+          <span class="pill">React 19</span>
+          <span class="pill">TypeScript</span>
+          <span class="pill">Vite</span>
+          <span class="pill">Zustand</span>
+          <span class="pill">Tailwind CSS</span>
+          <span class="pill">Framer Motion</span>
+          <span class="pill">React Router</span>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-title qa">QA &amp; Automation</div>
+        <div class="stack-pill-group">
+          <span class="pill">Playwright</span>
+          <span class="pill">Vitest</span>
+          <span class="pill">GitHub Actions</span>
+          <span class="pill">Page Object Model</span>
+          <span class="pill">ESLint</span>
+          <span class="pill">TypeScript</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ THE TESTING CYCLE -->
+<section id="cycle">
+  <div class="container">
+    <div class="section-label">The Core Story</div>
+    <h2>The Testing Cycle</h2>
+    <p class="muted" style="margin-bottom: 0;">Four phases — from planning to automation to CI/CD.</p>
+
+    <div class="cycle-steps">
+
+      <div class="cycle-step">
+        <div class="step-left">
+          <div class="step-number s1">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Test Plan</h3>
+          <p>Defined scope, priorities, test objectives, and risk areas before writing a single test case. The plan identifies 9 modules and assigns P1/P2/P3 priority to each based on business impact.</p>
+          <a class="step-link" href="../tests/test-plan/test_case_progress.md">📄 tests/test-plan/test_case_progress.md</a>
+        </div>
+      </div>
+
+      <div class="cycle-step">
+        <div class="step-left">
+          <div class="step-number s2">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Manual Test Cases</h3>
+          <p>104 test cases written by hand across 9 modules — covering happy paths, edge cases, error states, and security guards. Each case has preconditions, steps, and expected results.</p>
+          <a class="step-link" href="../tests/manual-cases/">📁 tests/manual-cases/</a>
+        </div>
+      </div>
+
+      <div class="cycle-step">
+        <div class="step-left">
+          <div class="step-number s3">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>Automation Scripts</h3>
+          <p>73 of the 104 cases are automated with Playwright E2E tests (atomic 1-test-per-file structure) and Vitest unit tests for business logic. P1 modules (auth, checkout, risk) are 100% automated.</p>
+          <a class="step-link" href="../tests/e2e/">📁 tests/e2e/ — E2E specs</a>
+          &nbsp;
+          <a class="step-link" href="../app/tests/unit/">📁 app/tests/unit/ — Unit tests</a>
+        </div>
+      </div>
+
+      <div class="cycle-step">
+        <div class="step-left">
+          <div class="step-number s4">4</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <h3>CI/CD Pipeline</h3>
+          <p>GitHub Actions runs three quality gates automatically on every pull request — lint + type check, unit tests, and E2E tests. Results are posted as a comment directly on the PR.</p>
+          <a class="step-link" href="../.github/workflows/ci.yml">⚙️ .github/workflows/ci.yml</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ COVERAGE DASHBOARD -->
+<section id="coverage">
+  <div class="container">
+    <div class="section-label">Test Coverage</div>
+    <h2>Coverage Dashboard</h2>
+    <p class="muted">9 modules · 104 manual cases · 73 automated · P1 critical paths = 100%</p>
+
+    <table class="coverage-table">
+      <thead>
+        <tr>
+          <th>Priority</th>
+          <th>Module</th>
+          <th>Manual Cases</th>
+          <th>Automation</th>
+          <th style="min-width:160px">Coverage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="priority-badge p1">P1</span></td>
+          <td>Auth</td>
+          <td>23</td>
+          <td>23 / 23</td>
+          <td>
+            <div class="pct-bar-wrap">
+              <div class="pct-bar-bg"><div class="pct-bar-fill" style="width:100%"></div></div>
+              <span class="pct-label pct-100">100%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge p1">P1</span></td>
+          <td>Checkout</td>
+          <td>27</td>
+          <td>27 / 27</td>
+          <td>
+            <div class="pct-bar-wrap">
+              <div class="pct-bar-bg"><div class="pct-bar-fill" style="width:100%"></div></div>
+              <span class="pct-label pct-100">100%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge p1">P1</span></td>
+          <td>Risk</td>
+          <td>18</td>
+          <td>18 / 18</td>
+          <td>
+            <div class="pct-bar-wrap">
+              <div class="pct-bar-bg"><div class="pct-bar-fill" style="width:100%"></div></div>
+              <span class="pct-label pct-100">100%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge p2">P2</span></td>
+          <td>Payment</td>
+          <td>11</td>
+          <td>3 / 11</td>
+          <td>
+            <div class="pct-bar-wrap">
+              <div class="pct-bar-bg"><div class="pct-bar-fill partial" style="width:27%"></div></div>
+              <span class="pct-label pct-mid">27%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge p2">P2</span></td>
+          <td>Credit</td>
+          <td>9</td>
+          <td>4 / 9</td>
+          <td>
+            <div class="pct-bar-wrap">
+              <div class="pct-bar-bg"><div class="pct-bar-fill partial" style="width:44%"></div></div>
+              <span class="pct-label pct-mid">44%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge p2">P2</span></td>
+          <td>KYC</td>
+          <td>3</td>
+          <td>0 / 3</td>
+          <td>
+            <div class="pct-bar-wrap">
+              <div class="pct-bar-bg"><div class="pct-bar-fill zero" style="width:4%"></div></div>
+              <span class="pct-label pct-low">0%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge p3">P3</span></td>
+          <td>Cards</td>
+          <td>3</td>
+          <td>0 / 3</td>
+          <td>
+            <div class="pct-bar-wrap">
+              <div class="pct-bar-bg"><div class="pct-bar-fill zero" style="width:4%"></div></div>
+              <span class="pct-label pct-low">0%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge p3">P3</span></td>
+          <td>Merchant</td>
+          <td>6</td>
+          <td>1 / 6</td>
+          <td>
+            <div class="pct-bar-wrap">
+              <div class="pct-bar-bg"><div class="pct-bar-fill partial" style="width:17%"></div></div>
+              <span class="pct-label pct-mid">17%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge p3">P3</span></td>
+          <td>Schedule</td>
+          <td>4</td>
+          <td>2 / 4</td>
+          <td>
+            <div class="pct-bar-wrap">
+              <div class="pct-bar-bg"><div class="pct-bar-fill partial" style="width:50%"></div></div>
+              <span class="pct-label pct-mid">50%</span>
+            </div>
+          </td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="2">Total</td>
+          <td>104</td>
+          <td>73 / 104</td>
+          <td>
+            <div class="pct-bar-wrap">
+              <div class="pct-bar-bg"><div class="pct-bar-fill partial" style="width:70%"></div></div>
+              <span class="pct-label pct-mid">70%</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ⑥ CI/CD FLOW -->
+<section id="cicd">
+  <div class="container">
+    <div class="section-label">Continuous Integration</div>
+    <h2>CI/CD Pipeline</h2>
+    <p class="muted">Every pull request to <code style="font-size:0.85em;color:var(--purple);background:var(--code-bg);padding:0.1rem 0.4rem;border-radius:4px">main</code> triggers three automated quality gates in parallel.</p>
+
+    <div class="cicd-diagram">
+
+      <div class="cicd-trigger">
+        <div class="icon">🔀</div>
+        <div>
+          <h3>Pull Request opened → main</h3>
+          <p>GitHub Actions kicks off automatically — no manual steps needed</p>
+        </div>
+      </div>
+
+      <div class="cicd-arrow">↓</div>
+
+      <div class="cicd-jobs">
+        <div class="cicd-job">
+          <div class="job-icon">🔍</div>
+          <h3>Lint &amp; Type Check</h3>
+          <p>ESLint catches code style issues. TypeScript compiler confirms all types are correct — no silent bugs.</p>
+          <span class="job-tag tag-lint">eslint + tsc</span>
+        </div>
+        <div class="cicd-job">
+          <div class="job-icon">⚡</div>
+          <h3>Unit Tests</h3>
+          <p>Vitest runs fast isolated tests on the business logic — fee calculations, refund math, state transitions.</p>
+          <span class="job-tag tag-unit">vitest</span>
+        </div>
+        <div class="cicd-job">
+          <div class="job-icon">🎭</div>
+          <h3>E2E Tests</h3>
+          <p>Playwright boots the full app and runs 73 end-to-end tests simulating real user flows in Chromium.</p>
+          <span class="job-tag tag-e2e">playwright</span>
+        </div>
+      </div>
+
+      <div class="cicd-arrow">↓</div>
+
+      <div class="cicd-result">
+        <div class="icon">💬</div>
+        <div>
+          <h3>Results posted as a PR comment</h3>
+          <p>Test counts, pass/fail status, and a link to the full HTML report — visible to any reviewer without leaving GitHub</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cicd-note">
+      All three gates must pass before the branch can be merged. A failure in any one of them blocks the PR — protecting the main branch from broken code.
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ APP SCREENSHOTS -->
+<section id="screenshots">
+  <div class="container">
+    <div class="section-label">The App</div>
+    <h2>App Screenshots</h2>
+    <p class="muted">KODA is a fully functional BNPL prototype — all screens are live and interactive.</p>
+
+    <div class="screenshots-grid">
+      <div class="screenshot-card">
+        <img src="screenshots/01-login.png" alt="Login screen" loading="lazy" />
+        <div class="caption"><strong>Login</strong> — mock auth with demo accounts for each test scenario</div>
+      </div>
+      <div class="screenshot-card">
+        <img src="screenshots/02-dashboard.png" alt="Dashboard" loading="lazy" />
+        <div class="caption"><strong>Dashboard</strong> — credit gauge, active orders, installment progress bars</div>
+      </div>
+      <div class="screenshot-card">
+        <img src="screenshots/04-checkout.png" alt="Checkout modal" loading="lazy" />
+        <div class="caption"><strong>Checkout Modal</strong> — payment plan selector, installment breakdown, card selection</div>
+      </div>
+      <div class="screenshot-card">
+        <img src="screenshots/05-locked-account.png" alt="Locked account risk state" loading="lazy" />
+        <div class="caption"><strong>Risk State</strong> — overdue account locked, blocked from new purchases</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ HOW TO RUN IT -->
+<section id="run">
+  <div class="container">
+    <div class="section-label">Getting Started</div>
+    <h2>How to Run It</h2>
+    <p class="muted">Node.js v22 required. All commands run from the repo root.</p>
+
+    <div class="run-blocks">
+
+      <div class="run-block">
+        <div class="run-block-header">
+          <span class="icon">🚀</span>
+          <span class="title">Run the App</span>
+          <span class="desc">Opens at localhost:5173</span>
+        </div>
+        <pre><span class="comment"># Install dependencies and start the dev server</span>
+<span class="cmd">cd app</span>
+<span class="cmd">npm install</span>
+<span class="cmd">npm run dev</span></pre>
+      </div>
+
+      <div class="run-block">
+        <div class="run-block-header">
+          <span class="icon">⚡</span>
+          <span class="title">Run Unit Tests</span>
+          <span class="desc">Tests business logic — fast, no browser needed</span>
+        </div>
+        <pre><span class="comment"># Run all unit tests (fee calculations, refund logic, state)</span>
+<span class="cmd">cd app && npm run test</span>
+
+<span class="comment"># Run a single test file</span>
+<span class="cmd">cd app && npx vitest run tests/unit/RefundEngine.test.ts</span></pre>
+      </div>
+
+      <div class="run-block">
+        <div class="run-block-header">
+          <span class="icon">🎭</span>
+          <span class="title">Run E2E Tests</span>
+          <span class="desc">Playwright launches Chromium and tests real user flows</span>
+        </div>
+        <pre><span class="comment"># Install Playwright browsers (first time only)</span>
+<span class="cmd">npx playwright install chromium</span>
+
+<span class="comment"># Run all E2E tests (auto-starts the dev server)</span>
+<span class="cmd">npx playwright test</span>
+
+<span class="comment"># Open the interactive UI mode</span>
+<span class="cmd">npx playwright test <span class="flag">--ui</span></span>
+
+<span class="comment"># Run a single spec</span>
+<span class="cmd">npx playwright test tests/e2e/auth/login-valid-email.spec.ts</span></pre>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ⑨ WHERE TO FIND THINGS -->
+<section id="files">
+  <div class="container">
+    <div class="section-label">Repository Map</div>
+    <h2>Where to Find Things</h2>
+
+    <table class="filemap">
+      <thead>
+        <tr>
+          <th>What</th>
+          <th>Where</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Test Plan</td>
+          <td><code>tests/test-plan/</code></td>
+          <td class="what">Module priorities, coverage progress, scope definition</td>
+        </tr>
+        <tr>
+          <td>Manual Test Cases</td>
+          <td><code>tests/manual-cases/</code></td>
+          <td class="what">104 test cases across 9 modules (auth, checkout, risk, …)</td>
+        </tr>
+        <tr>
+          <td>E2E Automation</td>
+          <td><code>tests/e2e/</code></td>
+          <td class="what">Playwright specs — 1 file per test case, atomic structure</td>
+        </tr>
+        <tr>
+          <td>Unit Tests</td>
+          <td><code>app/tests/unit/</code></td>
+          <td class="what">Vitest tests for fee logic, refund engine, state transitions</td>
+        </tr>
+        <tr>
+          <td>CI/CD Config</td>
+          <td><code>.github/workflows/ci.yml</code></td>
+          <td class="what">GitHub Actions — 3 jobs: lint, unit, E2E</td>
+        </tr>
+        <tr>
+          <td>App Source</td>
+          <td><code>app/src/</code></td>
+          <td class="what">React app — components, store, pages, hooks</td>
+        </tr>
+        <tr>
+          <td>Page Object Model</td>
+          <td><code>playwright/pages/</code></td>
+          <td class="what">Reusable page objects for cleaner E2E tests</td>
+        </tr>
+        <tr>
+          <td>Test Accounts</td>
+          <td><code>account.check.md</code></td>
+          <td class="what">8 mock users — each triggers a different app state</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    KODA — QA Automation Portfolio &nbsp;·&nbsp; Built for anyday.io interview &nbsp;·&nbsp; 2026
+  </div>
+</footer>
+
+</body>
+</html>
