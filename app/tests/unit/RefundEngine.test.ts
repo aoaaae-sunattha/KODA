@@ -85,4 +85,27 @@ describe('Refund Engine (Phase 4)', () => {
     expect(order.refundedAmount).toBe(750)
     expect(order.total).toBe(250)
   })
+
+  it('TC-RFND-006: skips paid installments when applying refunds (Logic/Edge)', () => {
+    useStore.getState().login('fresh@koda.test')
+    
+    // Order for $1000, 4 installments ($250 each)
+    const product: Product = { ...SEED_PRODUCTS[0], price: 1000 }
+    useStore.getState().createOrder(product, 4)
+    const orderId = useStore.getState().orders[0].id
+    
+    // Manually set installment #3 (Last) as PAID to simulate early payment
+    // Unpaid: #1 ($250), #2 ($250). Paid: #0 ($250), #3 ($250).
+    useStore.getState().orders[0].installments[3].status = 'paid'
+    
+    // Apply refund of $300
+    // Logic should skip #3, deduct from #2 ($250) and then #1 ($50)
+    useStore.getState().simulateRefund(orderId, 300)
+    
+    const order = useStore.getState().orders[0]
+    expect(order.refundedAmount).toBe(300)
+    expect(order.installments[3].amount).toBe(250) // Skipped because PAID
+    expect(order.installments[2].amount).toBe(0)   // $250 - 250 = 0
+    expect(order.installments[1].amount).toBe(200) // $250 - 50 = 200
+  })
 })

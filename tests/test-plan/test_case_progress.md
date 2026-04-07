@@ -12,7 +12,7 @@
 |----------|----------|:------------:|:----------:|:----------:|:--------:|:--------:|--------|
 | 🔴 P1    | auth     | 23           | 23         | 0          | 0        | **100%** | ✅ Done |
 | 🔴 P1    | checkout | 27           | 27         | 0          | 0        | **100%** | ✅ Done |
-| 🔴 P1    | risk     | 18           | 13         | 5          | 0        | **72%**  | 🚧 In progress |
+| 🔴 P1    | risk     | 18           | 18         | 0          | 0        | **100%** | ✅ Done |
 | 🟠 P2    | payment  | 11           | 3          | 8          | 0        | **27%**  | 🚧 In progress |
 | 🟠 P2    | credit   | 9            | 4          | 5          | 1        | **44%**  | 🚧 In progress |
 | 🟠 P2    | kyc      | 3            | 0          | 3          | 0        | **0%**   | ❌ Dir absent |
@@ -115,12 +115,12 @@
 | 5 | TC-RISK-005 | Simulate Payment Failure | P1 | risk-simulate-failure.spec.ts | ✅ |
 | 6 | TC-RISK-006 | ID Verification Simulator | P1 | risk-id-verify-simulator.spec.ts | ✅ |
 | 7 | TC-RFND-001 | Partial Refund - Backward Allocation (BVA) | P1 | refunds/refund-backward-allocation.spec.ts | ✅ |
-| 8 | TC-RFND-002 | Refund Matching Multiple Installments | P2 | — | ❌ |
+| 8 | TC-RFND-002 | Refund Matching Multiple Installments | P2 | refunds/refund-multi-installment.spec.ts | ✅ |
 | 9 | TC-RFND-003 | Full Refund (All Unpaid) | P1 | refunds/refund-full-complete.spec.ts | ✅ |
-| 10 | TC-RFND-004 | Refund > Unpaid Balance (Mock behavior) | P2 | — | ❌ |
-| 11 | TC-RFND-005 | Refund UI Price Strikethrough | P2 | — | ❌ |
-| 12 | TC-RFND-006 | Refund Skipping Paid Installments (Unit only) | P1 | — | ❌ |
-| 13 | TC-RISK-007 | KYC Credit Limit Grant Verification | P2 | — | ❌ |
+| 10 | TC-RFND-004 | Refund > Unpaid Balance (Mock behavior) | P2 | refunds/refund-max-cap.spec.ts | ✅ |
+| 11 | TC-RFND-005 | Refund UI Price Strikethrough | P2 | refunds/refund-ui-strikethrough.spec.ts | ✅ |
+| 12 | TC-RFND-006 | Refund Skipping Paid Installments (Unit only) | P1 | RefundEngine.test.ts | ✅ |
+| 13 | TC-RISK-007 | KYC Credit Limit Grant Verification | P2 | risk-kyc-credit-grant.spec.ts | ✅ |
 | 14 | TC-RISK-008 | Action Required Banner & Navigation | P1 | risk-action-required-banner.spec.ts | ✅ |
 | 15 | TC-RISK-009 | Dashboard KYC Banner for Unverified User | P1 | risk-kyc-banner.spec.ts | ✅ |
 | 16 | TC-RFND-007 | Refund Button Visibility Conditions | P1 | refunds/refund-button-visibility.spec.ts | ✅ |
@@ -246,7 +246,7 @@ These are not coverage gaps — they are technical debt items that should be res
 ## Next Actions (Priority Order)
 
 - [x] 🔴 Write `tests/e2e/checkout/` — TC-CHKT-001 to TC-CHKT-027 ✅ 100% done
-- [~] 🔴 Write `tests/e2e/risk/` — TC-RISK-001 to TC-RISK-009, TC-RFND-001 to TC-RFND-009 (72% done — missing: TC-RFND-002, TC-RFND-004, TC-RFND-005, TC-RFND-006, TC-RISK-007)
+- [x] 🔴 Write `tests/e2e/risk/` — TC-RISK-001 to TC-RISK-009, TC-RFND-001 to TC-RFND-009 ✅ 100% done
 - [~] 🟠 Write `tests/e2e/risk/payment/` — TC-PAY-001 to TC-PAY-011 (27% done — TC-PAY-009/010/011 ✅; missing: TC-PAY-001 to TC-PAY-008)
 - [ ] 🟠 Write `tests/e2e/kyc/` — TC-KYC-001, TC-KYC-002
 - [~] 🟠 Write missing credit specs at `tests/e2e/risk/credit/` — TC-CRDT-003, TC-CRDT-005, TC-CRDT-006, TC-CRED-002, TC-CRED-003 (TC-CRED-001 ✅)

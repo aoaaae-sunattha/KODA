@@ -2,13 +2,13 @@
 
 **Date:** 2026-04-07
 **Service:** Koda Pay
-**Duration:** 380.7s
+**Duration:** 447.1s
 
 ## Summary
 
 | Total | Passed | Failed | Skipped | Status |
 |-------|--------|--------|---------|--------|
-| 164 | 162 | 2 | 0 | FAIL |
+| 172 | 172 | 0 | 0 | PASS |
 
 ## Test Results
 
@@ -119,8 +119,8 @@
 | TC-CHKT-021: Product Image Click Also Triggers Checkout Guard @regression @checkout @p3 | PASS |
 | TC-CHKT-024: Checkout Modal Resets to Term-4 on Reopen @regression @checkout | PASS |
 | TC-CHKT-024: Checkout Modal Resets to Term-4 on Reopen @regression @checkout | PASS |
-| TC-CHKT-016: No Primary Card — Confirm Disabled @regression @checkout @p1 | FAIL |
-| TC-CHKT-016: No Primary Card — Confirm Disabled @regression @checkout @p1 | FAIL |
+| TC-CHKT-016: No Primary Card — Confirm Disabled @regression @checkout @p1 | PASS |
+| TC-CHKT-016: No Primary Card — Confirm Disabled @regression @checkout @p1 | PASS |
 | TC-CHKT-027: Plan Selector Expand Link Disappears After Click @regression @checkout | PASS |
 | TC-CHKT-027: Plan Selector Expand Link Disappears After Click @regression @checkout | PASS |
 | TC-CHKT-026: Risk Alert Modal — Close via X Button @regression @checkout | PASS |
@@ -141,10 +141,18 @@
 | TC-PAY-011: Payment Modal Cancel Dismisses Without Payment @regression @risk @payment | PASS |
 | TC-PAY-010: Payment Modal Header Shows Merchant Name and Balance @regression @risk @payment | PASS |
 | TC-PAY-010: Payment Modal Header Shows Merchant Name and Balance @regression @risk @payment | PASS |
+| TC-RFND-004: Refund > Unpaid Balance @regression @risk @refunds | PASS |
+| TC-RFND-004: Refund > Unpaid Balance @regression @risk @refunds | PASS |
 | TC-RFND-008: RefundModal Input + Quick-Select @regression @risk @refunds | PASS |
 | TC-RFND-008: RefundModal Input + Quick-Select @regression @risk @refunds | PASS |
+| TC-RFND-002: Refund Matching Multiple Installments @regression @risk @refunds | PASS |
+| TC-RFND-002: Refund Matching Multiple Installments @regression @risk @refunds | PASS |
 | TC-RFND-009: RefundModal Processing + Simulation Label @regression @risk @refunds | PASS |
 | TC-RFND-009: RefundModal Processing + Simulation Label @regression @risk @refunds | PASS |
+| TC-RFND-005: Refund UI Price Strikethrough @regression @risk @refunds | PASS |
+| TC-RFND-005: Refund UI Price Strikethrough @regression @risk @refunds | PASS |
+| TC-RISK-007: KYC Credit Limit Grant Verification @regression @risk @kyc | PASS |
+| TC-RISK-007: KYC Credit Limit Grant Verification @regression @risk @kyc | PASS |
 | TC-CHKT-013: Action Required Blocks Checkout — Payment Issue Alert @tag @checkout @p1 | PASS |
 | TC-CHKT-015: Checkout Modal — Close via Backdrop Click @tag @checkout @p2 | PASS |
 | TC-CHKT-002: Credit Limit Guard (Negative) @tag @checkout @p0 | PASS |

@@ -58,23 +58,29 @@ describe('Card Management (Phase 6)', () => {
     expect(state.cards.find(c => c.last4 === '2222')?.isPrimary).toBe(true)
   })
 
-  it('prevents removal of the primary card', () => {
+  it('prevents removal of the primary card when other cards exist', () => {
     const store = useStore.getState()
-    
-    store.addCard({
-      last4: '1111',
-      brand: 'visa',
-      expiryMonth: 12,
-      expiryYear: 2028,
-      isPrimary: true,
-    })
+
+    store.addCard({ last4: '1111', brand: 'visa', expiryMonth: 12, expiryYear: 2028, isPrimary: true })
+    store.addCard({ last4: '2222', brand: 'mastercard', expiryMonth: 10, expiryYear: 2029, isPrimary: false })
+
+    const primaryId = useStore.getState().cards.find(c => c.isPrimary)!.id
+    useStore.getState().removeCard(primaryId)
+
+    const state = useStore.getState()
+    expect(state.cards).toHaveLength(2) // Not removed
+    expect(state.cards.find(c => c.id === primaryId)).toBeDefined()
+  })
+
+  it('allows removal of the primary card when it is the only card', () => {
+    const store = useStore.getState()
+
+    store.addCard({ last4: '1111', brand: 'visa', expiryMonth: 12, expiryYear: 2028, isPrimary: true })
 
     const cardId = useStore.getState().cards[0].id
     useStore.getState().removeCard(cardId)
 
-    const state = useStore.getState()
-    expect(state.cards).toHaveLength(1) // Not removed
-    expect(state.cards[0].id).toBe(cardId)
+    expect(useStore.getState().cards).toHaveLength(0)
   })
 
   it('allows removal of non-primary cards', () => {

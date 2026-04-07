@@ -286,6 +286,27 @@ describe('useStore Zustand actions', () => {
       expect(useStore.getState().cards.find(c => c.id === cardToRemove.id)).toBeUndefined()
     })
 
+    it('removeCard allows removing the last card even if it is primary', () => {
+      useStore.getState().login('fresh@koda.test')
+      const cardId = useStore.getState().cards[0].id
+      
+      useStore.getState().removeCard(cardId)
+      
+      expect(useStore.getState().cards).toHaveLength(0)
+    })
+
+    it('removeCard prevents removing the primary card if multiple cards exist', () => {
+      useStore.getState().login('power@koda.test')
+      const initialCards = useStore.getState().cards
+      const primaryCard = initialCards.find(c => c.isPrimary)!
+      
+      useStore.getState().removeCard(primaryCard.id)
+      
+      // Should NOT be removed
+      expect(useStore.getState().cards).toHaveLength(initialCards.length)
+      expect(useStore.getState().cards.find(c => c.id === primaryCard.id)).toBeDefined()
+    })
+
     it('setPrimaryCard sets only one card as primary', () => {
       useStore.getState().login('power@koda.test')
       const nonPrimary = useStore.getState().cards.find(c => !c.isPrimary)!
